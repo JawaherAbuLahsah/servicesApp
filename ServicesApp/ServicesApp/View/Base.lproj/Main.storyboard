@@ -531,6 +531,7 @@
                     <tabBarItem key="tabBarItem" title="Item" id="RLA-0b-ciA"/>
                     <connections>
                         <outlet property="requestsTableView" destination="Og6-Wr-z0M" id="UvM-3g-XLK"/>
+                        <segue destination="lcq-wV-ewp" kind="show" identifier="toServiceProvidersVC" id="7Nd-th-mGb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eaL-OR-Ki4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -619,24 +620,35 @@
                     <tabBarItem key="tabBarItem" title="Item" id="hts-rb-iwK"/>
                     <connections>
                         <outlet property="servicesCollectionView" destination="4nX-uK-hBL" id="bl8-Rv-8ym"/>
+                        <segue destination="Pzr-wg-KmV" kind="show" identifier="toRequestDetailsVC" id="IQW-Bg-KEs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NqG-7W-RBo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="846" y="1409"/>
+            <point key="canvasLocation" x="661" y="1937"/>
         </scene>
         <!--Item-->
         <scene sceneID="2xK-YX-X1J">
             <objects>
-                <viewController id="lcq-wV-ewp" sceneMemberID="viewController">
+                <viewController id="lcq-wV-ewp" customClass="ServiceProvidersViewController" customModule="ServicesApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="o0A-T9-xfO">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="pRd-MT-Qma">
                                 <rect key="frame" x="0.0" y="72" width="414" height="620"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="serviceProvidersCell" id="Yse-fY-cDe">
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Yse-fY-cDe" id="kO1-pb-IkV">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vLx-7x-R0q">
                                 <rect key="frame" x="168" y="746" width="79" height="31"/>
@@ -644,23 +656,31 @@
                                 <color key="backgroundColor" red="0.86132495090000005" green="0.86985362249999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="CANCEL"/>
+                                <connections>
+                                    <action selector="handleCancel:" destination="lcq-wV-ewp" eventType="touchUpInside" id="fTL-pQ-iEa"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="1QV-2d-laP"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="yNP-X3-Iwi"/>
+                    <navigationItem key="navigationItem" id="EaX-kB-rbE"/>
+                    <connections>
+                        <outlet property="cancelButton" destination="vLx-7x-R0q" id="R1a-s2-Tua"/>
+                        <outlet property="serviceProvidersTableView" destination="pRd-MT-Qma" id="qtJ-0M-vRu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zG3-gn-L4S" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1561" y="1409"/>
+            <point key="canvasLocation" x="3154" y="1937"/>
         </scene>
         <!--Request Details View Controller-->
         <scene sceneID="hXx-R7-ki4">
             <objects>
                 <viewController id="Pzr-wg-KmV" customClass="RequestDetailsViewController" customModule="ServicesApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="neD-OU-XTb">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="TITLE" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t68-Pw-iMk">
@@ -698,6 +718,7 @@
                         <viewLayoutGuide key="safeArea" id="lfg-wc-D8Q"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" id="zLG-dy-tgi"/>
                     <connections>
                         <outlet property="requestDetailsTextView" destination="rW5-b6-LAC" id="uN9-OT-XEa"/>
                         <outlet property="requestTitleTextField" destination="t68-Pw-iMk" id="bcV-ap-vjz"/>
@@ -705,12 +726,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nqN-N0-UVU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2357" y="1409"/>
+            <point key="canvasLocation" x="1642" y="2119"/>
         </scene>
         <!--Item-->
         <scene sceneID="JSx-tI-Gez">
             <objects>
-                <viewController id="q68-ic-R3W" sceneMemberID="viewController">
+                <viewController id="q68-ic-R3W" customClass="UserProfileViewController" customModule="ServicesApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GWr-hB-jKE">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -813,33 +834,40 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="00K-hO-NdL">
+                                <rect key="frame" x="103" y="755" width="209" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.51013188899999995" green="0.76019926599999998" blue="0.98431372640000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="EDIT"/>
+                                <connections>
+                                    <segue destination="leP-Nd-gqa" kind="show" id="D0w-ZO-tlZ"/>
+                                </connections>
+                            </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="DETAILS" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="d3U-Fk-r4E">
-                                <rect key="frame" x="87" y="628" width="240" height="128"/>
+                                <rect key="frame" x="53" y="619" width="298" height="119"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A3T-r4-H73">
-                                <rect key="frame" x="150" y="725" width="115" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.86711874850000004" green="0.98431372640000003" blue="0.96668271709999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="EDIT PROFILE"/>
-                                <connections>
-                                    <segue destination="leP-Nd-gqa" kind="show" id="1IA-uJ-0gy"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="jPA-0G-9pH"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="HYF-hI-U2Y"/>
+                    <connections>
+                        <outlet property="editProfileButton" destination="00K-hO-NdL" id="tmQ-Mq-wxV"/>
+                        <outlet property="profileImageView" destination="yqW-8O-2Dq" id="w8A-T3-J8I"/>
+                        <outlet property="userEmailLabel" destination="f2Z-Lb-Qd4" id="Fjx-Nb-BeG"/>
+                        <outlet property="userNameLabel" destination="9XZ-tM-WC9" id="Iiq-nF-dbV"/>
+                        <outlet property="userPhoneNumberLabel" destination="EKo-pN-Wev" id="CSO-iO-cDs"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d2e-1G-wGX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2357" y="744"/>
+            <point key="canvasLocation" x="2356.521739130435" y="743.97321428571422"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tje-Se-fyB">
@@ -953,11 +981,12 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="apU-OM-mbs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="158" y="1409"/>
+            <point key="canvasLocation" x="-245" y="1373"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="IZK-ZH-DO7"/>
+        <segue reference="7Nd-th-mGb"/>
         <segue reference="5yg-aj-jK4"/>
     </inferredMetricsTieBreakers>
     <resources>

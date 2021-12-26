@@ -32,6 +32,8 @@
 		95034CC42778C4AE006E37CD /* ServiceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95034CC32778C4AE006E37CD /* ServiceCollectionViewCell.swift */; };
 		95034CC62778D7CB006E37CD /* ServiceSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95034CC52778D7CB006E37CD /* ServiceSelectionViewController.swift */; };
 		95034CC82778DBEE006E37CD /* ServiceSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95034CC72778DBEE006E37CD /* ServiceSelectionTableViewCell.swift */; };
+		95034CCA2778E7A5006E37CD /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95034CC92778E7A5006E37CD /* UserProfileViewController.swift */; };
+		95034CCC2778F3D5006E37CD /* ServiceProvidersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95034CCB2778F3D5006E37CD /* ServiceProvidersViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +64,8 @@
 		95034CC32778C4AE006E37CD /* ServiceCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCollectionViewCell.swift; sourceTree = "<group>"; };
 		95034CC52778D7CB006E37CD /* ServiceSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceSelectionViewController.swift; sourceTree = "<group>"; };
 		95034CC72778DBEE006E37CD /* ServiceSelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceSelectionTableViewCell.swift; sourceTree = "<group>"; };
+		95034CC92778E7A5006E37CD /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		95034CCB2778F3D5006E37CD /* ServiceProvidersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProvidersViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +146,8 @@
 				95034CBF2778BC06006E37CD /* UserRequestsViewController.swift */,
 				95034CC12778C449006E37CD /* ServicesViewController.swift */,
 				95034CC52778D7CB006E37CD /* ServiceSelectionViewController.swift */,
+				95034CC92778E7A5006E37CD /* UserProfileViewController.swift */,
+				95034CCB2778F3D5006E37CD /* ServiceProvidersViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -245,6 +251,7 @@
 				95034CBC277861AA006E37CD /* Request.swift in Sources */,
 				95034CC62778D7CB006E37CD /* ServiceSelectionViewController.swift in Sources */,
 				95034C8F27778F53006E37CD /* LodingImage.swift in Sources */,
+				95034CCA2778E7A5006E37CD /* UserProfileViewController.swift in Sources */,
 				95034CB82778617B006E37CD /* User.swift in Sources */,
 				95034CC02778BC06006E37CD /* UserRequestsViewController.swift in Sources */,
 				95034CC22778C449006E37CD /* ServicesViewController.swift in Sources */,
@@ -255,6 +262,7 @@
 				95034CBA2778618A006E37CD /* Service.swift in Sources */,
 				95034C8027774B6E006E37CD /* RegistrationViewController.swift in Sources */,
 				95034C8C27778B49006E37CD /* ChangeLanguage.swift in Sources */,
+				95034CCC2778F3D5006E37CD /* ServiceProvidersViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

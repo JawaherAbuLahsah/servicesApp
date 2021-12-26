@@ -14,9 +14,9 @@ struct Request{
     var price = ""
     var createAt : Timestamp?
     var user : User
-    var service : Service
+    //var service : Service
     
-    init(dict:[String:Any],id:String,user:User,service:Service){
+    init(dict:[String:Any],id:String,user:User){
         if let title = dict["title"] as? String,
            let details = dict["details"] as? String,
            let price = dict["price"] as? String,
@@ -28,6 +28,6 @@ struct Request{
         }
         self.id = id
         self.user = user
-        self.service = service
+    
     }
 }

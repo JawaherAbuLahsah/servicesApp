@@ -59,6 +59,8 @@ extension ServicesViewController:UICollectionViewDelegate,UICollectionViewDataSo
         print(services[indexPath.row].name)
         return cell
     }
-
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "toRequestDetailsVC", sender: self)
+    }
 }
