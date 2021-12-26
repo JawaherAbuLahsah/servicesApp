@@ -9,4 +9,11 @@ import Foundation
 struct Service{
     var id = ""
     var name = ""
+    init(dict:[String:Any]){
+        if let id = dict["id"] as? String,
+           let name = dict["name"] as? String{
+            self.id = id
+            self.name = name
+        }
+    }
 }
