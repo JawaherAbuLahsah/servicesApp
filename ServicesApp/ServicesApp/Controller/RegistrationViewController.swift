@@ -70,10 +70,9 @@ class RegistrationViewController: UIViewController {
                 }
             }
         }
-        
     }
-    
 }
+
 
 extension RegistrationViewController:UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

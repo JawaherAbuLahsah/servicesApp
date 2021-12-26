@@ -26,6 +26,7 @@
 		95034CB82778617B006E37CD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95034CB72778617B006E37CD /* User.swift */; };
 		95034CBA2778618A006E37CD /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95034CB92778618A006E37CD /* Service.swift */; };
 		95034CBC277861AA006E37CD /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95034CBB277861AA006E37CD /* Request.swift */; };
+		95034CBE27789578006E37CD /* RequestDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95034CBD27789578006E37CD /* RequestDetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		95034CB72778617B006E37CD /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		95034CB92778618A006E37CD /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		95034CBB277861AA006E37CD /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		95034CBD27789578006E37CD /* RequestDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestDetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 				95034C7D27774B41006E37CD /* LoginViewController.swift */,
 				95034C7F27774B6E006E37CD /* RegistrationViewController.swift */,
 				95034C6827765C40006E37CD /* ViewController.swift */,
+				95034CBD27789578006E37CD /* RequestDetailsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 				95034CBC277861AA006E37CD /* Request.swift in Sources */,
 				95034C8F27778F53006E37CD /* LodingImage.swift in Sources */,
 				95034CB82778617B006E37CD /* User.swift in Sources */,
+				95034CBE27789578006E37CD /* RequestDetailsViewController.swift in Sources */,
 				95034C6727765C40006E37CD /* SceneDelegate.swift in Sources */,
 				95034CBA2778618A006E37CD /* Service.swift in Sources */,
 				95034C8027774B6E006E37CD /* RegistrationViewController.swift in Sources */,

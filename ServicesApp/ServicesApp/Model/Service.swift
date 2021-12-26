@@ -6,3 +6,7 @@
 //
 
 import Foundation
+struct Service{
+    var id = ""
+    var name = ""
+}
