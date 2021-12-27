@@ -30,17 +30,20 @@ class UserProfileViewController: UIViewController {
     
     func getData(){
         let db = Firestore.firestore()
-        db.collection("users").order(by: "name").addSnapshotListener { snapshot, error in
-            if let error = error{
-                print(error)
-            }
-            if let snapshot = snapshot{
-                snapshot.documentChanges.forEach { documentChange in
-                    let userData = documentChange.document.data()
-                    let user = User(dict: userData)
-                    self.userNameLabel.text = user.name
-                    self.userPhoneNumberLabel.text = String(user.phoneNumber)
-                    self.userEmailLabel.text = user.email
+        if let currentUser = Auth.auth().currentUser{
+            db.collection("users").document(currentUser.uid).getDocument { snapshot, error in
+                if let error = error{
+                    print(error)
+                }
+                if let snapshot = snapshot , snapshot.exists{
+//                     let dataDescription =  snapshot.data().map(String.init(describing:)) ?? "nil"
+//                                        print(dataDescription)
+                    if let userData = snapshot.data(){
+                        let user = User(dict: userData)
+                        self.userNameLabel.text = user.name
+                        self.userPhoneNumberLabel.text = String(user.phoneNumber)
+                        self.userEmailLabel.text = user.email
+                    }
                 }
             }
         }

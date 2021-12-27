@@ -75,23 +75,25 @@ class RegistrationViewController: UIViewController {
                             
                         }else{
                             
+                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
                             if self.userTypeSegmentedControl.selectedSegmentIndex == 0 {
-                                print(">>>>>",self.userTypeSegmentedControl.selectedSegmentIndex)
-                                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceProviderNavigationController") as?  UIViewController{
-                                    vc.modalPresentationStyle = .fullScreen
-                                }
-                                }else{
-                                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceRequesterNavigationController") as? UINavigationController {
-                                        vc.modalPresentationStyle = .fullScreen
-                                    }
-                                    }
-                                }
+                                let mainTabBarController = storyboard.instantiateViewController(identifier: "ServiceProviderNavigationController")
+                                mainTabBarController.modalPresentationStyle = .fullScreen
+                                
+                                self.present(mainTabBarController, animated: true, completion: nil)
+                            }else{
+                                let mainTabBarController = storyboard.instantiateViewController(identifier: "ServiceRequesterNavigationController")
+                                mainTabBarController.modalPresentationStyle = .fullScreen
+                                
+                                self.present(mainTabBarController, animated: true, completion: nil)
                             }
                         }
                     }
                 }
             }
         }
+    }
+}
 
 
 extension RegistrationViewController:UITextFieldDelegate{

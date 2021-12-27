@@ -25,7 +25,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
@@ -37,18 +37,32 @@ class LoginViewController: UIViewController {
                 if let error = error{
                     print(error)
                 }
-//                if let authDataResult = authDataResult{
-//                    
-//                }
-//                if  {
-//                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceProviderNavigationController") as? UINavigationController {
-//                        vc.modalPresentationStyle = .fullScreen
-//                    }else{
-//                        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceRequesterNavigationController") as? UINavigationController {
-//                            vc.modalPresentationStyle = .fullScreen
-//                        }
-//                    }
-//                }
+                if let authDataResult = authDataResult{
+                    let db = Firestore.firestore()
+                    db.collection("users").document(authDataResult.user.uid).addSnapshotListener { userSnapshot, error in
+                        if let error = error{
+                            print(error)
+                        }
+                        if let userSnapshot = userSnapshot,
+                           let userData = userSnapshot.data(){
+                            let user = User(dict: userData)
+                            print("this is user ",user)
+                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                            if user.userType == "Service Provider"{
+                                let mainTabBarController = storyboard.instantiateViewController(identifier: "ServiceProviderNavigationController")
+                                mainTabBarController.modalPresentationStyle = .fullScreen
+                                
+                                self.present(mainTabBarController, animated: true, completion: nil)
+                            }
+                            if user.userType == "Service Requester"{
+                                let mainTabBarController = storyboard.instantiateViewController(identifier: "ServiceRequesterNavigationController")
+                                mainTabBarController.modalPresentationStyle = .fullScreen
+                                
+                                self.present(mainTabBarController, animated: true, completion: nil)
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -57,7 +71,7 @@ class LoginViewController: UIViewController {
 extension LoginViewController:UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-    
+        
         return true
     }
 }
