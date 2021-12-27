@@ -2,9 +2,9 @@
 
 Users Stories:
 
-![](service provider story.png)
+![](serviceProviderStory.png)
 
-![](requester story.png)
+![](requesterStory.png)
 
 
 Wireframe:
