@@ -35,14 +35,16 @@ class RequestDetailsViewController: UIViewController {
         if let title = requestTitleTextField.text,
            let details = requestDetailsTextView.text ,
            let currentUser = Auth.auth().currentUser {
+            let requestId = "\(Firebase.UUID())"
             let dataBase = Firestore.firestore()
             let requestData :[String:Any] = [
                "userId" : currentUser.uid,
                 "title" : title,
                 "details" : details,
+               "price": "15",
                 "createAt" : FieldValue.serverTimestamp()
             ]
-            dataBase.collection("requests").document(currentUser.uid).setData(requestData){ error in
+            dataBase.collection("requests").document(requestId).setData(requestData){ error in
                 if let error = error {
                     print(error)
                 }

@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import Firebase
 class ServiceProvidersViewController: UIViewController {
 
     @IBOutlet weak var serviceProvidersTableView: UITableView!{
@@ -26,8 +26,43 @@ class ServiceProvidersViewController: UIViewController {
     }
 
     @IBAction func handleCancel(_ sender: Any) {
+        do {
+            try Auth.auth().signOut()
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LandingNavigationController") as? UINavigationController {
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true, completion: nil)
+            }
+        } catch  {
+            print("ERROR in signout",error.localizedDescription)
+        }
+//        let alert = UIAlertController(title: "" , message: "", preferredStyle: .alert)
+//
+//        let cancelAction = UIAlertAction(title: "cancel", style: .destructive) { Action in
+//            let ref = Firestore.firestore().collection("requests")
+//            if let currentUser = Auth.auth().currentUser{
+//                ref.document(currentUser.uid).delete { error in
+//                    if let error = error{
+//                        print(error)
+//                    }else{
+//                    let storageRef = Storage.storage().reference(withPath: "requests/\(currentUser.uid)")
+//                    storageRef.delete { error in
+//                        if let error = error {
+//                            print("Error in storage delete",error)
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        }
+////        let updateAction = UIAlertAction(title: "Update", style: .default) { Action in
+////            //go to chat
+////        }
+//        alert.addAction(cancelAction)
+//       // alert.addAction(updateAction)
+//        self.present(alert, animated: true, completion: nil)
+//    }
     }
-    
+
 }
 extension ServiceProvidersViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

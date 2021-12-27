@@ -8,16 +8,16 @@
 import UIKit
 import Firebase
 class RegistrationViewController: UIViewController {
-    var userType = ""
-    @IBOutlet weak var userTypeSegmentedControl: UISegmentedControl!{
+    //var userType = ""
+    @IBOutlet weak var userTypeButton: UIButton!{
         didSet{
-            if userTypeSegmentedControl.selectedSegmentIndex == 0 {
-                userType = "Service Provider"
-            }else{
-                userType = "Service Requester"
-            }
+            userTypeButton.layer.borderWidth = 0.5
+            userTypeButton.layer.borderColor = UIColor.systemBlue.cgColor
+            userTypeButton.layer.cornerRadius = userTypeButton.frame.size.width / 2.0
+            userTypeButton.backgroundColor = .systemBackground
         }
     }
+
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var userNameTaxtField: UITextField!{
         didSet{
@@ -43,7 +43,16 @@ class RegistrationViewController: UIViewController {
         }
     }
     @IBOutlet weak var signInButton: UIButton!
-    
+        var isProvider = false
+        @IBAction func specifyType(_ sender: Any) {
+            if isProvider{
+                userTypeButton.backgroundColor = .systemBackground
+                isProvider = false
+            }else{
+                userTypeButton.backgroundColor = .systemBlue
+                isProvider = true
+            }
+        }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -62,12 +71,12 @@ class RegistrationViewController: UIViewController {
                 }
                 if let authDataResult = authDataResult {
                     let dataBase = Firestore.firestore()
-                    let userData:[String:String] = [
+                    let userData:[String:Any] = [
                         "id" : authDataResult.user.uid,
                         "name" : name,
                         "email" : email,
                         "phoneNumber" : phoneNumber,
-                        "userType" : self.userType
+                        "userType" : self.isProvider
                     ]
                     dataBase.collection("users").document(authDataResult.user.uid).setData(userData){ error in
                         if let error = error{
@@ -76,7 +85,7 @@ class RegistrationViewController: UIViewController {
                         }else{
                             
                             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                            if self.userTypeSegmentedControl.selectedSegmentIndex == 0 {
+                            if self.isProvider{
                                 let mainTabBarController = storyboard.instantiateViewController(identifier: "ServiceProviderNavigationController")
                                 mainTabBarController.modalPresentationStyle = .fullScreen
                                 
@@ -93,6 +102,9 @@ class RegistrationViewController: UIViewController {
             }
         }
     }
+    
+
+    
 }
 
 

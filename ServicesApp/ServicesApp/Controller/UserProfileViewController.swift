@@ -35,18 +35,32 @@ class UserProfileViewController: UIViewController {
                 if let error = error{
                     print(error)
                 }
-                if let snapshot = snapshot , snapshot.exists{
-//                     let dataDescription =  snapshot.data().map(String.init(describing:)) ?? "nil"
-//                                        print(dataDescription)
-                    if let userData = snapshot.data(){
-                        let user = User(dict: userData)
-                        self.userNameLabel.text = user.name
-                        self.userPhoneNumberLabel.text = String(user.phoneNumber)
-                        self.userEmailLabel.text = user.email
+                if let snapshot = snapshot,
+                   let userData = snapshot.data(){
+                   if let name = userData["name"] as? String,
+                    let phoneNumber = userData["phoneNumber"] as? String,
+                    let email = userData["email"] as? String{
+                        self.userNameLabel.text = name
+                        self.userPhoneNumberLabel.text = phoneNumber
+                        self.userEmailLabel.text = email
                     }
                 }
             }
         }
+    }
+    
+    
+    @IBAction func handleLogout(_ sender: Any) {
+        do {
+            try Auth.auth().signOut()
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LandingNavigationController") as? UINavigationController {
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true, completion: nil)
+            }
+        } catch  {
+            print("ERROR in signout",error.localizedDescription)
+        }
+        
     }
 }
 

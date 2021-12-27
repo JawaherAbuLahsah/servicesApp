@@ -14,7 +14,8 @@
 import UIKit
 import Firebase
 class UserRequestsViewController: UIViewController {
-    
+    var rId = ""
+    var usId = ""
     @IBOutlet weak var requestsTableView: UITableView!{
         didSet{
             requestsTableView.delegate = self
@@ -31,7 +32,7 @@ class UserRequestsViewController: UIViewController {
     }
     func getData(){
         let db = Firestore.firestore()
-        db.collection("requests").order(by: "createAt").addSnapshotListener { snapshot, error in
+        db.collection("requests").order(by: "createAt",descending: true).addSnapshotListener { snapshot, error in
             
             if let error = error{
                 print(error)
@@ -39,23 +40,55 @@ class UserRequestsViewController: UIViewController {
             if let snapshot = snapshot{
                 snapshot.documentChanges.forEach { documentChange in
                     let requestData = documentChange.document.data()
-                    if let userId = requestData["userId"] as? String{
-                        db.collection("users").document(userId).getDocument { userSnapshot, error in
-                            if let error = error{
-                                print(error)
+                    self.rId = documentChange.document.documentID
+                    switch documentChange.type{
+                    case .added:
+                        if let userId = requestData["userId"] as? String{
+                            self.usId = userId
+                            db.collection("users").document(userId).getDocument { userSnapshot, error in
+                                if let error = error{
+                                    print(error)
+                                }
+                                if let userSnapshot = userSnapshot,
+                                   let userData = userSnapshot.data(){
+                                    let user = User(dict: userData)
+                                    let request = Request(dict: requestData,id: documentChange.document.documentID)
+                                    print("whyyyy",userData)
+                                    print("whyyyy",user)
+                                    self.userRequests.append(request)
+                                    self.requestsTableView.reloadData()
+                                    print(self.userRequests)
+                                }
                             }
-                            if let userSnapshot = userSnapshot,
-                               let userData = userSnapshot.data(){
-                                let user = User(dict: userData)
-                                let request = Request(dict: requestData,id: documentChange.document.documentID,user: user)
-                                
-                                self.userRequests.append(request)
-                                self.requestsTableView.reloadData()
-                                print(self.userRequests)
-                            }
+                            
+                        }
+                    case .modified:
+                        let requestId = documentChange.document.documentID
+                        if let currentRequest = self.userRequests.first(where: {$0.id == requestId}),
+                           let updateIndex = self.userRequests.firstIndex(where: {$0.id == requestId}){
+                            let newRequest =  Request(dict: requestData,id: requestId)
+                            self.userRequests[updateIndex] = newRequest
+                            
+                            
+                            self.requestsTableView.beginUpdates()
+                            self.requestsTableView.deleteRows(at: [IndexPath(row: updateIndex, section: 0)], with: .left)
+                            self.requestsTableView.insertRows(at: [IndexPath(row: updateIndex, section: 0)], with: .left)
+                            self.requestsTableView.endUpdates()
+                            
+                            
+                        }
+                    case .removed:
+                        let requestId = documentChange.document.documentID
+                        if let deleteIndex = self.userRequests.firstIndex(where: {$0.id == requestId}){
+                            self.userRequests.remove(at: deleteIndex)
+                            self.requestsTableView.beginUpdates()
+                            self.requestsTableView.deleteRows(at: [IndexPath(row: deleteIndex, section: 0)], with: .automatic)
+                            self.requestsTableView.endUpdates()
+                            
                         }
                         
                     }
+                    
                 }
                 
             }
@@ -75,9 +108,9 @@ class UserRequestsViewController: UIViewController {
                     
                     if let userData = snapshot.data(){
                         let user = User(dict: userData)
-                       // if user.userType == "Service Provider"{
+                        // if user.userType == "Service Provider"{
                         self.provider = user
-                       // }
+                        // }
                     }
                     
                 }
@@ -88,10 +121,9 @@ class UserRequestsViewController: UIViewController {
         let sender = segue.destination as! ServiceProvidersViewController
         sender.selectedRequests = selectedRequests
         if let provider = provider{
-        sender.serviceProviders = [provider]
+            sender.serviceProviders = [provider]
         }
     }
-    
 }
 extension UserRequestsViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -107,8 +139,8 @@ extension UserRequestsViewController:UITableViewDelegate,UITableViewDataSource{
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let alert = UIAlertController(title: userRequests[indexPath.row].title, message: "\(userRequests[indexPath.row].details) \(userRequests[indexPath.row].user.name)", preferredStyle: .alert)
-        alert.addTextField { textField in
+        let alert = UIAlertController(title: userRequests[indexPath.row].title, message: "\(userRequests[indexPath.row].details)", preferredStyle: .alert)
+        alert.addTextField { (textField:UITextField) in
             textField.placeholder = "add price"
             textField.keyboardType = .decimalPad
             let toolBar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.size.width, height: 44.0))
@@ -116,19 +148,54 @@ extension UserRequestsViewController:UITableViewDelegate,UITableViewDataSource{
             let DoneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(self.tapDone))
             toolBar.setItems([flexibleSpace, DoneButton], animated: false)
             textField.inputAccessoryView = toolBar
-            if let textField = textField.text , let priceTextField = Double(textField) {
-                self.userRequests[indexPath.row].price = "\(priceTextField)"
-            }else{
-                textField.backgroundColor = .systemRed
-            }
         }
         
         let cancelAction = UIAlertAction(title: "cancel", style: .cancel) { Action in
             //remove from table
         }
         let sendAction = UIAlertAction(title: "send", style: .default) { Action in
+            //change Price
+            if let fields = alert.textFields{
+                let price = fields[0]
+                if let price = price.text, !price.isEmpty{
+                    print(price)
+                    // self.performSegue(withIdentifier: "toServiceProvidersVC", sender: self)
+                     let db = Firestore.firestore()
+                     let ref = db.collection("requests")
+                     
+                         let priceData:[String:Any] = ["price": price,
+                                                       "userId" : self.usId,
+                                                   "title" : self.userRequests[indexPath.row].title ,
+                                                   "details" : self.userRequests[indexPath.row].details ,
+                                                   "createAt" : FieldValue.serverTimestamp()
+                     ]
+                     ref.document(self.rId).setData(priceData) { error in
+                         if let error = error {
+                             print("FireStore Error",error.localizedDescription)
+                     }
+                     }
+                }else{
+                    print("oh no")
+                }
+            }
             self.selectedRequests = self.userRequests[indexPath.row]
-            self.performSegue(withIdentifier: "toServiceProvidersVC", sender: self)
+           // self.performSegue(withIdentifier: "toServiceProvidersVC", sender: self)
+//            let db = Firestore.firestore()
+//            let ref = db.collection("requests")
+//            if let selectedRequests = self.selectedRequests{
+//                let priceData:[String:Any] = ["price": self.price,
+//                                          "userId" : selectedRequests.id ,
+//                                          "title" : self.userRequests[indexPath.row].title ,
+//                                          "details" : self.userRequests[indexPath.row].details ,
+//                                          "createAt" : FieldValue.serverTimestamp()
+//            ]
+//            ref.document(self.rId).setData(priceData) { error in
+//                if let error = error {
+//                    print("FireStore Error",error.localizedDescription)
+//                }
+//
+//            }
+//            }
         }
         alert.addAction(cancelAction)
         alert.addAction(sendAction)

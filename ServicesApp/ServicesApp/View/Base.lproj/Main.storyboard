@@ -400,20 +400,28 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="XHx-UL-4Ng">
-                                        <rect key="frame" x="29" y="42" width="307" height="32"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <segments>
-                                            <segment title="SERVICE PROVIDER"/>
-                                            <segment title="SERVICE REQUESTER"/>
-                                        </segments>
-                                    </segmentedControl>
                                     <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CIo-po-ELu">
                                         <rect key="frame" x="83" y="131" width="195" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mYE-On-wtv">
+                                        <rect key="frame" x="165" y="47" width="28" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title=" "/>
+                                        <connections>
+                                            <action selector="specifyType:" destination="jow-ho-YXG" eventType="touchUpInside" id="isF-nK-R6a"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="&gt;&gt;&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xmP-99-HY6">
+                                        <rect key="frame" x="115" y="47" width="31" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemGray5Color"/>
                             </view>
@@ -432,7 +440,7 @@
                         <outlet property="userNameTaxtField" destination="CIo-po-ELu" id="N4B-Pv-SVE"/>
                         <outlet property="userPhoneNumberLabel" destination="mP7-X9-q5d" id="NLi-uD-4F2"/>
                         <outlet property="userPhoneNumberTextField" destination="GSX-ac-SaT" id="ouX-Mk-uDf"/>
-                        <outlet property="userTypeSegmentedControl" destination="XHx-UL-4Ng" id="pYF-P6-ni8"/>
+                        <outlet property="userTypeButton" destination="mYE-On-wtv" id="8qf-7x-tYg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hg5-Jn-xct" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -486,7 +494,7 @@
         <!--Navigation Controller-->
         <scene sceneID="yv4-Pr-Y1E">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="N2i-GM-qXZ" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="LandingNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="N2i-GM-qXZ" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="leG-40-dHw">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -632,11 +640,11 @@
             <objects>
                 <viewController id="lcq-wV-ewp" customClass="ServiceProvidersViewController" customModule="ServicesApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="o0A-T9-xfO">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="pRd-MT-Qma">
-                                <rect key="frame" x="0.0" y="72" width="414" height="620"/>
+                                <rect key="frame" x="0.0" y="72" width="414" height="617"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
@@ -673,7 +681,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zG3-gn-L4S" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="945" y="1629"/>
+            <point key="canvasLocation" x="944.92753623188412" y="1628.5714285714284"/>
         </scene>
         <!--Request Details View Controller-->
         <scene sceneID="hXx-R7-ki4">
@@ -853,10 +861,14 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Uk-PN-6Rg">
-                                <rect key="frame" x="280" y="755" width="76" height="31"/>
+                                <rect key="frame" x="237" y="731" width="157" height="71"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.3876758756" blue="0.4318585358" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Log Out"/>
+                                <connections>
+                                    <action selector="handleLogout:" destination="q68-ic-R3W" eventType="touchUpInside" id="nAm-Wi-a16"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="jPA-0G-9pH"/>
@@ -873,7 +885,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d2e-1G-wGX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2296" y="744"/>
+            <point key="canvasLocation" x="2295.6521739130435" y="743.97321428571422"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tje-Se-fyB">
@@ -992,8 +1004,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="7Nd-th-mGb"/>
-        <segue reference="GYj-Cp-VRg"/>
+        <segue reference="Cl0-K4-Tv6"/>
+        <segue reference="5yg-aj-jK4"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="doc.text.image" catalog="system" width="115" height="128"/>

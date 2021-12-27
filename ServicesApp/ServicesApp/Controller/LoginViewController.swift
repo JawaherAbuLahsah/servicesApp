@@ -45,21 +45,20 @@ class LoginViewController: UIViewController {
                         }
                         if let userSnapshot = userSnapshot,
                            let userData = userSnapshot.data(){
-                            let user = User(dict: userData)
-                            print("this is user ",user)
+                           if let userType = userData["userType"] as? Bool{
                             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                            if user.userType == "Service Provider"{
+                            if userType {
                                 let mainTabBarController = storyboard.instantiateViewController(identifier: "ServiceProviderNavigationController")
                                 mainTabBarController.modalPresentationStyle = .fullScreen
                                 
                                 self.present(mainTabBarController, animated: true, completion: nil)
-                            }
-                            if user.userType == "Service Requester"{
+                            }else{
                                 let mainTabBarController = storyboard.instantiateViewController(identifier: "ServiceRequesterNavigationController")
                                 mainTabBarController.modalPresentationStyle = .fullScreen
                                 
                                 self.present(mainTabBarController, animated: true, completion: nil)
                             }
+                        }
                         }
                     }
                 }

@@ -13,10 +13,10 @@ struct Request{
     var details = ""
     var price = ""
     var createAt : Timestamp?
-    var user : User
+    //var user : User
     //var service : Service
     
-    init(dict:[String:Any],id:String,user:User){
+    init(dict:[String:Any],id:String){
         if let title = dict["title"] as? String,
            let details = dict["details"] as? String,
            let price = dict["price"] as? String,
@@ -27,7 +27,6 @@ struct Request{
             self.createAt = createAt
         }
         self.id = id
-        self.user = user
-    
+        //self.user = user
     }
 }

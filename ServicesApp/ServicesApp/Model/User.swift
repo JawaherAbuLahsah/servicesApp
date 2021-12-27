@@ -11,7 +11,7 @@ struct User {
     var name = ""
     var email = ""
     var phoneNumber = 0
-    var userType = ""
+    var userType = true
     var profilePictuer = ""
 
     init(dict:[String:Any]) {
@@ -19,7 +19,7 @@ struct User {
            let name = dict["name"] as? String,
            let email = dict["email"] as? String,
            let phoneNumber = dict["phoneNumber"] as? Int,
-           let userType = dict["userType"] as? String,
+           let userType = dict["userType"] as? Bool,
            let profilePictuer = dict["profilePictuer"] as? String{
             self.name = name
             self.id = id
