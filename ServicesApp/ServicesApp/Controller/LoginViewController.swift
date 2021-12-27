@@ -37,7 +37,18 @@ class LoginViewController: UIViewController {
                 if let error = error{
                     print(error)
                 }
-                // add page to go
+//                if let authDataResult = authDataResult{
+//                    
+//                }
+//                if  {
+//                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceProviderNavigationController") as? UINavigationController {
+//                        vc.modalPresentationStyle = .fullScreen
+//                    }else{
+//                        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceRequesterNavigationController") as? UINavigationController {
+//                            vc.modalPresentationStyle = .fullScreen
+//                        }
+//                    }
+//                }
             }
         }
     }

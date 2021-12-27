@@ -75,18 +75,15 @@ class UserRequestsViewController: UIViewController {
                     
                     if let userData = snapshot.data(){
                         let user = User(dict: userData)
+                       // if user.userType == "Service Provider"{
                         self.provider = user
+                       // }
                     }
                     
                 }
             }
         }
     }
-    
-    
-    
-    
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let sender = segue.destination as! ServiceProvidersViewController
         sender.selectedRequests = selectedRequests

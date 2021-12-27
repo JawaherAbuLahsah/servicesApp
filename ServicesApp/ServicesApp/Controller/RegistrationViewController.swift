@@ -8,8 +8,16 @@
 import UIKit
 import Firebase
 class RegistrationViewController: UIViewController {
-    
-    @IBOutlet weak var userTypeSegmentedControl: UISegmentedControl!
+    var userType = ""
+    @IBOutlet weak var userTypeSegmentedControl: UISegmentedControl!{
+        didSet{
+            if userTypeSegmentedControl.selectedSegmentIndex == 0 {
+                userType = "Service Provider"
+            }else{
+                userType = "Service Requester"
+            }
+        }
+    }
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var userNameTaxtField: UITextField!{
         didSet{
@@ -38,10 +46,10 @@ class RegistrationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
-
+    
     
     @IBAction func handleRegister(_ sender: Any) {
         if let name = userNameTaxtField.text ,
@@ -58,26 +66,38 @@ class RegistrationViewController: UIViewController {
                         "id" : authDataResult.user.uid,
                         "name" : name,
                         "email" : email,
-                        "phoneNumber" : phoneNumber
+                        "phoneNumber" : phoneNumber,
+                        "userType" : self.userType
                     ]
                     dataBase.collection("users").document(authDataResult.user.uid).setData(userData){ error in
                         if let error = error{
                             print(error)
+                            
                         }else{
-                            // add page
+                            
+                            if self.userTypeSegmentedControl.selectedSegmentIndex == 0 {
+                                print(">>>>>",self.userTypeSegmentedControl.selectedSegmentIndex)
+                                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceProviderNavigationController") as?  UIViewController {
+                                    vc.modalPresentationStyle = .fullScreen
+                                }
+                                }else{
+                                    if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceRequesterNavigationController") as? UINavigationController {
+                                        vc.modalPresentationStyle = .fullScreen
+                                    }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
         }
-    }
-}
 
 
 extension RegistrationViewController:UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-    
+        
         return true
     }
 }
