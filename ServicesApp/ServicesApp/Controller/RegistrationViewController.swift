@@ -77,7 +77,7 @@ class RegistrationViewController: UIViewController {
                             
                             if self.userTypeSegmentedControl.selectedSegmentIndex == 0 {
                                 print(">>>>>",self.userTypeSegmentedControl.selectedSegmentIndex)
-                                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceProviderNavigationController") as?  UIViewController {
+                                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceProviderNavigationController") as?  UIViewController{
                                     vc.modalPresentationStyle = .fullScreen
                                 }
                                 }else{
