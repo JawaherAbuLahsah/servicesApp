@@ -46,7 +46,6 @@ class LoginViewController: UIViewController {
                         if let userSnapshot = userSnapshot,
                            let userData = userSnapshot.data(){
                              let user = User(dict: userData)
-                            //if let userType = userData["userType"] as? Bool{
                                 
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                             if user.userType {
@@ -59,7 +58,7 @@ class LoginViewController: UIViewController {
                                     mainTabBarController.modalPresentationStyle = .fullScreen
                                     
                                     self.present(mainTabBarController, animated: true, completion: nil)
-                              //  }
+                             
                             }
                         }
                     }

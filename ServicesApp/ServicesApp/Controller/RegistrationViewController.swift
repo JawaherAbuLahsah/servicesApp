@@ -8,7 +8,7 @@
 import UIKit
 import Firebase
 class RegistrationViewController: UIViewController {
-    //var userType = ""
+    
     @IBOutlet weak var userTypeButton: UIButton!{
         didSet{
             userTypeButton.layer.borderWidth = 0.5

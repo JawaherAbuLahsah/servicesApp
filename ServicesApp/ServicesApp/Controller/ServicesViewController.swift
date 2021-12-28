@@ -56,7 +56,6 @@ extension ServicesViewController:UICollectionViewDelegate,UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "serviceCell", for: indexPath) as! ServiceCollectionViewCell
         cell.serviceNameLabel.text = services[indexPath.row].name
-        print(services[indexPath.row].name)
         return cell
     }
     

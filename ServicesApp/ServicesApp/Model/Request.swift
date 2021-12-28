@@ -13,20 +13,25 @@ struct Request{
     var details = ""
     var price = ""
     var createAt : Timestamp?
-    var user : User
+    var userProvider : User
+    var userRequest:User
+    var haveProvider = false
     //var service : Service
     
-    init(dict:[String:Any],id:String,user:User){
+    init(dict:[String:Any],id:String,userRequest:User,userProvider:User){
         if let title = dict["title"] as? String,
            let details = dict["details"] as? String,
            let price = dict["price"] as? String,
+           let haveProvider = dict["haveProvider"] as? Bool,
            let createAt = dict["createAt"] as? Timestamp {
             self.title = title
             self.details = details
             self.price = price
             self.createAt = createAt
+            self.haveProvider = haveProvider
         }
         self.id = id
-        self.user = user
+        self.userRequest = userRequest
+        self.userProvider = userProvider
     }
 }
