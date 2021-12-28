@@ -10,7 +10,7 @@ struct User {
     var id = ""
     var name = ""
     var email = ""
-    var phoneNumber = 0
+    var phoneNumber = ""
     var userType = true
     var profilePictuer = ""
 
@@ -18,7 +18,7 @@ struct User {
         if let id = dict["id"] as? String,
            let name = dict["name"] as? String,
            let email = dict["email"] as? String,
-           let phoneNumber = dict["phoneNumber"] as? Int,
+           let phoneNumber = dict["phoneNumber"] as? String,
            let userType = dict["userType"] as? Bool,
            let profilePictuer = dict["profilePictuer"] as? String{
             self.name = name

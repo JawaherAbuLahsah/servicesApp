@@ -5,3 +5,20 @@
   Created by Jawaher Mohammad on 21/05/1443 AH.
   
 */
+"language" = "اللغة";
+"signIn" = "التسجيل";
+"email" = "البريد الإلكتروني";
+"password" = "كلمة المرور";
+"login" = "تسجيل الدخول";
+"forget" = "نسيت كلمة المرور";
+"signup" = "تسجيل جديد";
+"name" = "الاسم";
+"phone" = "رقم الجوال";
+"provider" = "هل انت مقدم خدمه";
+"code" = "رمز التحقق";
+"send" = "ارسال";
+"edit" = "تعديل";
+"logout" = "تسجيل الخروج";
+"cancel" = "الغاء";
+"title" = "عنوان";
+"details" = "تفاصيل";

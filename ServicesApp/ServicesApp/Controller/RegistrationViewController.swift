@@ -17,7 +17,7 @@ class RegistrationViewController: UIViewController {
             userTypeButton.backgroundColor = .systemBackground
         }
     }
-
+    
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var userNameTaxtField: UITextField!{
         didSet{
@@ -43,25 +43,28 @@ class RegistrationViewController: UIViewController {
         }
     }
     @IBOutlet weak var signInButton: UIButton!
-        var isProvider = false
-        @IBAction func specifyType(_ sender: Any) {
-            if isProvider{
-                userTypeButton.backgroundColor = .systemBackground
-                isProvider = false
-            }else{
-                userTypeButton.backgroundColor = .systemBlue
-                isProvider = true
-            }
+    var isProvider = false
+    @IBAction func specifyType(_ sender: Any) {
+        if isProvider{
+            userTypeButton.backgroundColor = .systemBackground
+            isProvider = false
+        }else{
+            userTypeButton.backgroundColor = .systemBlue
+            isProvider = true
         }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
     }
     
-    
+    let image = UIImage(systemName: "person.fill")
     @IBAction func handleRegister(_ sender: Any) {
+        
         if let name = userNameTaxtField.text ,
+           let image = image,
+           let imageData = image.jpegData(compressionQuality: 0.25),
            let email = userEmailTextField.text ,
            let phoneNumber = userPhoneNumberTextField.text ,
            let password = passWordTextField.text {
@@ -70,31 +73,50 @@ class RegistrationViewController: UIViewController {
                     print(error)
                 }
                 if let authDataResult = authDataResult {
-                    let dataBase = Firestore.firestore()
-                    let userData:[String:Any] = [
-                        "id" : authDataResult.user.uid,
-                        "name" : name,
-                        "email" : email,
-                        "phoneNumber" : phoneNumber,
-                        "userType" : self.isProvider
-                    ]
-                    dataBase.collection("users").document(authDataResult.user.uid).setData(userData){ error in
-                        if let error = error{
-                            print(error)
-                            
-                        }else{
-                            
-                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                            if self.isProvider{
-                                let mainTabBarController = storyboard.instantiateViewController(identifier: "ServiceProviderNavigationController")
-                                mainTabBarController.modalPresentationStyle = .fullScreen
+                    
+                    let storageReference = Storage.storage().reference(withPath: "users/\(authDataResult.user.uid)")
+                    let uploadMeta = StorageMetadata.init()
+                    uploadMeta.contentType = "image/png"
+                    storageReference.putData(imageData, metadata: uploadMeta) { storageMeta, error in
+                        if let error = error {
+                            print("Registration Storage Error",error.localizedDescription)
+                        }
+                        storageReference.downloadURL { url, error in
+                            if let error = error {
+                                print("Registration Storage Download Url Error",error.localizedDescription)
+                            }
+                            if let url = url {
+                                print("URL",url.absoluteString)
                                 
-                                self.present(mainTabBarController, animated: true, completion: nil)
-                            }else{
-                                let mainTabBarController = storyboard.instantiateViewController(identifier: "ServiceRequesterNavigationController")
-                                mainTabBarController.modalPresentationStyle = .fullScreen
-                                
-                                self.present(mainTabBarController, animated: true, completion: nil)
+                                let dataBase = Firestore.firestore()
+                                let userData:[String:Any] = [
+                                    "id" : authDataResult.user.uid,
+                                    "name" : name,
+                                    "email" : email,
+                                    "phoneNumber" : phoneNumber,
+                                    "userType" : self.isProvider,
+                                    "profilePictuer": url.absoluteString
+                                ]
+                                dataBase.collection("users").document(authDataResult.user.uid).setData(userData){ error in
+                                    if let error = error{
+                                        print(error)
+                                        
+                                    }else{
+                                        
+                                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                        if self.isProvider{
+                                            let mainTabBarController = storyboard.instantiateViewController(identifier: "ServiceProviderNavigationController")
+                                            mainTabBarController.modalPresentationStyle = .fullScreen
+                                            
+                                            self.present(mainTabBarController, animated: true, completion: nil)
+                                        }else{
+                                            let mainTabBarController = storyboard.instantiateViewController(identifier: "ServiceRequesterNavigationController")
+                                            mainTabBarController.modalPresentationStyle = .fullScreen
+                                            
+                                            self.present(mainTabBarController, animated: true, completion: nil)
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -102,9 +124,6 @@ class RegistrationViewController: UIViewController {
             }
         }
     }
-    
-
-    
 }
 
 

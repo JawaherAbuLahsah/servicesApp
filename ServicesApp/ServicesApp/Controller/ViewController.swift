@@ -16,18 +16,3 @@ class ViewController: UIViewController {
 
 
 }
-/*
- work on service struct
->>>>>>>>>sceneDelegate  
- 1- login with apple
- 2- work on userRequest
- 3- serviceprovider
- 4- profile
- 5- requester edit request
- 6- add adderss
- 7- code phone
- 8- forget password
- 9- notification
- 10- chat
- 
- */

@@ -22,9 +22,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     }
                     if let userSnapshot = userSnapshot,
                         let userData = userSnapshot.data(){
-                        if let userType = userData["userType"] as? Bool{
+                        let user = User(dict: userData)
+                        //if let userType = userData["userType"] as? Bool{
                         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                        if userType{
+                            if user.userType{
                             let mainTabBarController = storyboard.instantiateViewController(identifier: "ServiceProviderNavigationController")
 
                             window.rootViewController = mainTabBarController
@@ -33,7 +34,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                             let mainTabBarController = storyboard.instantiateViewController(identifier: "ServiceRequesterNavigationController")
                             window.rootViewController = mainTabBarController
                             window.makeKeyAndVisible()
-                        }
+                       // }
                         }
                     }
                 }
