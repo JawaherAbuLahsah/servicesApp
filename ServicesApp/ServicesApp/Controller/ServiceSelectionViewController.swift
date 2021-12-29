@@ -8,7 +8,7 @@
 import UIKit
 import Firebase
 class ServiceSelectionViewController: UIViewController {
-
+    
     @IBOutlet weak var serviceSelectionTableView: UITableView!{
         didSet{
             serviceSelectionTableView.dataSource = self
@@ -16,14 +16,15 @@ class ServiceSelectionViewController: UIViewController {
         }
     }
     var services = [Service]()
+    var selectedServices = [Service]()
     override func viewDidLoad() {
         super.viewDidLoad()
         getData()
-
+        
         // Do any additional setup after loading the view.
     }
     
-
+    
     func getData(){
         let db = Firestore.firestore()
         db.collection("services").order(by: "name").addSnapshotListener { snapshot, error in
@@ -47,9 +48,48 @@ class ServiceSelectionViewController: UIViewController {
     }
     
     @IBAction func handleSave(_ sender: Any) {
-        //add 
+        //add
+        if let currentUser = Auth.auth().currentUser , !selectedServices.isEmpty{
+            let db = Firestore.firestore()
+            db.collection("users").document(currentUser.uid).getDocument { snapshot, error in
+                if let error = error{
+                    print(error)
+                }
+                if let snapshot = snapshot,
+                   var userData = snapshot.data(){
+//                    let user = User(dict: userData)
+                    let dataBase = Firestore.firestore()
+                    if let providerId = userData["id"] as? String{
+//                    let userData:[String:Any] = [
+//                        "id" : user.id,
+//                        "name" : user.name,
+//                        "email" : user.email,
+//                        "phoneNumber" : user.phoneNumber,
+//                        "userType" : user.userType,
+//                        "profilePictuer": user.profilePictuer,
+//                        "service":self.selectedServices
+//                    ]
+                        userData["service"] = self.selectedServices
+                        dataBase.collection("users").document(providerId).setData(userData){ error in
+                        if let error = error{
+                            print(error)
+                            
+                        }else{
+                            
+                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                            
+                            let mainTabBarController = storyboard.instantiateViewController(identifier: "ServiceProviderNavigationController")
+                            mainTabBarController.modalPresentationStyle = .fullScreen
+                            
+                            self.present(mainTabBarController, animated: true, completion: nil)
+                        }
+                    }
+                    }
+                }
+            }
+        }
+        
     }
-    
 }
 extension ServiceSelectionViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -59,10 +99,23 @@ extension ServiceSelectionViewController:UITableViewDelegate,UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "serviceSelectionCell", for: indexPath) as! ServiceSelectionTableViewCell
         cell.serviceNameLabel.text = services[indexPath.row].name
+      //  cell.selectServiceSwitch.tag = indexPath.row
+        let selectServiceSwitch = UISwitch()
+       
+        selectServiceSwitch.tag = indexPath.row
+        selectServiceSwitch.addTarget(self, action: #selector(didChangeswitch(_:)), for: .valueChanged)
+        selectServiceSwitch.isOn = false
+               cell.accessoryView = selectServiceSwitch
+//        cell.selectServiceSwitch.addTarget(self, action: #selector(didChangeswitch(_:)), for: .valueChanged)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 200
     }
-    
+    @objc func didChangeswitch(_ sender:UISwitch){
+        if sender.isOn{
+            selectedServices.append(services[sender.tag])
+            print("this>>>",selectedServices)
+        }
+    }
 }

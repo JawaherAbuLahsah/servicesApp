@@ -10,6 +10,9 @@ import UIKit
 class ServiceSelectionTableViewCell: UITableViewCell {
 
     @IBOutlet weak var serviceNameLabel: UILabel!
+    
+    @IBOutlet weak var selectServiceSwitch: UISwitch!
+    
     @IBOutlet weak var checkButton: UIButton!{
         didSet{
             checkButton.layer.borderWidth = 0.5

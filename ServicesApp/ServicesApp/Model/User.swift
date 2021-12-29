@@ -13,20 +13,22 @@ struct User {
     var phoneNumber = ""
     var userType = true
     var profilePictuer = ""
-
+    var service :[Service]?
     init(dict:[String:Any]) {
         if let id = dict["id"] as? String,
            let name = dict["name"] as? String,
            let email = dict["email"] as? String,
            let phoneNumber = dict["phoneNumber"] as? String,
            let userType = dict["userType"] as? Bool,
-           let profilePictuer = dict["profilePictuer"] as? String{
+           let profilePictuer = dict["profilePictuer"] as? String,
+           let service = dict["service"] as? [Service]{
             self.name = name
             self.id = id
             self.email = email
             self.phoneNumber = phoneNumber
             self.userType = userType
             self.profilePictuer = profilePictuer
+            self.service = service
         }
     }
 }

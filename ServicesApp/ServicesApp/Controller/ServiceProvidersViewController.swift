@@ -18,8 +18,8 @@ class ServiceProvidersViewController: UIViewController {
     @IBOutlet weak var cancelButton: UIButton!
     
     var serviceProviders = [Request]()
-    var selectedRequests : User?
-    // var provider : User?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -93,92 +93,71 @@ class ServiceProvidersViewController: UIViewController {
                 
                 snapshot.documentChanges.forEach { documentChange in
                     let requestData = documentChange.document.data()
-//                    if let currentUser = Auth.auth().currentUser{
-//                        db.collection("users").document(currentUser.uid).getDocument { userProviderSnapshot, error in
-//                            if let error = error{
-//                                print(error)
-//                            }
-//                    if let currentUser = Auth.auth().currentUser{
-//                        db.collection("users").document(currentUser.uid).getDocument { userProviderSnapshot, error in
-//                            if let error = error{
-//                                print("Error in get provider data ",error)
-//                            }
-//                            if let userId = requestData["userId"] as? String{
-////                                self.requestr = userId
-////                                print("'llll'",self.requestr)
-//                                db.collection("users").document(userId).getDocument { userSnapshot, error in
-//                                    if let error = error{
-//                                        print("3",error)
-//                                    }
-                            switch documentChange.type{
-                            case .added:
-                                if let userId = requestData["requestsId"] as? String, let providerId = requestData["providerId"] as? String{
-
-                                   db.collection("users").document(userId).getDocument { userSnapshot, error in
-                                        if let error = error{
-                                            print("6",error)
-                                        }
-                                       db.collection("users").document(providerId).getDocument { userProviderSnapshot, error in
-                                           if let error = error{
-                                               print("Error in get provider data ",error)
-                                           }
-                                
-                                if let userProviderSnapshot = userProviderSnapshot,
-                                   let userProviderData = userProviderSnapshot.data(),
-                                   let userSnapshot = userSnapshot,
-                                   let userData = userSnapshot.data(){
-                                    let user = User(dict: userData)
-                                    let userProvider = User(dict: userProviderData)
-                                    print(user)
-                                    print(userProvider)
-                                    let request = Request(dict: requestData,id: documentChange.document.documentID,userRequest: user ,userProvider: userProvider)
-                                    print("provider>>,",userProvider)
-                                    print("Requesterr>>",user)
+                    switch documentChange.type{
+                    case .added:
+                        if let userId = requestData["requestsId"] as? String, let providerId = requestData["providerId"] as? String{
+                            
+                            db.collection("users").document(userId).getDocument { userSnapshot, error in
+                                if let error = error{
+                                    print("6",error)
+                                }
+                                db.collection("users").document(providerId).getDocument { userProviderSnapshot, error in
+                                    if let error = error{
+                                        print("Error in get provider data ",error)
+                                    }
                                     
-//                                        if let userSnapshot = userSnapshot,
-//                                           let userData = userSnapshot.data(){
-//                                            let user = User(dict: userData)
-//                                            let request = Request(dict: requestData,id: documentChange.document.documentID, userRequest: user, userProvider: user)
-//                                            print(request)
+                                    if let userProviderSnapshot = userProviderSnapshot,
+                                       let userProviderData = userProviderSnapshot.data(),
+                                       let userSnapshot = userSnapshot,
+                                       let userData = userSnapshot.data(){
+                                        let user = User(dict: userData)
+                                        let userProvider = User(dict: userProviderData)
+                                        print(user)
+                                        print(userProvider)
+                                        let request = Request(dict: requestData,id: documentChange.document.documentID,userRequest: user ,userProvider: userProvider)
+                                        print("provider>>,",userProvider)
+                                        print("Requesterr>>",user)
+                                        
+                                        let currentUser = Auth.auth().currentUser
+                                        if let currentUser = currentUser, currentUser.uid ==  user.id, request.haveProvider{
                                             self.serviceProviders.append(request)
                                             self.serviceProvidersTableView.reloadData()
                                             print(self.serviceProviders)
+                                        }
+                                        
                                     }
-                                   }
                                 }
-                                }
-                            case .modified:
-                                let requestId = documentChange.document.documentID
-                                if let updateIndex = self.serviceProviders.firstIndex(where: {$0.id == requestId}){
-                                    //                            let newRequest =  Request(dict: requestData,id: requestId)
-                                    //                            self.userRequests[updateIndex] = newRequest
-                                    
-                                    
-                                    self.serviceProvidersTableView.beginUpdates()
-                                    self.serviceProviders.remove(at: updateIndex)
-                                    self.serviceProvidersTableView.deleteRows(at: [IndexPath(row: updateIndex, section: 0)], with: .left)
-                                    // self.requestsTableView.insertRows(at: [IndexPath(row: updateIndex, section: 0)], with: .left)
-                                    self.serviceProvidersTableView.endUpdates()
-                                    
-                                    
-                                }
-                            case .removed:
-                                let requestId = documentChange.document.documentID
-                                if let deleteIndex = self.serviceProviders.firstIndex(where: {$0.id == requestId}){
-                                    self.serviceProviders.remove(at: deleteIndex)
-                                    self.serviceProvidersTableView.beginUpdates()
-                                    self.serviceProvidersTableView.deleteRows(at: [IndexPath(row: deleteIndex, section: 0)], with: .automatic)
-                                    self.serviceProvidersTableView.endUpdates()
-                                    
-                                }
-                                
                             }
                         }
+                    case .modified:
+                        
+                        let requestId = documentChange.document.documentID
+                        if let updateIndex = self.serviceProviders.firstIndex(where: {$0.id == requestId}){
+                            
+                            self.serviceProvidersTableView.beginUpdates()
+                            self.serviceProviders.remove(at: updateIndex)
+                            self.serviceProvidersTableView.deleteRows(at: [IndexPath(row: updateIndex, section: 0)], with: .left)
+                            self.serviceProvidersTableView.endUpdates()
+                            
+                            
+                        }
+                    case .removed:
+                        let requestId = documentChange.document.documentID
+                        if let deleteIndex = self.serviceProviders.firstIndex(where: {$0.id == requestId}){
+                            self.serviceProviders.remove(at: deleteIndex)
+                            self.serviceProvidersTableView.beginUpdates()
+                            self.serviceProvidersTableView.deleteRows(at: [IndexPath(row: deleteIndex, section: 0)], with: .automatic)
+                            self.serviceProvidersTableView.endUpdates()
+                            
+                        }
+                        
                     }
                 }
             }
-                }
-            
+        }
+    }
+}
+
 
 
 extension ServiceProvidersViewController:UITableViewDelegate,UITableViewDataSource{
@@ -189,26 +168,20 @@ extension ServiceProvidersViewController:UITableViewDelegate,UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "serviceProvidersCell" , for: indexPath)
         var content = cell.defaultContentConfiguration()
-        if let currentUser = Auth.auth().currentUser, currentUser.uid == serviceProviders[indexPath.row].userRequest.id{
-            if serviceProviders[indexPath.row].haveProvider {
+        
         
         content.text = serviceProviders[indexPath.row].title
         content.secondaryText = serviceProviders[indexPath.row].price
-            
-            cell.accessoryType = .detailButton
-        }else{
-            content.text = "no provider"
-        }
-        }
+        
+        cell.accessoryType = .detailButton
+        
         cell.contentConfiguration = content
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         
-        //selectedRequests = serviceProviders[indexPath.row]
         
-
         let alert = UIAlertController(title: serviceProviders[indexPath.row].userProvider.name , message: "\(serviceProviders[indexPath.row].userProvider.phoneNumber)", preferredStyle: .alert)
         
         let cancelAction = UIAlertAction(title: "cancel", style: .cancel) { [self] Action in

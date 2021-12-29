@@ -70,6 +70,7 @@
 		95034CCB2778F3D5006E37CD /* ServiceProvidersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProvidersViewController.swift; sourceTree = "<group>"; };
 		95034CCD2779B250006E37CD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		95034CCF2779B2B8006E37CD /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = .gitignore; path = ../.gitignore; sourceTree = "<group>"; };
+		95F2E2A8277C55720066D83C /* ServicesApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ServicesApp.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +108,7 @@
 		95034C6327765C40006E37CD /* ServicesApp */ = {
 			isa = PBXGroup;
 			children = (
+				95F2E2A8277C55720066D83C /* ServicesApp.entitlements */,
 				95034C6427765C40006E37CD /* AppDelegate.swift */,
 				95034C6627765C40006E37CD /* SceneDelegate.swift */,
 				95034C8D27778F1E006E37CD /* Utill */,
@@ -430,6 +432,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ServicesApp/ServicesApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4TAAWH6W7Q;
@@ -458,6 +461,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ServicesApp/ServicesApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4TAAWH6W7Q;

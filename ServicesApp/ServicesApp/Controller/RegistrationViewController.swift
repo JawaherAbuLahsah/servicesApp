@@ -95,7 +95,8 @@ class RegistrationViewController: UIViewController {
                                     "email" : email,
                                     "phoneNumber" : phoneNumber,
                                     "userType" : self.isProvider,
-                                    "profilePictuer": url.absoluteString
+                                    "profilePictuer": url.absoluteString,
+                                    "service":[]
                                 ]
                                 dataBase.collection("users").document(authDataResult.user.uid).setData(userData){ error in
                                     if let error = error{
