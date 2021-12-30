@@ -44,29 +44,41 @@ class UserRequestsViewController: UIViewController {
                             if let error = error{
                                 print("Error in get provider data ",error)
                             }
-                            if let userId = requestData["requestsId"] as? String{
+                            if let userId = requestData["requestsId"] as? String,
+                               let serviceId = requestData["serviceId"] as? String{
                                 
                                 db.collection("users").document(userId).getDocument { userSnapshot, error in
                                     if let error = error{
                                         print("3",error)
                                     }
-                                    
+                                    db.collection("services").document(serviceId).getDocument { serviceSnapshot, error in
+                                        if let error = error{
+                                            print("3",error)
+                                        }
                                     switch documentChange.type{
                                     case .added:
                                         
                                         if let userProviderSnapshot = userProviderSnapshot,
                                            let userProviderData = userProviderSnapshot.data(),
+                                           let serviceSnapshot = serviceSnapshot,
+                                              let serviceData = serviceSnapshot.data(),
                                            let userSnapshot = userSnapshot,
                                            let userData = userSnapshot.data(){
                                             let user = User(dict: userData)
                                             let userProvider = User(dict: userProviderData)
+                                            let service = Service(dict: serviceData)
                                             print(user)
                                             print(userProvider)
                                             
-                                            let request = Request(dict: requestData,id: documentChange.document.documentID,userRequest: user ,userProvider: userProvider)
+                                            let request = Request(dict: requestData,id: documentChange.document.documentID,userRequest: user ,userProvider: userProvider, requestType: service)
                                             
                                             if !request.haveProvider {
+                                                
+                                                for id in userProvider.service{
+                                                    if id == service.id{
                                                 self.userRequests.append(request)
+                                                    }
+                                                }
                                                 self.requestsTableView.reloadData()
                                                 print(self.userRequests)
                                             }
@@ -101,10 +113,10 @@ class UserRequestsViewController: UIViewController {
                     
                 }
             }
-            
         }
         
     }
+}
 }
 
 extension UserRequestsViewController:UITableViewDelegate,UITableViewDataSource{

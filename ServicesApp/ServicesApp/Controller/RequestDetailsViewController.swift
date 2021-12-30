@@ -8,7 +8,7 @@
 import UIKit
 import Firebase
 class RequestDetailsViewController: UIViewController {
-    
+    var selectServices : Service?
     @IBOutlet weak var requestTitleTextField: UITextField!{
         didSet{
             requestTitleTextField.delegate = self
@@ -37,6 +37,8 @@ class RequestDetailsViewController: UIViewController {
            let currentUser = Auth.auth().currentUser {
             let requestId = "\(Firebase.UUID())"
             let dataBase = Firestore.firestore()
+            if let selectServices = selectServices {
+                
             let requestData :[String:Any] = [
                 "requestsId" : currentUser.uid,
                 "providerId" :"0",
@@ -44,13 +46,14 @@ class RequestDetailsViewController: UIViewController {
                 "details" : details,
                 "price": "0",
                 "createAt" : FieldValue.serverTimestamp(),
-                "haveProvider": false
+                "haveProvider": false,
+                "serviceId":selectServices.id
             ]
             dataBase.collection("requests").document(requestId).setData(requestData){ error in
                 if let error = error {
                     print(error)
                 }
-                
+            }
             }
         }
     }

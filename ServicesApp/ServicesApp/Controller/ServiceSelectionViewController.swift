@@ -16,7 +16,7 @@ class ServiceSelectionViewController: UIViewController {
         }
     }
     var services = [Service]()
-    var selectedServices = [Service]()
+    var selectedServices = [String]()
     override func viewDidLoad() {
         super.viewDidLoad()
         getData()
@@ -113,7 +113,7 @@ extension ServiceSelectionViewController:UITableViewDelegate,UITableViewDataSour
     }
     @objc func didChangeswitch(_ sender:UISwitch){
         if sender.isOn{
-            selectedServices.append(services[sender.tag])
+            selectedServices.append(services[sender.tag].id)
             print("this>>>",selectedServices)
         }
     }

@@ -22,6 +22,7 @@ class ServicesViewController: UIViewController {
         getData()
         // Do any additional setup after loading the view.
     }
+    var selectServices : Service?
     
     func getData(){
         let db = Firestore.firestore()
@@ -45,6 +46,12 @@ class ServicesViewController: UIViewController {
         }
         
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+    
+        let sender = segue.destination as! RequestDetailsViewController
+        sender.selectServices = selectServices
+    }
 }
 
 
@@ -60,6 +67,7 @@ extension ServicesViewController:UICollectionViewDelegate,UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectServices = services[indexPath.row]
         performSegue(withIdentifier: "toRequestDetailsVC", sender: self)
     }
 }
