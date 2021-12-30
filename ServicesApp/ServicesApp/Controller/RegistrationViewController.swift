@@ -40,6 +40,7 @@ class RegistrationViewController: UIViewController {
     @IBOutlet weak var passWordTextField: UITextField!{
         didSet{
             passWordTextField.delegate = self
+            passWordTextField.isSecureTextEntry = true
         }
     }
     @IBOutlet weak var signInButton: UIButton!

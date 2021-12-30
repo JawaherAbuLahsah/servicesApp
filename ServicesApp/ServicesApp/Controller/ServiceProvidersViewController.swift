@@ -214,11 +214,12 @@ extension ServiceProvidersViewController:UITableViewDelegate,UITableViewDataSour
                     print("Error in db delete",error)
                 }else {
                     //error Index out of range
-                    let storageRef = Storage.storage().reference(withPath: "requests/\(self.serviceProviders[indexPath.row].id)/\(self.serviceProviders[indexPath.row].userProvider.id)")
+                    let storageRef = Storage.storage().reference(withPath: "requests/\(self.serviceProviders[indexPath.row].id)")
                     storageRef.delete { error in
                         if let error = error {
                             print("Error in storage delete",error)
                         }
+                    
                     }
                 }
             }

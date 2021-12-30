@@ -206,6 +206,12 @@
                                             <action selector="handleLogin:" destination="dDf-03-tG5" eventType="touchUpInside" id="LEs-xP-7sP"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hHf-WF-oGU">
+                                        <rect key="frame" x="178" y="158" width="47" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="gray" image="eye" catalog="system"/>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemGray5Color"/>
                             </view>
@@ -820,7 +826,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="00K-hO-NdL">
-                                <rect key="frame" x="20" y="755" width="209" height="39"/>
+                                <rect key="frame" x="20" y="731" width="209" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.51013188899999995" green="0.76019926599999998" blue="0.98431372640000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
@@ -830,7 +836,7 @@
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="DETAILS" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="d3U-Fk-r4E">
-                                <rect key="frame" x="53" y="619" width="298" height="119"/>
+                                <rect key="frame" x="53" y="619" width="298" height="83"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
@@ -866,10 +872,10 @@
             </objects>
             <point key="canvasLocation" x="2295.6521739130435" y="743.97321428571422"/>
         </scene>
-        <!--View Controller-->
+        <!--Edit Profile View Controller-->
         <scene sceneID="tje-Se-fyB">
             <objects>
-                <viewController id="leP-Nd-gqa" sceneMemberID="viewController">
+                <viewController id="leP-Nd-gqa" customClass="EditProfileViewController" customModule="ServicesApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2wr-hZ-f0Y">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -927,6 +933,9 @@
                                         <color key="backgroundColor" red="0.86711874850000004" green="0.98431372640000003" blue="0.96668271709999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="SAVE"/>
+                                        <connections>
+                                            <action selector="handleSave:" destination="leP-Nd-gqa" eventType="touchUpInside" id="Ecs-z3-HfM"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemGray5Color"/>
@@ -936,6 +945,12 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="xuH-tn-CNd"/>
+                    <connections>
+                        <outlet property="emailTextField" destination="ngA-8c-X7x" id="keX-fg-Naz"/>
+                        <outlet property="phoneNumberTextField" destination="S9d-pf-Rb9" id="jyG-Pk-KdP"/>
+                        <outlet property="profileImageView" destination="tdS-El-XB0" id="uoM-SS-Fmn"/>
+                        <outlet property="userNameTextField" destination="r6e-8d-Lkc" id="bBa-MS-Nsi"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nlp-eA-NAS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -988,6 +1003,7 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="doc.text.image" catalog="system" width="115" height="128"/>
+        <image name="eye" catalog="system" width="128" height="81"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
