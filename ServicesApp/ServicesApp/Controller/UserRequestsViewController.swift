@@ -55,68 +55,67 @@ class UserRequestsViewController: UIViewController {
                                         if let error = error{
                                             print("3",error)
                                         }
-                                    switch documentChange.type{
-                                    case .added:
-                                        
-                                        if let userProviderSnapshot = userProviderSnapshot,
-                                           let userProviderData = userProviderSnapshot.data(),
-                                           let serviceSnapshot = serviceSnapshot,
-                                              let serviceData = serviceSnapshot.data(),
-                                           let userSnapshot = userSnapshot,
-                                           let userData = userSnapshot.data(){
-                                            let user = User(dict: userData)
-                                            let userProvider = User(dict: userProviderData)
-                                            let service = Service(dict: serviceData)
-                                            print(user)
-                                            print(userProvider)
+                                        switch documentChange.type{
+                                        case .added:
                                             
-                                            let request = Request(dict: requestData,id: documentChange.document.documentID,userRequest: user ,userProvider: userProvider, requestType: service)
-                                            
-                                            if !request.haveProvider {
+                                            if let userProviderSnapshot = userProviderSnapshot,
+                                               let userProviderData = userProviderSnapshot.data(),
+                                               let serviceSnapshot = serviceSnapshot,
+                                               let serviceData = serviceSnapshot.data(),
+                                               let userSnapshot = userSnapshot,
+                                               let userData = userSnapshot.data(){
+                                                let user = User(dict: userData)
+                                                let userProvider = User(dict: userProviderData)
+                                                let service = Service(dict: serviceData)
+                                                print(user)
+                                                print(userProvider)
                                                 
-                                                for id in userProvider.service{
-                                                    if id == service.id{
-                                                self.userRequests.append(request)
+                                                let request = Request(dict: requestData,id: documentChange.document.documentID,userRequest: user ,userProvider: userProvider, requestType: service)
+                                                
+                                                if !request.haveProvider {
+                                                    
+                                                    for id in userProvider.service{
+                                                        if id == service.id{
+                                                            self.userRequests.append(request)
+                                                        }
                                                     }
+                                                    self.requestsTableView.reloadData()
+                                                    print(self.userRequests)
                                                 }
-                                                self.requestsTableView.reloadData()
-                                                print(self.userRequests)
                                             }
+                                            
+                                        case .modified:
+                                            let requestId = documentChange.document.documentID
+                                            if let updateIndex = self.userRequests.firstIndex(where: {$0.id == requestId}){
+                                                
+                                                self.requestsTableView.beginUpdates()
+                                                self.userRequests.remove(at: updateIndex)
+                                                self.requestsTableView.deleteRows(at: [IndexPath(row: updateIndex, section: 0)], with: .left)
+                                                self.requestsTableView.endUpdates()
+                                                
+                                                
+                                            }
+                                        case .removed:
+                                            let requestId = documentChange.document.documentID
+                                            if let deleteIndex = self.userRequests.firstIndex(where: {$0.id == requestId}){
+                                                self.userRequests.remove(at: deleteIndex)
+                                                self.requestsTableView.beginUpdates()
+                                                self.requestsTableView.deleteRows(at: [IndexPath(row: deleteIndex, section: 0)], with: .automatic)
+                                                self.requestsTableView.endUpdates()
+                                                
+                                            }
+                                            
                                         }
-                                        
-                                    case .modified:
-                                        let requestId = documentChange.document.documentID
-                                        if let updateIndex = self.userRequests.firstIndex(where: {$0.id == requestId}){
-                                            
-                                            self.requestsTableView.beginUpdates()
-                                            self.userRequests.remove(at: updateIndex)
-                                            self.requestsTableView.deleteRows(at: [IndexPath(row: updateIndex, section: 0)], with: .left)
-                                            self.requestsTableView.endUpdates()
-                                            
-                                            
-                                        }
-                                    case .removed:
-                                        let requestId = documentChange.document.documentID
-                                        if let deleteIndex = self.userRequests.firstIndex(where: {$0.id == requestId}){
-                                            self.userRequests.remove(at: deleteIndex)
-                                            self.requestsTableView.beginUpdates()
-                                            self.requestsTableView.deleteRows(at: [IndexPath(row: deleteIndex, section: 0)], with: .automatic)
-                                            self.requestsTableView.endUpdates()
-                                            
-                                        }
-                                        
                                     }
                                 }
                             }
                         }
                     }
-                    
                 }
             }
+            
         }
-        
     }
-}
 }
 
 extension UserRequestsViewController:UITableViewDelegate,UITableViewDataSource{
@@ -142,19 +141,19 @@ extension UserRequestsViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let alert = UIAlertController(title: userRequests[indexPath.row].title, message: "\(userRequests[indexPath.row].details) \n \(userRequests[indexPath.row].userRequest.name)", preferredStyle: .alert)
         alert.addTextField { (textField:UITextField) in
-            textField.placeholder = "add price"
+            textField.placeholder = "price".localizes
             textField.keyboardType = .decimalPad
             let toolBar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.size.width, height: 44.0))
             let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-            let DoneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(self.tapDone))
+            let DoneButton = UIBarButtonItem(title: "done".localizes, style: .plain, target: self, action: #selector(self.tapDone))
             toolBar.setItems([flexibleSpace, DoneButton], animated: false)
             textField.inputAccessoryView = toolBar
         }
         
-        let cancelAction = UIAlertAction(title: "cancel", style: .cancel) { Action in
+        let cancelAction = UIAlertAction(title: "cancel".localizes, style: .cancel) { Action in
             
         }
-        let sendAction = UIAlertAction(title: "send", style: .default) { Action in
+        let sendAction = UIAlertAction(title: "send".localizes, style: .default) { Action in
             
             if let fields = alert.textFields{
                 let price = fields[0]

@@ -8,20 +8,42 @@
 import UIKit
 import Firebase
 class LoginViewController: UIViewController {
-    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!{
+        didSet{
+            emailLabel.text = "email".localizes
+        }
+    }
     @IBOutlet weak var emailTextField: UITextField!{
         didSet{
             emailTextField.delegate = self
         }
     }
-    @IBOutlet weak var passwordLabel: UILabel!
+    @IBOutlet weak var passwordLabel: UILabel!{
+        didSet{
+            passwordLabel.text = "password".localizes
+        }
+    }
     @IBOutlet weak var passwordTextField: UITextField!{
         didSet{
             passwordTextField.delegate = self
         }
     }
-    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var loginButton: UIButton!{
+        didSet{
+            loginButton.setTitle("login".localizes, for: .normal)
+        }
+    }
+    @IBOutlet weak var signUpButton: UIButton!{
+        didSet{
+            signUpButton.setTitle("signup".localizes, for: .normal)
+        }
+    }
     
+    @IBOutlet weak var forgotPasswordButton: UIButton!{
+        didSet{
+            forgotPasswordButton.setTitle("forgot".localizes, for: .normal)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

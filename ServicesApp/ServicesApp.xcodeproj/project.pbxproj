@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		95034C6527765C40006E37CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95034C6427765C40006E37CD /* AppDelegate.swift */; };
 		95034C6727765C40006E37CD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95034C6627765C40006E37CD /* SceneDelegate.swift */; };
-		95034C6927765C40006E37CD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95034C6827765C40006E37CD /* ViewController.swift */; };
+		95034C6927765C40006E37CD /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95034C6827765C40006E37CD /* LandingViewController.swift */; };
 		95034C6C27765C40006E37CD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95034C6A27765C40006E37CD /* Main.storyboard */; };
 		95034C6E27765C43006E37CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95034C6D27765C43006E37CD /* Assets.xcassets */; };
 		95034C7127765C43006E37CD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95034C6F27765C43006E37CD /* LaunchScreen.storyboard */; };
@@ -38,13 +38,14 @@
 		95034CD02779B2B9006E37CD /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 95034CCF2779B2B8006E37CD /* .gitignore */; };
 		9515C524277D8A8500205358 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9515C523277D8A8500205358 /* EditProfileViewController.swift */; };
 		9515C526277E29D400205358 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9515C525277E29D300205358 /* ResetPasswordViewController.swift */; };
+		9576FF8E277F5D7F00E1F583 /* CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576FF8D277F5D7F00E1F583 /* CLLocation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		95034C6127765C40006E37CD /* ServicesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ServicesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95034C6427765C40006E37CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		95034C6627765C40006E37CD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		95034C6827765C40006E37CD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		95034C6827765C40006E37CD /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
 		95034C6B27765C40006E37CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		95034C6D27765C43006E37CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		95034C7027765C43006E37CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -74,6 +75,7 @@
 		95034CCF2779B2B8006E37CD /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = .gitignore; path = ../.gitignore; sourceTree = "<group>"; };
 		9515C523277D8A8500205358 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		9515C525277E29D300205358 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
+		9576FF8D277F5D7F00E1F583 /* CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocation.swift; sourceTree = "<group>"; };
 		95F2E2A8277C55720066D83C /* ServicesApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ServicesApp.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -153,7 +155,7 @@
 			children = (
 				95034C7D27774B41006E37CD /* LoginViewController.swift */,
 				95034C7F27774B6E006E37CD /* RegistrationViewController.swift */,
-				95034C6827765C40006E37CD /* ViewController.swift */,
+				95034C6827765C40006E37CD /* LandingViewController.swift */,
 				95034CBD27789578006E37CD /* RequestDetailsViewController.swift */,
 				95034CBF2778BC06006E37CD /* UserRequestsViewController.swift */,
 				95034CC12778C449006E37CD /* ServicesViewController.swift */,
@@ -172,6 +174,7 @@
 				95034C8927778AE9006E37CD /* BundleExtention.swift */,
 				95034C8B27778B49006E37CD /* ChangeLanguage.swift */,
 				95034C8E27778F53006E37CD /* LodingImage.swift */,
+				9576FF8D277F5D7F00E1F583 /* CLLocation.swift */,
 			);
 			path = Utill;
 			sourceTree = "<group>";
@@ -262,7 +265,7 @@
 			files = (
 				95034C7E27774B41006E37CD /* LoginViewController.swift in Sources */,
 				95034C8A27778AE9006E37CD /* BundleExtention.swift in Sources */,
-				95034C6927765C40006E37CD /* ViewController.swift in Sources */,
+				95034C6927765C40006E37CD /* LandingViewController.swift in Sources */,
 				95034C6527765C40006E37CD /* AppDelegate.swift in Sources */,
 				95034CBC277861AA006E37CD /* Request.swift in Sources */,
 				95034CC62778D7CB006E37CD /* ServiceSelectionViewController.swift in Sources */,
@@ -273,6 +276,7 @@
 				95034CB82778617B006E37CD /* User.swift in Sources */,
 				95034CC02778BC06006E37CD /* UserRequestsViewController.swift in Sources */,
 				95034CC22778C449006E37CD /* ServicesViewController.swift in Sources */,
+				9576FF8E277F5D7F00E1F583 /* CLLocation.swift in Sources */,
 				95034CBE27789578006E37CD /* RequestDetailsViewController.swift in Sources */,
 				95034CC42778C4AE006E37CD /* ServiceCollectionViewCell.swift in Sources */,
 				95034C6727765C40006E37CD /* SceneDelegate.swift in Sources */,

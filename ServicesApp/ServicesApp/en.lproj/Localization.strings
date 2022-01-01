@@ -10,7 +10,7 @@
 "email" = "EMAIL";
 "password" = "PASSWORD";
 "login" = "LOGIN";
-"forget" = "FORGET PASSWORD";
+"forgot" = "FORGET PASSWORD";
 "signup" = "SIGN UP";
 "name" = "NAME";
 "phone" = "PHONE NUMBER";
@@ -22,4 +22,7 @@
 "cancel" = "CANCEL";
 "title" = "TITLE";
 "details" = "DETAILS";
-
+"done" = "Done";
+"price" =  "PRICE";
+"services" = "services";
+"delete" = "Delete";

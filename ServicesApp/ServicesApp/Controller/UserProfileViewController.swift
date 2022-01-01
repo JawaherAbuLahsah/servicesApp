@@ -11,6 +11,7 @@ class UserProfileViewController: UIViewController {
     
     @IBOutlet weak var profileImageView: UIImageView!
     
+    @IBOutlet weak var serviceView: UIView!
     @IBOutlet weak var providerServicesTableView: UITableView!{
         didSet{
             providerServicesTableView.delegate = self
@@ -58,8 +59,13 @@ class UserProfileViewController: UIViewController {
                                     self.userNameLabel.text = user.name
                                     self.userPhoneNumberLabel.text = user.phoneNumber
                                     self.userEmailLabel.text = user.email
+                                    self.profileImageView.lodingImage(user.profilePictuer)
+                                    if !user.userType{
+                                        self.serviceView.isHidden = true
+                                    }
                                     
                                     self.userProviderData.append(user)
+                                    
                                     self.providerServices = user.service
                                     self.providerServicesTableView.reloadData()
                                     
@@ -67,16 +73,13 @@ class UserProfileViewController: UIViewController {
                                 case .modified:
                                     let userId = documentChange.document.documentID
                                     if let updateIndex = self.userProviderData.firstIndex(where: {$0.id == userId}){
-                                        
-                                        self.providerServicesTableView.beginUpdates()
-                                        
-                                        self.providerServicesTableView.deleteRows(at: [IndexPath(row: updateIndex, section: 0)], with: .left)
-                                        
-                                        self.providerServicesTableView.deleteRows(at: [IndexPath(row: updateIndex, section: 0)], with: .left)
-                                        self.providerServicesTableView.insertRows(at: [IndexPath(row: updateIndex, section: 0)], with: .left)
-                                        
-                                        self.providerServicesTableView.endUpdates()
-                                        
+                                        if !self.providerServices.isEmpty{
+                                            self.providerServicesTableView.beginUpdates()
+                                            self.providerServicesTableView.deleteRows(at: [IndexPath(row: updateIndex, section: 0)], with: .left)
+                                            self.providerServicesTableView.insertRows(at: [IndexPath(row: updateIndex, section: 0)], with: .left)
+                                            
+                                            self.providerServicesTableView.endUpdates()
+                                        }
                                         
                                     }
                                 case .removed:
@@ -99,6 +102,16 @@ class UserProfileViewController: UIViewController {
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "toEditVC"{
+//            let sender = segue.destination as! ServiceSelectionViewController
+//            sender.selectedServices = providerServices
+        }else{
+        let sender = segue.destination as! EditProfileViewController
+        sender.providerServices = providerServices
+        }
+    }
     
     
     
@@ -125,20 +138,19 @@ extension UserProfileViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "selectedServicesCell", for: indexPath)
         var content = cell.defaultContentConfiguration()
-        let db = Firestore.firestore()
-        db.collection("services").document(providerServices[indexPath.row]).getDocument { documentSnapshot, error in
-            if let error = error{
-                print(error)
-            }
-            if let documentSnapshot = documentSnapshot,let data = documentSnapshot.data(){
-                let service = Service(dict: data)
-                content.text = service.name
-                cell.contentConfiguration = content
+        if !providerServices.isEmpty{
+            let db = Firestore.firestore()
+            db.collection("services".localizes).document(providerServices[indexPath.row]).getDocument { documentSnapshot, error in
+                if let error = error{
+                    print(error)
+                }
+                if let documentSnapshot = documentSnapshot,let data = documentSnapshot.data(){
+                    let service = Service(dict: data)
+                    content.text = service.name
+                    cell.contentConfiguration = content
+                }
             }
         }
-        
         return cell
     }
-    
-    
 }

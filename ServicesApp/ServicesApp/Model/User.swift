@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Firebase
 struct User {
     var id = ""
     var name = ""
@@ -14,6 +15,7 @@ struct User {
     var userType = true
     var profilePictuer = ""
     var service = [""]
+    var address:GeoPoint?
     init(dict:[String:Any]) {
         if let id = dict["id"] as? String,
            let name = dict["name"] as? String,
@@ -21,6 +23,7 @@ struct User {
            let phoneNumber = dict["phoneNumber"] as? String,
            let userType = dict["userType"] as? Bool,
            let profilePictuer = dict["profilePictuer"] as? String,
+           let address = dict["address"] as? GeoPoint,
            let service = dict["service"] as? [String]{
             self.name = name
             self.id = id
@@ -29,6 +32,7 @@ struct User {
             self.userType = userType
             self.profilePictuer = profilePictuer
             self.service = service
+            self.address = address
         }
     }
 }

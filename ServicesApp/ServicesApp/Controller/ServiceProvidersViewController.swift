@@ -65,23 +65,7 @@ class ServiceProvidersViewController: UIViewController {
         //        self.present(alert, animated: true, completion: nil)
         //    }
     }
-    func deleteRequest(){
-        //        if let currentUser = Auth.auth().currentUser{
-        //            let ref = Firestore.firestore().collection("requests")
-        //            ref.document(currentUser.uid).delete { error in
-        //                if let error = error {
-        //                    print("Error in db delete",error)
-        //                }else {
-        //                    let storageRef = Storage.storage().reference(withPath: "requests/\(currentUser.uid)/\()")
-        //                    storageRef.delete { error in
-        //                        if let error = error {
-        //                            print("Error in storage delete",error)
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        }
-    }
+    
     func getData(){
         let db = Firestore.firestore()
         db.collection("requests").order(by: "createAt",descending: true).addSnapshotListener { snapshot, error in
@@ -193,7 +177,7 @@ extension ServiceProvidersViewController:UITableViewDelegate,UITableViewDataSour
         
         let alert = UIAlertController(title: serviceProviders[indexPath.row].userProvider.name , message: "\(serviceProviders[indexPath.row].userProvider.phoneNumber)", preferredStyle: .alert)
         
-        let cancelAction = UIAlertAction(title: "cancel", style: .cancel) { [self] Action in
+        let cancelAction = UIAlertAction(title: "cancel".localizes, style: .cancel) { [self] Action in
             let db = Firestore.firestore()
             let ref = db.collection("requests")
             
@@ -212,7 +196,7 @@ extension ServiceProvidersViewController:UITableViewDelegate,UITableViewDataSour
             }
             
         }
-        let sendAction = UIAlertAction(title: "send", style: .default) { Action in
+        let sendAction = UIAlertAction(title: "send".localizes, style: .default) { Action in
             let ref = Firestore.firestore().collection("requests")
             ref.document(self.serviceProviders[indexPath.row].id).delete { error in
                 if let error = error {
@@ -225,7 +209,7 @@ extension ServiceProvidersViewController:UITableViewDelegate,UITableViewDataSour
             
             self.present(mainTabBarController, animated: true, completion: nil)
         }
-        let deleteAction = UIAlertAction(title: "Delete", style: .destructive){ Action in
+        let deleteAction = UIAlertAction(title: "delete".localizes, style: .destructive){ Action in
             
             let ref = Firestore.firestore().collection("requests")
             ref.document(self.serviceProviders[indexPath.row].id).delete { error in

@@ -19,7 +19,7 @@ class EditProfileViewController: UIViewController {
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var phoneNumberTextField: UITextField!
-    
+    var providerServices = [String]()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -63,15 +63,30 @@ class EditProfileViewController: UIViewController {
                                        let userData = userSnapshot.data(){
                                         let user = User(dict: userData)
                                         let dataBase = Firestore.firestore()
-                                        let userData:[String:Any] = [
+                                        let userData:[String:Any]
+                                        if user.userType{
+                                         userData = [
                                             "id" : currentUser.uid,
                                             "name" : name,
                                             "email" : email,
                                             "phoneNumber" : phoneNumber,
                                             "userType" : user.userType,
                                             "profilePictuer": url.absoluteString,
-                                            "service":[]
+                                            "service":self.providerServices,
+                                            "address":user.address
                                         ]
+                                        }else{
+                                        userData = [
+                                            "id" : currentUser.uid,
+                                            "name" : name,
+                                            "email" : email,
+                                            "phoneNumber" : phoneNumber,
+                                            "userType" : user.userType,
+                                            "profilePictuer": url.absoluteString,
+                                            "service":[],
+                                            "address":user.address
+                                        ]
+                                        }
                                         dataBase.collection("users").document(currentUser.uid).setData(userData){ error in
                                             if let error = error{
                                                 print(error)
@@ -86,6 +101,7 @@ class EditProfileViewController: UIViewController {
                 }
             }
         }
+        self.dismiss(animated: true, completion: nil)
     }
     
 }

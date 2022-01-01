@@ -9,8 +9,16 @@ import UIKit
 import Firebase
 class ResetPasswordViewController: UIViewController {
 
-    @IBOutlet weak var emailLabel: UILabel!
-    @IBOutlet weak var sendButton: UIButton!
+    @IBOutlet weak var emailLabel: UILabel!{
+        didSet{
+            emailLabel.text = "email".localizes
+        }
+    }
+    @IBOutlet weak var sendButton: UIButton!{
+        didSet{
+            sendButton.setTitle("send".localizes, for: .normal)
+        }
+    }
     @IBOutlet weak var emailTextField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()

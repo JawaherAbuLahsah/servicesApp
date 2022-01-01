@@ -27,7 +27,7 @@ class ServiceSelectionViewController: UIViewController {
     
     func getData(){
         let db = Firestore.firestore()
-        db.collection("services").order(by: "name").addSnapshotListener { snapshot, error in
+        db.collection("services".localizes).order(by: "name").addSnapshotListener { snapshot, error in
             
             if let error = error{
                 print(error)
@@ -67,7 +67,8 @@ class ServiceSelectionViewController: UIViewController {
                                                 "phoneNumber" : user.phoneNumber,
                                                 "userType" : user.userType,
                                                 "profilePictuer": user.profilePictuer,
-                                                "service":self.selectedServices
+                                                "service":self.selectedServices,
+                                                "address":user.address
                                             ]
                        // userData["service"] = self.selectedServices
                         dataBase.collection("users").document(user.id).setData(userData){ error in
@@ -87,6 +88,7 @@ class ServiceSelectionViewController: UIViewController {
                     }
                 }
             }
+        //self.dismiss(animated: true, completion: nil)
         }
     
 }
@@ -103,7 +105,7 @@ extension ServiceSelectionViewController:UITableViewDelegate,UITableViewDataSour
         
         selectServiceSwitch.tag = indexPath.row
         selectServiceSwitch.addTarget(self, action: #selector(didChangeswitch(_:)), for: .valueChanged)
-        selectServiceSwitch.isOn = false
+        //selectServiceSwitch.isOn = false
         cell.accessoryView = selectServiceSwitch
 
         return cell
@@ -114,7 +116,6 @@ extension ServiceSelectionViewController:UITableViewDelegate,UITableViewDataSour
     @objc func didChangeswitch(_ sender:UISwitch){
         if sender.isOn{
             selectedServices.append(services[sender.tag].id)
-            print("this>>>",selectedServices)
         }
     }
 }
