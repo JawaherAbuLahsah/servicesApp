@@ -27,7 +27,7 @@ class ServiceSelectionViewController: UIViewController {
     
     func getData(){
         let db = Firestore.firestore()
-        db.collection("services").order(by: "name").addSnapshotListener { snapshot, error in
+        db.collection("services").addSnapshotListener { snapshot, error in
             
             if let error = error{
                 print(error)

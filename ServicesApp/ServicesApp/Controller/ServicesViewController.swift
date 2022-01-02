@@ -26,7 +26,7 @@ class ServicesViewController: UIViewController {
     
     func getData(){
         let db = Firestore.firestore()
-        db.collection("services").order(by: "name").addSnapshotListener { snapshot, error in
+        db.collection("services").addSnapshotListener { snapshot, error in
             
             if let error = error{
                 print(error)
@@ -63,6 +63,7 @@ extension ServicesViewController:UICollectionViewDelegate,UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "serviceCell", for: indexPath) as! ServiceCollectionViewCell
         cell.serviceNameLabel.text = services[indexPath.row].name
+        print("this name",services[indexPath.row].name)
         return cell
     }
     

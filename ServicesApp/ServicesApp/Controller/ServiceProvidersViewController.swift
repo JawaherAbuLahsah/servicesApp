@@ -27,17 +27,17 @@ class ServiceProvidersViewController: UIViewController {
     }
     
     @IBAction func handleCancel(_ sender: Any) {
-//        do {
-//            try Auth.auth().signOut()
-//            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LandingNavigationController") as? UINavigationController {
-//                vc.modalPresentationStyle = .fullScreen
-//                self.present(vc, animated: true, completion: nil)
-//            }
-//        } catch  {
-//            print("ERROR in signout",error.localizedDescription)
-//        }
-      
-
+        //        do {
+        //            try Auth.auth().signOut()
+        //            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LandingNavigationController") as? UINavigationController {
+        //                vc.modalPresentationStyle = .fullScreen
+        //                self.present(vc, animated: true, completion: nil)
+        //            }
+        //        } catch  {
+        //            print("ERROR in signout",error.localizedDescription)
+        //        }
+        
+        
     }
     
     func getData(){
@@ -51,27 +51,26 @@ class ServiceProvidersViewController: UIViewController {
                 
                 snapshot.documentChanges.forEach { documentChange in
                     let requestData = documentChange.document.data()
-                    switch documentChange.type{
-                    case .added:
-                        if let userId = requestData["requestsId"] as? String, let providerId = requestData["providerId"] as? String ,let serviceId = requestData["serviceId"] as? String{
-                            
-                            db.collection("users").document(userId).getDocument { userSnapshot, error in
+                    
+                    if let userId = requestData["requestsId"] as? String, let providerId = requestData["providerId"] as? String ,let serviceId = requestData["serviceId"] as? String{
+                        
+                        db.collection("users").document(userId).getDocument { userSnapshot, error in
+                            if let error = error{
+                                print("6",error)
+                            }
+                            db.collection("users").document(providerId).getDocument { userProviderSnapshot, error in
                                 if let error = error{
-                                    print("6",error)
+                                    print("Error in get provider data ",error)
                                 }
-                                db.collection("users").document(providerId).getDocument { userProviderSnapshot, error in
+                                db.collection("services").document(serviceId).getDocument { serviceSnapshot, error in
                                     if let error = error{
-                                        print("Error in get provider data ",error)
+                                        print("3",error)
                                     }
-                                    db.collection("services").document(serviceId).getDocument { serviceSnapshot, error in
-                                        if let error = error{
-                                            print("3",error)
-                                        }
                                     
                                     if let userProviderSnapshot = userProviderSnapshot,
                                        let userProviderData = userProviderSnapshot.data(),
                                        let serviceSnapshot = serviceSnapshot,
-                                          let serviceData = serviceSnapshot.data(),
+                                       let serviceData = serviceSnapshot.data(),
                                        let userSnapshot = userSnapshot,
                                        let userData = userSnapshot.data(){
                                         let user = User(dict: userData)
@@ -82,42 +81,66 @@ class ServiceProvidersViewController: UIViewController {
                                         let request = Request(dict: requestData,id: documentChange.document.documentID,userRequest: user ,userProvider: userProvider, requestType: service)
                                         print("provider>>,",userProvider)
                                         print("Requesterr>>",user)
-                                        
-                                        let currentUser = Auth.auth().currentUser
-                                        if let currentUser = currentUser, currentUser.uid ==  user.id, request.haveProvider{
-                                            self.serviceProviders.append(request)
-                                            self.serviceProvidersTableView.reloadData()
-                                            print(self.serviceProviders)
-                                            print("myyy",request,"vvv",self.serviceProviders)
+                                        switch documentChange.type{
+                                        case .added:
+                                            let currentUser = Auth.auth().currentUser
+                                            if let currentUser = currentUser, currentUser.uid ==  user.id, request.haveProvider{
+                                                self.serviceProviders.append(request)
+                                                self.serviceProvidersTableView.reloadData()
+                                                print(self.serviceProviders)
+                                                print("myyy",request,"vvv",self.serviceProviders)
+                                            }
+                                            
+                                            
+                                        case .modified:
+                                            
+                                            let requestId = documentChange.document.documentID
+                                           
+                                            let newRequest = Request(dict: requestData, id: requestId, userRequest: user, userProvider: userProvider, requestType: service)
+                                            print(newRequest)
+                                              //  self.serviceProviders[updateIndex] = newRequest
+                                            if newRequest.title != "" && newRequest.haveProvider{
+                                            self.serviceProvidersTableView.beginUpdates()
+                                            self.serviceProviders.append(newRequest)
+                                            self.serviceProvidersTableView.insertRows(at: [IndexPath(row:self.serviceProviders.count - 1,section: 0)],with: .automatic)
+                                            self.serviceProvidersTableView.endUpdates()
+                                            }
+                                            if !newRequest.haveProvider{
+                                                if let deleteIndex = self.serviceProviders.firstIndex(where: {$0.id == requestId}){
+                                                    self.serviceProviders.remove(at: deleteIndex)
+                                                    self.serviceProvidersTableView.beginUpdates()
+                                                    self.serviceProvidersTableView.deleteRows(at: [IndexPath(row: deleteIndex, section: 0)], with: .automatic)
+                                                    self.serviceProvidersTableView.endUpdates()
+                                                    
+                                                }
+                                            }
+//                                            if let updateIndex = self.serviceProviders.firstIndex(where: {$0.id == requestId}){
+                                                
+                                              //  self.serviceProvidersTableView.beginUpdates()
+                                               
+//                                                self.serviceProviders.remove(at: updateIndex)
+//                                                self.serviceProvidersTableView.reloadData()
+                                              //  self.serviceProvidersTableView.deleteRows(at: [IndexPath(row: updateIndex, section: 0)], with: .left)
+//                                                if request.haveProvider {
+//                                                self.serviceProvidersTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .left)
+//                                            }
+                                                   //     self.serviceProvidersTableView.endUpdates()
+                                                        
+                                                        
+//                                            }
+                                        case .removed:
+                                            let requestId = documentChange.document.documentID
+                                            if let deleteIndex = self.serviceProviders.firstIndex(where: {$0.id == requestId}){
+                                                self.serviceProviders.remove(at: deleteIndex)
+                                                self.serviceProvidersTableView.beginUpdates()
+                                                self.serviceProvidersTableView.deleteRows(at: [IndexPath(row: deleteIndex, section: 0)], with: .automatic)
+                                                self.serviceProvidersTableView.endUpdates()
+                                                
+                                            }
                                         }
-                                        
                                     }
                                 }
                             }
-                        }
-                        }
-                    case .modified:
-                        
-                        let requestId = documentChange.document.documentID
-                        if let updateIndex = self.serviceProviders.firstIndex(where: {$0.id == requestId}){
-                            
-                            self.serviceProvidersTableView.beginUpdates()
-                            // self.serviceProviders.remove(at: updateIndex)
-                            
-                            self.serviceProvidersTableView.deleteRows(at: [IndexPath(row: updateIndex, section: 0)], with: .left)
-                            self.serviceProvidersTableView.insertRows(at: [IndexPath(row: updateIndex, section: 0)], with: .left)
-                            self.serviceProvidersTableView.endUpdates()
-                            
-                            
-                        }
-                    case .removed:
-                        let requestId = documentChange.document.documentID
-                        if let deleteIndex = self.serviceProviders.firstIndex(where: {$0.id == requestId}){
-                            self.serviceProviders.remove(at: deleteIndex)
-                            self.serviceProvidersTableView.beginUpdates()
-                            self.serviceProvidersTableView.deleteRows(at: [IndexPath(row: deleteIndex, section: 0)], with: .automatic)
-                            self.serviceProvidersTableView.endUpdates()
-                            
                         }
                     }
                 }
@@ -170,6 +193,7 @@ extension ServiceProvidersViewController:UITableViewDelegate,UITableViewDataSour
                     print("FireStore Error",error.localizedDescription)
                 }
             }
+            //self.serviceProviders.remove(at: indexPath.row)
             
         }
         let sendAction = UIAlertAction(title: "send".localizes, style: .default) { Action in

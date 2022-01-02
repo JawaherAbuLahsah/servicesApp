@@ -20,7 +20,7 @@ class RequestDetailsViewController: UIViewController {
     
     @IBOutlet weak var removeAnnotationButton: UIButton!{
         didSet{
-            removeAnnotationButton.isHidden = true
+           //  removeAnnotationButton.isHidden = true
         }
     }
     @IBOutlet weak var mapView: MKMapView!{

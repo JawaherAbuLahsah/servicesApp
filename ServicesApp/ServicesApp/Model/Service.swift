@@ -11,9 +11,14 @@ struct Service{
     var name = ""
     init(dict:[String:Any]){
         if let id = dict["id"] as? String,
-           let name = dict["name"] as? String{
+           let arName = dict["arName"] as? String,
+               let enName = dict["enName"] as? String{
             self.id = id
-            self.name = name
+            if UserDefaults.standard.object(forKey: "currentLanguage") as! String == "ar"{
+            self.name = arName
+            }else{
+            self.name = enName
+            }
         }
     }
 }

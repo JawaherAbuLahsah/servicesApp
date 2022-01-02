@@ -55,22 +55,23 @@ class UserRequestsViewController: UIViewController {
                                         if let error = error{
                                             print("3",error)
                                         }
-                                        switch documentChange.type{
-                                        case .added:
+                                        if let userProviderSnapshot = userProviderSnapshot,
+                                           let userProviderData = userProviderSnapshot.data(),
+                                           let serviceSnapshot = serviceSnapshot,
+                                           let serviceData = serviceSnapshot.data(),
+                                           let userSnapshot = userSnapshot,
+                                           let userData = userSnapshot.data(){
+                                            let user = User(dict: userData)
+                                            let userProvider = User(dict: userProviderData)
+                                            let service = Service(dict: serviceData)
+                                            print(user)
+                                            print(userProvider)
                                             
-                                            if let userProviderSnapshot = userProviderSnapshot,
-                                               let userProviderData = userProviderSnapshot.data(),
-                                               let serviceSnapshot = serviceSnapshot,
-                                               let serviceData = serviceSnapshot.data(),
-                                               let userSnapshot = userSnapshot,
-                                               let userData = userSnapshot.data(){
-                                                let user = User(dict: userData)
-                                                let userProvider = User(dict: userProviderData)
-                                                let service = Service(dict: serviceData)
-                                                print(user)
-                                                print(userProvider)
+                                            let request = Request(dict: requestData,id: documentChange.document.documentID,userRequest: user ,userProvider: userProvider, requestType: service)
+                                            switch documentChange.type{
+                                            case .added:
                                                 
-                                                let request = Request(dict: requestData,id: documentChange.document.documentID,userRequest: user ,userProvider: userProvider, requestType: service)
+                                                
                                                 
                                                 if !request.haveProvider {
                                                     
@@ -82,29 +83,54 @@ class UserRequestsViewController: UIViewController {
                                                     self.requestsTableView.reloadData()
                                                     print(self.userRequests)
                                                 }
+                                                
+                                                
+                                            case .modified:
+                                                let requestId = documentChange.document.documentID
+//                                                if let updateIndex = self.userRequests.firstIndex(where: {$0.id == requestId}){
+                                               // if let updateIndex = self.userRequests.firstIndex(where: {$0.id == requestId}){
+                                                    let newRequest = Request(dict: requestData, id: requestId, userRequest: user, userProvider: userProvider, requestType: service)
+                                                    print(newRequest)
+                                                    //self.userRequests[updateIndex] = newRequest
+                                                if newRequest.title != "" && !newRequest.haveProvider{
+                                                    self.requestsTableView.beginUpdates()
+                                                    self.userRequests.append(newRequest)
+                                                    self.requestsTableView.insertRows(at: [IndexPath(row:self.userRequests.count - 1,section: 0)],with: .automatic)
+                                                    self.requestsTableView.endUpdates()
+                                                }
+                                                
+                                                if newRequest.haveProvider{
+                                                    if let deleteIndex = self.userRequests.firstIndex(where: {$0.id == requestId}){
+                                                    self.userRequests.remove(at: deleteIndex)
+                                                    self.requestsTableView.beginUpdates()
+                                                    self.requestsTableView.deleteRows(at: [IndexPath(row: deleteIndex, section: 0)], with: .automatic)
+                                                    self.requestsTableView.endUpdates()
+                                                    }
+                                                }
+                                                
+                                             //   }
+                                                    // self.requestsTableView.beginUpdates()
+//                                                    self.userRequests.remove(at: updateIndex)
+//                                                    self.requestsTableView.reloadData()
+                                                    //                                                self.requestsTableView.deleteRows(at: [IndexPath(row: updateIndex, section: 0)], with: .left)
+                                                    ////                                                if !request.haveProvider {
+                                                    //                                              //  self.requestsTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .left)
+                                                    ////                                                }
+                                                    //                                                self.requestsTableView.endUpdates()
+                                                    
+                                                    
+                                              //  }
+                                            case .removed:
+                                                let requestId = documentChange.document.documentID
+                                                if let deleteIndex = self.userRequests.firstIndex(where: {$0.id == requestId}){
+                                                    self.userRequests.remove(at: deleteIndex)
+                                                    self.requestsTableView.beginUpdates()
+                                                    self.requestsTableView.deleteRows(at: [IndexPath(row: deleteIndex, section: 0)], with: .automatic)
+                                                    self.requestsTableView.endUpdates()
+                                                    
+                                                }
+                                                
                                             }
-                                            
-                                        case .modified:
-                                            let requestId = documentChange.document.documentID
-                                            if let updateIndex = self.userRequests.firstIndex(where: {$0.id == requestId}){
-                                                
-                                                self.requestsTableView.beginUpdates()
-                                                self.userRequests.remove(at: updateIndex)
-                                                self.requestsTableView.deleteRows(at: [IndexPath(row: updateIndex, section: 0)], with: .left)
-                                                self.requestsTableView.endUpdates()
-                                                
-                                                
-                                            }
-                                        case .removed:
-                                            let requestId = documentChange.document.documentID
-                                            if let deleteIndex = self.userRequests.firstIndex(where: {$0.id == requestId}){
-                                                self.userRequests.remove(at: deleteIndex)
-                                                self.requestsTableView.beginUpdates()
-                                                self.requestsTableView.deleteRows(at: [IndexPath(row: deleteIndex, section: 0)], with: .automatic)
-                                                self.requestsTableView.endUpdates()
-                                                
-                                            }
-                                            
                                         }
                                     }
                                 }
@@ -113,7 +139,6 @@ class UserRequestsViewController: UIViewController {
                     }
                 }
             }
-            
         }
     }
 }
@@ -163,35 +188,35 @@ extension UserRequestsViewController:UITableViewDelegate,UITableViewDataSource{
                     let ref = db.collection("requests")
                     
                     let priceData:[String:Any]
-//                    if self.userRequests[indexPath.row].userProvider.id != Auth.auth().currentUser?.uid{
-//                        priceData = ["price": price,
-//                                     "requestsId" : self.userRequests[indexPath.row].userRequest.id,
-//                                     "providerId":self.userRequests[indexPath.row].userProvider.id,
-//                                     "title" : self.userRequests[indexPath.row].title ,
-//                                     "details" : self.userRequests[indexPath.row].details ,
-//                                     "createAt" : FieldValue.serverTimestamp(),
-//                                     "haveProvider":true
-//                        ]
-//                    }else{
-//                    "requestsId" : currentUser.uid,
-//                    "providerId" :"0",
-//                    "title" : title,
-//                    "details" : details,
-//                    "price": "0",
-//                    "createAt" : FieldValue.serverTimestamp(),
-//                    "haveProvider": false,
-//                    "serviceId":selectServices.id
-                        priceData = ["price": price,
-                                     "requestsId" : self.userRequests[indexPath.row].userRequest.id,
-                                     "providerId":self.userRequests[indexPath.row].userProvider.id,
-                                     "title" : self.userRequests[indexPath.row].title ,
-                                     "details" : self.userRequests[indexPath.row].details ,
-                                     "createAt" : FieldValue.serverTimestamp(),
-                                     "haveProvider":true,
-                                     "serviceId":self.userRequests[indexPath.row].requestType.id
-                        ]
-                        
-//                    }
+                    //                    if self.userRequests[indexPath.row].userProvider.id != Auth.auth().currentUser?.uid{
+                    //                        priceData = ["price": price,
+                    //                                     "requestsId" : self.userRequests[indexPath.row].userRequest.id,
+                    //                                     "providerId":self.userRequests[indexPath.row].userProvider.id,
+                    //                                     "title" : self.userRequests[indexPath.row].title ,
+                    //                                     "details" : self.userRequests[indexPath.row].details ,
+                    //                                     "createAt" : FieldValue.serverTimestamp(),
+                    //                                     "haveProvider":true
+                    //                        ]
+                    //                    }else{
+                    //                    "requestsId" : currentUser.uid,
+                    //                    "providerId" :"0",
+                    //                    "title" : title,
+                    //                    "details" : details,
+                    //                    "price": "0",
+                    //                    "createAt" : FieldValue.serverTimestamp(),
+                    //                    "haveProvider": false,
+                    //                    "serviceId":selectServices.id
+                    priceData = ["price": price,
+                                 "requestsId" : self.userRequests[indexPath.row].userRequest.id,
+                                 "providerId":self.userRequests[indexPath.row].userProvider.id,
+                                 "title" : self.userRequests[indexPath.row].title ,
+                                 "details" : self.userRequests[indexPath.row].details ,
+                                 "createAt" : FieldValue.serverTimestamp(),
+                                 "haveProvider":true,
+                                 "serviceId":self.userRequests[indexPath.row].requestType.id
+                    ]
+                    
+                    //                    }
                     
                     ref.document(self.userRequests[indexPath.row].id).setData(priceData) { error in
                         if let error = error {
