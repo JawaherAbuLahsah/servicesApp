@@ -24,8 +24,18 @@ class LandingViewController: UIViewController {
             signInButton.setTitle("signIn".localizes, for: .normal)
         }
     }
-    @IBOutlet weak var arabicButton: UIButton!
-    @IBOutlet weak var englishButton: UIButton!
+    @IBOutlet weak var arabicButton: UIButton!{
+        didSet{
+            arabicButton.layer.borderColor = UIColor.brown.cgColor
+            arabicButton.layer.borderWidth = 5
+        }
+    }
+    @IBOutlet weak var englishButton: UIButton!{
+        didSet{
+            englishButton.layer.borderColor = UIColor.brown.cgColor
+            englishButton.layer.borderWidth = 5
+        }
+    }
     
     var arabicButtonCenter:CGPoint!
     var englishButtonCenter:CGPoint!

@@ -138,12 +138,26 @@ class RegistrationViewController: UIViewController, CLLocationManagerDelegate {
     let image = UIImage(systemName: "person.fill")
     @IBAction func handleRegister(_ sender: Any) {
         
+        let locman = CLLocationManager()
+        let authorizationStatus: CLAuthorizationStatus
+        
+        if #available(iOS 14, *) {
+            authorizationStatus = locman.authorizationStatus
+        } else {
+            authorizationStatus = CLLocationManager.authorizationStatus()
+        }
+        locman.requestWhenInUseAuthorization()
+        var loc:CLLocation?
+        if authorizationStatus == .authorizedWhenInUse || authorizationStatus == .authorizedAlways{
+            loc = locman.location
+        }
         if let name = userNameTaxtField.text ,
            let image = image,
            let imageData = image.jpegData(compressionQuality: 0.25),
            let email = userEmailTextField.text ,
            let phoneNumber = userPhoneNumberTextField.text ,
-           let password = passWordTextField.text {
+           let password = passWordTextField.text ,
+           let loc = loc {
             Auth.auth().createUser(withEmail: email, password: password) { authDataResult, error in
                 if let error = error{
                     print(error)
@@ -166,19 +180,7 @@ class RegistrationViewController: UIViewController, CLLocationManagerDelegate {
                                 
                                 
                                 
-                                let locman = CLLocationManager()
-                                let authorizationStatus: CLAuthorizationStatus
                                 
-                                if #available(iOS 14, *) {
-                                    authorizationStatus = locman.authorizationStatus
-                                } else {
-                                    authorizationStatus = CLLocationManager.authorizationStatus()
-                                }
-                                locman.requestWhenInUseAuthorization()
-                                var loc:CLLocation!
-                                if authorizationStatus == .authorizedWhenInUse || authorizationStatus == .authorizedAlways{
-                                    loc = locman.location
-                                }
                                 let lat:Double = loc.coordinate.latitude
                                 let long:Double = loc.coordinate.longitude
                                 let geo = GeoPoint.init(latitude: lat, longitude: long)

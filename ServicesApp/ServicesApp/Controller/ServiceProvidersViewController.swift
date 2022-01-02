@@ -27,43 +27,17 @@ class ServiceProvidersViewController: UIViewController {
     }
     
     @IBAction func handleCancel(_ sender: Any) {
-        do {
-            try Auth.auth().signOut()
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LandingNavigationController") as? UINavigationController {
-                vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true, completion: nil)
-            }
-        } catch  {
-            print("ERROR in signout",error.localizedDescription)
-        }
-        
-        
-        //        let alert = UIAlertController(title: "" , message: "", preferredStyle: .alert)
-        //
-        //        let cancelAction = UIAlertAction(title: "cancel", style: .destructive) { Action in
-        //            let ref = Firestore.firestore().collection("requests")
-        //            if let currentUser = Auth.auth().currentUser{
-        //                ref.document(currentUser.uid).delete { error in
-        //                    if let error = error{
-        //                        print(error)
-        //                    }else{
-        //                    let storageRef = Storage.storage().reference(withPath: "requests/\(currentUser.uid)")
-        //                    storageRef.delete { error in
-        //                        if let error = error {
-        //                            print("Error in storage delete",error)
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        }
-        ////        let updateAction = UIAlertAction(title: "Update", style: .default) { Action in
-        ////            //go to chat
-        ////        }
-        //        alert.addAction(cancelAction)
-        //       // alert.addAction(updateAction)
-        //        self.present(alert, animated: true, completion: nil)
-        //    }
+//        do {
+//            try Auth.auth().signOut()
+//            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LandingNavigationController") as? UINavigationController {
+//                vc.modalPresentationStyle = .fullScreen
+//                self.present(vc, animated: true, completion: nil)
+//            }
+//        } catch  {
+//            print("ERROR in signout",error.localizedDescription)
+//        }
+      
+
     }
     
     func getData(){
@@ -114,6 +88,7 @@ class ServiceProvidersViewController: UIViewController {
                                             self.serviceProviders.append(request)
                                             self.serviceProvidersTableView.reloadData()
                                             print(self.serviceProviders)
+                                            print("myyy",request,"vvv",self.serviceProviders)
                                         }
                                         
                                     }
@@ -187,7 +162,8 @@ extension ServiceProvidersViewController:UITableViewDelegate,UITableViewDataSour
                                           "title" : self.serviceProviders[indexPath.row].title ,
                                           "details" : self.serviceProviders[indexPath.row].details ,
                                           "createAt" : FieldValue.serverTimestamp(),
-                                          "haveProvider": false
+                                          "haveProvider": false,
+                                          "serviceId": self.serviceProviders[indexPath.row].requestType.id
             ]
             ref.document(self.serviceProviders[indexPath.row].id).setData(priceData) { error in
                 if let error = error {

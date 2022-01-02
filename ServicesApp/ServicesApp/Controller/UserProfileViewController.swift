@@ -140,7 +140,7 @@ extension UserProfileViewController:UITableViewDelegate,UITableViewDataSource{
         var content = cell.defaultContentConfiguration()
         if !providerServices.isEmpty{
             let db = Firestore.firestore()
-            db.collection("services".localizes).document(providerServices[indexPath.row]).getDocument { documentSnapshot, error in
+            db.collection("services").document(providerServices[indexPath.row]).getDocument { documentSnapshot, error in
                 if let error = error{
                     print(error)
                 }

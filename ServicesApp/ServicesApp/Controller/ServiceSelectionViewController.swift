@@ -27,7 +27,7 @@ class ServiceSelectionViewController: UIViewController {
     
     func getData(){
         let db = Firestore.firestore()
-        db.collection("services".localizes).order(by: "name").addSnapshotListener { snapshot, error in
+        db.collection("services").order(by: "name").addSnapshotListener { snapshot, error in
             
             if let error = error{
                 print(error)
@@ -44,36 +44,38 @@ class ServiceSelectionViewController: UIViewController {
             }
             
         }
-        
     }
     
     @IBAction func handleSave(_ sender: Any) {
         //add
-        if let currentUser = Auth.auth().currentUser , !selectedServices.isEmpty{
+       
+        if let currentUser = Auth.auth().currentUser{
             let db = Firestore.firestore()
             db.collection("users").document(currentUser.uid).getDocument { snapshot, error in
                 if let error = error{
                     print(error)
                 }
+                
                 if let snapshot = snapshot,
                    let userData = snapshot.data(){
-                                      let user = User(dict: userData)
+                    let user = User(dict: userData)
                     let dataBase = Firestore.firestore()
-                   // if let providerId = userData["id"] as? String{
-                                            let userData:[String:Any] = [
-                                                "id" : user.id,
-                                                "name" : user.name,
-                                                "email" : user.email,
-                                                "phoneNumber" : user.phoneNumber,
-                                                "userType" : user.userType,
-                                                "profilePictuer": user.profilePictuer,
-                                                "service":self.selectedServices,
-                                                "address":user.address
-                                            ]
-                       // userData["service"] = self.selectedServices
+              //  if let address = userData["address"] as? String{
+                        let userData:[String:Any] = [
+                            "id" : user.id,
+                            "name" : user.name,
+                            "email" : user.email,
+                            "phoneNumber" : user.phoneNumber,
+                            "userType" : user.userType,
+                            "profilePictuer": user.profilePictuer,
+                            "service":self.selectedServices,
+                            "address": user.address
+                        ]
+                
                         dataBase.collection("users").document(user.id).setData(userData){ error in
                             if let error = error{
                                 print(error)
+                                
                                 
                             }else{
                                 
@@ -84,14 +86,18 @@ class ServiceSelectionViewController: UIViewController {
                                 
                                 self.present(mainTabBarController, animated: true, completion: nil)
                             }
+                            
                         }
                     }
                 }
+                
             }
-        //self.dismiss(animated: true, completion: nil)
         }
+        
+    
     
 }
+
 extension ServiceSelectionViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return services.count
@@ -100,14 +106,13 @@ extension ServiceSelectionViewController:UITableViewDelegate,UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "serviceSelectionCell", for: indexPath) as! ServiceSelectionTableViewCell
         cell.serviceNameLabel.text = services[indexPath.row].name
-
+        
         let selectServiceSwitch = UISwitch()
         
         selectServiceSwitch.tag = indexPath.row
         selectServiceSwitch.addTarget(self, action: #selector(didChangeswitch(_:)), for: .valueChanged)
-        //selectServiceSwitch.isOn = false
         cell.accessoryView = selectServiceSwitch
-
+        
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
