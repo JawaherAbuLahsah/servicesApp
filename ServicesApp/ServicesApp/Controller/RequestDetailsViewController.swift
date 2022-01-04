@@ -6,33 +6,12 @@
 //
 
 import UIKit
-import MapKit
 import Firebase
 class RequestDetailsViewController: UIViewController {
     
     @IBOutlet weak var serviceNameLabel: UILabel!
     var selectServices : Service?
     
-    @IBOutlet weak var chooseLocationButton: UIButton!
-    
-    @IBOutlet weak var currentLocationButton: UIButton!
-    
-    @IBOutlet weak var showMapButton: UIButton!
-    
-    @IBOutlet weak var removeAnnotationButton: UIButton!{
-        didSet{
-           //  removeAnnotationButton.isHidden = true
-        }
-    }
-    @IBOutlet weak var mapView: MKMapView!{
-        didSet{
-            //mapView.isHidden = true
-            let gestureRecognizer = UITapGestureRecognizer(
-                target: self, action:#selector(handleTap))
-            gestureRecognizer.delegate = self
-            mapView.addGestureRecognizer(gestureRecognizer)
-        }
-    }
     @IBOutlet weak var titleLabel: UILabel!{
         didSet{
             titleLabel.text = "title".localizes
@@ -64,6 +43,7 @@ class RequestDetailsViewController: UIViewController {
             
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if let selectServices = selectServices{
@@ -78,8 +58,7 @@ class RequestDetailsViewController: UIViewController {
            let currentUser = Auth.auth().currentUser {
             let requestId = "\(Firebase.UUID())"
             let dataBase = Firestore.firestore()
-            if let selectServices = selectServices {
-                
+            if let selectServices = self.selectServices {
                 let requestData :[String:Any] = [
                     "requestsId" : currentUser.uid,
                     "providerId" :"0",
@@ -90,6 +69,7 @@ class RequestDetailsViewController: UIViewController {
                     "haveProvider": false,
                     "serviceId":selectServices.id
                 ]
+                
                 dataBase.collection("requests").document(requestId).setData(requestData){ error in
                     if let error = error {
                         print(error)
@@ -97,6 +77,7 @@ class RequestDetailsViewController: UIViewController {
                 }
             }
         }
+        
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -105,13 +86,6 @@ class RequestDetailsViewController: UIViewController {
         self.view.endEditing(true)
     }
     
-    
-    @IBAction func removeAnnotation(_ sender: Any) {
-        
-        let annotations = mapView.annotations.filter({ !($0 is MKUserLocation) })
-        mapView.removeAnnotations(annotations)
-        
-    }
 }
 
 extension RequestDetailsViewController:UITextFieldDelegate,UITextViewDelegate{
@@ -122,19 +96,4 @@ extension RequestDetailsViewController:UITextFieldDelegate,UITextViewDelegate{
     }
     
 }
-extension RequestDetailsViewController:MKMapViewDelegate, UIGestureRecognizerDelegate{
-    @objc func handleTap(gestureRecognizer: UITapGestureRecognizer) {
-        
-        let location = gestureRecognizer.location(in: mapView)
-        let coordinate = mapView.convert(location, toCoordinateFrom: mapView)
-        
-        let annotation = MKPointAnnotation()
-        
-        annotation.coordinate = coordinate
-        mapView.addAnnotation(annotation)
-        let lat:Double = annotation.coordinate.latitude
-        let long:Double = annotation.coordinate.longitude
-        let geo = GeoPoint(latitude: lat, longitude: long)
-        
-    }
-}
+

@@ -27,3 +27,10 @@
 "services" = "services";
 "delete" = "Delete";
 "save" = "SAVE";
+"0tab" = "REQUEST";
+"1tab" = "CHAT";
+"2tab" = "PROFILE";
+"0tabBar" = "SERVICES";
+"1tabBar" = "PROVIDER";
+"2tabBar" = "CHAT";
+"3tabBar" = "PROFILE";

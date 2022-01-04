@@ -13,12 +13,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginView: UIView!{
         didSet{
             loginView.layer.cornerRadius = 40
-//            loginView.layer.shadowColor = UIColor.gray.cgColor
-//            loginView.layer.shadowOpacity = 0.3
-//            loginView.layer.shadowOffset = CGSize.zero
-//            loginView.layer.shadowRadius = 3
-            
-           // loginView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         }
     }
     

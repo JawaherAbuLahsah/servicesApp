@@ -17,7 +17,8 @@ struct Request{
     var userRequest:User
     var haveProvider = false
     var requestType :Service
-    //var service : Service
+ 
+
     
     init(dict:[String:Any],id:String,userRequest:User,userProvider:User,requestType :Service){
         if let title = dict["title"] as? String,
@@ -30,6 +31,7 @@ struct Request{
             self.price = price
             self.createAt = createAt
             self.haveProvider = haveProvider
+           
         }
         self.id = id
         self.userRequest = userRequest

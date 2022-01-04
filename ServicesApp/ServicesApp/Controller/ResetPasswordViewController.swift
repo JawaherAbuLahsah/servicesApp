@@ -12,11 +12,6 @@ class ResetPasswordViewController: UIViewController {
     @IBOutlet weak var resetPasswordView: UIView!{
         didSet{
             resetPasswordView.layer.cornerRadius = 40
-//            resetPasswordView.layer.shadowColor = UIColor.black.cgColor
-//            resetPasswordView.layer.shadowOpacity = 0.3
-//            resetPasswordView.layer.shadowOffset = CGSize.zero
-//            resetPasswordView.layer.shadowRadius = 3
-           // resetPasswordView.layer.maskedCorners = [.layerMinXMinYCorner]
         }
     }
     @IBOutlet weak var emailLabel: UILabel!{
@@ -27,6 +22,7 @@ class ResetPasswordViewController: UIViewController {
     @IBOutlet weak var sendButton: UIButton!{
         didSet{
             sendButton.setTitle("send".localizes, for: .normal)
+            sendButton.layer.cornerRadius = 10
         }
     }
     @IBOutlet weak var emailTextField: UITextField!

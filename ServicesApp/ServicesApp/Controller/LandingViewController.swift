@@ -9,11 +9,7 @@ import UIKit
 
 class LandingViewController: UIViewController {
     
-//    @IBOutlet weak var languageView: UIView!{
-//        didSet{
-//            languageView.isHidden = true
-//        }
-//    }
+
     @IBOutlet weak var languageButton: UIButton!{
         didSet{
             languageButton.setTitle("language".localizes, for: .normal)
@@ -90,4 +86,5 @@ class LandingViewController: UIViewController {
             isClick = true
         }
     }
+    
 }

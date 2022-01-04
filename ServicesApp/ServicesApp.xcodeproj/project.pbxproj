@@ -39,12 +39,13 @@
 		950C9C7F27843E43002982CE /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950C9C7E27843E43002982CE /* AuthManager.swift */; };
 		950C9C8127844381002982CE /* SMSCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950C9C8027844380002982CE /* SMSCodeViewController.swift */; };
 		950F1B8627846B43005C92D1 /* HamburgerMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950F1B8527846B43005C92D1 /* HamburgerMenuViewController.swift */; };
+		950F1B882784D5B4005C92D1 /* ProviderTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950F1B872784D5B4005C92D1 /* ProviderTabBarViewController.swift */; };
+		950F1B8A2784D7BB005C92D1 /* RequesterTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950F1B892784D7BB005C92D1 /* RequesterTabBarViewController.swift */; };
 		9515C524277D8A8500205358 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9515C523277D8A8500205358 /* EditProfileViewController.swift */; };
 		9515C526277E29D400205358 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9515C525277E29D300205358 /* ResetPasswordViewController.swift */; };
 		9576FF8E277F5D7F00E1F583 /* CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576FF8D277F5D7F00E1F583 /* CLLocation.swift */; };
 		95B8322C2780C51600D674C4 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B8322B2780C51600D674C4 /* ChatViewController.swift */; };
 		95B8322E2780C88D00D674C4 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B8322D2780C88D00D674C4 /* Message.swift */; };
-		95CB72662783085800C691A5 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CB72652783085800C691A5 /* AlertViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,12 +83,13 @@
 		950C9C7E27843E43002982CE /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		950C9C8027844380002982CE /* SMSCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSCodeViewController.swift; sourceTree = "<group>"; };
 		950F1B8527846B43005C92D1 /* HamburgerMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamburgerMenuViewController.swift; sourceTree = "<group>"; };
+		950F1B872784D5B4005C92D1 /* ProviderTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderTabBarViewController.swift; sourceTree = "<group>"; };
+		950F1B892784D7BB005C92D1 /* RequesterTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequesterTabBarViewController.swift; sourceTree = "<group>"; };
 		9515C523277D8A8500205358 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		9515C525277E29D300205358 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		9576FF8D277F5D7F00E1F583 /* CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocation.swift; sourceTree = "<group>"; };
 		95B8322B2780C51600D674C4 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		95B8322D2780C88D00D674C4 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
-		95CB72652783085800C691A5 /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
 		95F2E2A8277C55720066D83C /* ServicesApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ServicesApp.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -179,9 +181,10 @@
 				9515C523277D8A8500205358 /* EditProfileViewController.swift */,
 				9515C525277E29D300205358 /* ResetPasswordViewController.swift */,
 				95B8322B2780C51600D674C4 /* ChatViewController.swift */,
-				95CB72652783085800C691A5 /* AlertViewController.swift */,
 				950C9C8027844380002982CE /* SMSCodeViewController.swift */,
 				950F1B8527846B43005C92D1 /* HamburgerMenuViewController.swift */,
+				950F1B872784D5B4005C92D1 /* ProviderTabBarViewController.swift */,
+				950F1B892784D7BB005C92D1 /* RequesterTabBarViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -291,6 +294,7 @@
 				95034CC62778D7CB006E37CD /* ServiceSelectionViewController.swift in Sources */,
 				9515C526277E29D400205358 /* ResetPasswordViewController.swift in Sources */,
 				95034C8F27778F53006E37CD /* LodingImage.swift in Sources */,
+				950F1B8A2784D7BB005C92D1 /* RequesterTabBarViewController.swift in Sources */,
 				95034CCA2778E7A5006E37CD /* UserProfileViewController.swift in Sources */,
 				9515C524277D8A8500205358 /* EditProfileViewController.swift in Sources */,
 				95034CB82778617B006E37CD /* User.swift in Sources */,
@@ -304,10 +308,10 @@
 				95034CC82778DBEE006E37CD /* ServiceSelectionTableViewCell.swift in Sources */,
 				95034CBA2778618A006E37CD /* Service.swift in Sources */,
 				95034C8027774B6E006E37CD /* RegistrationViewController.swift in Sources */,
+				950F1B882784D5B4005C92D1 /* ProviderTabBarViewController.swift in Sources */,
 				95B8322E2780C88D00D674C4 /* Message.swift in Sources */,
 				950C9C8127844381002982CE /* SMSCodeViewController.swift in Sources */,
 				95034C8C27778B49006E37CD /* ChangeLanguage.swift in Sources */,
-				95CB72662783085800C691A5 /* AlertViewController.swift in Sources */,
 				95034CCC2778F3D5006E37CD /* ServiceProvidersViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

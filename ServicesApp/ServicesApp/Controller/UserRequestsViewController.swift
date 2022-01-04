@@ -172,26 +172,7 @@ extension UserRequestsViewController:UITableViewDelegate,UITableViewDataSource{
                     let db = Firestore.firestore()
                     let ref = db.collection("requests")
                     
-                    let priceData:[String:Any]
-                    //                    if self.userRequests[indexPath.row].userProvider.id != Auth.auth().currentUser?.uid{
-                    //                        priceData = ["price": price,
-                    //                                     "requestsId" : self.userRequests[indexPath.row].userRequest.id,
-                    //                                     "providerId":self.userRequests[indexPath.row].userProvider.id,
-                    //                                     "title" : self.userRequests[indexPath.row].title ,
-                    //                                     "details" : self.userRequests[indexPath.row].details ,
-                    //                                     "createAt" : FieldValue.serverTimestamp(),
-                    //                                     "haveProvider":true
-                    //                        ]
-                    //                    }else{
-                    //                    "requestsId" : currentUser.uid,
-                    //                    "providerId" :"0",
-                    //                    "title" : title,
-                    //                    "details" : details,
-                    //                    "price": "0",
-                    //                    "createAt" : FieldValue.serverTimestamp(),
-                    //                    "haveProvider": false,
-                    //                    "serviceId":selectServices.id
-                    priceData = ["price": price,
+                    let priceData:[String:Any] = ["price": price,
                                  "requestsId" : self.userRequests[indexPath.row].userRequest.id,
                                  "providerId":self.userRequests[indexPath.row].userProvider.id,
                                  "title" : self.userRequests[indexPath.row].title ,
@@ -200,8 +181,6 @@ extension UserRequestsViewController:UITableViewDelegate,UITableViewDataSource{
                                  "haveProvider":true,
                                  "serviceId":self.userRequests[indexPath.row].requestType.id
                     ]
-                    
-                    //                    }
                     
                     ref.document(self.userRequests[indexPath.row].id).setData(priceData) { error in
                         if let error = error {

@@ -8,7 +8,7 @@
 import UIKit
 import Firebase
 class EditProfileViewController: UIViewController {
-   
+    
     @IBOutlet weak var profileImageView: UIImageView!{
         didSet{
             profileImageView.isUserInteractionEnabled = true
@@ -64,37 +64,35 @@ class EditProfileViewController: UIViewController {
                                        let userData = userSnapshot.data(){
                                         let user = User(dict: userData)
                                         let dataBase = Firestore.firestore()
-                                        if let address = user.address{
+                                        
                                         let userData:[String:Any]
                                         if user.userType{
-                                         userData = [
-                                            "id" : currentUser.uid,
-                                            "name" : name,
-                                            "email" : email,
-                                            "phoneNumber" : phoneNumber,
-                                            "userType" : user.userType,
-                                            "profilePictuer": url.absoluteString,
-                                            "service":self.providerServices,
-                                            "address":address
-                                        ]
+                                            userData = [
+                                                "id" : currentUser.uid,
+                                                "name" : name,
+                                                "email" : email,
+                                                "phoneNumber" : phoneNumber,
+                                                "userType" : user.userType,
+                                                "profilePictuer": url.absoluteString,
+                                                "service":self.providerServices
+                                            ]
                                         }else{
-                                        userData = [
-                                            "id" : currentUser.uid,
-                                            "name" : name,
-                                            "email" : email,
-                                            "phoneNumber" : phoneNumber,
-                                            "userType" : user.userType,
-                                            "profilePictuer": url.absoluteString,
-                                            "service":[],
-                                            "address":address
-                                        ]
+                                            userData = [
+                                                "id" : currentUser.uid,
+                                                "name" : name,
+                                                "email" : email,
+                                                "phoneNumber" : phoneNumber,
+                                                "userType" : user.userType,
+                                                "profilePictuer": url.absoluteString,
+                                                "service":[]
+                                            ]
                                         }
                                         
                                         dataBase.collection("users").document(currentUser.uid).setData(userData){ error in
                                             if let error = error{
                                                 print(error)
                                             }
-                                            }
+                                            
                                         }
                                     }
                                 }
@@ -105,7 +103,6 @@ class EditProfileViewController: UIViewController {
             }
         }
     }
-    
 }
 extension EditProfileViewController:UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     @objc func selectImage(){

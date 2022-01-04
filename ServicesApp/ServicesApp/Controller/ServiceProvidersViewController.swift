@@ -15,7 +15,7 @@ class ServiceProvidersViewController: UIViewController {
             serviceProvidersTableView.dataSource = self
         }
     }
-    @IBOutlet weak var cancelButton: UIButton!
+  
     
     var serviceProviders = [Request]()
     
@@ -26,24 +26,7 @@ class ServiceProvidersViewController: UIViewController {
         getData()
     }
     
-    @IBAction func handleCancel(_ sender: Any) {
-        //        do {
-        //            try Auth.auth().signOut()
-        //            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LandingNavigationController") as? UINavigationController {
-        //                vc.modalPresentationStyle = .fullScreen
-        //                self.present(vc, animated: true, completion: nil)
-        //            }
-        //        } catch  {
-        //            print("ERROR in signout",error.localizedDescription)
-        //        }
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let myAlert = storyboard.instantiateViewController(withIdentifier: "alert")
-        myAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-                myAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-                self.present(myAlert, animated: true, completion: nil)
-        
-    }
+
     
     func getData(){
         let db = Firestore.firestore()
@@ -185,7 +168,6 @@ extension ServiceProvidersViewController:UITableViewDelegate,UITableViewDataSour
                     print("FireStore Error",error.localizedDescription)
                 }
             }
-            //self.serviceProviders.remove(at: indexPath.row)
             
         }
         let sendAction = UIAlertAction(title: "send".localizes, style: .default) { Action in

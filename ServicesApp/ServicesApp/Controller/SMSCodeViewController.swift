@@ -11,11 +11,13 @@ class SMSCodeViewController: UIViewController {
     
     @IBOutlet weak var codeLabel: UILabel!{
         didSet{
-            
+            codeLabel.text = "code".localizes
+            codeLabel.layer.cornerRadius = 10
         }
     }
     @IBOutlet weak var sendButton: UIButton!{
         didSet{
+            sendButton.setTitle("send".localizes, for: .normal)
             sendButton.layer.cornerRadius = 10
         }
     }
@@ -56,7 +58,6 @@ class SMSCodeViewController: UIViewController {
                                     
                                     self.present(mainTabBarController, animated: true, completion: nil)
                                 }
-                                
                             }
                         }
                     }

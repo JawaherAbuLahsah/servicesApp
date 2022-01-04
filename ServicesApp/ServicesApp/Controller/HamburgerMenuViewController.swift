@@ -11,13 +11,34 @@ protocol HamburgerMenuControllerDelegate{
     func hideHamburgerMenu()
 }
 class HamburgerMenuViewController: UIViewController {
-    @IBOutlet weak var arButton: UIButton!
+    @IBOutlet weak var arButton: UIButton!{
+        didSet{
+            arButton.layer.borderColor = UIColor.systemTeal.cgColor
+            arButton.layer.borderWidth = 5
+            arButton.layer.cornerRadius = 10
+        }
+    }
     
-    @IBOutlet weak var enButton: UIButton!
-    @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var enButton: UIButton!{
+        didSet{
+            enButton.layer.borderColor = UIColor.systemTeal.cgColor
+            enButton.layer.borderWidth = 5
+            enButton.layer.cornerRadius = 10
+        }
+    }
+    @IBOutlet weak var editButton: UIButton!{
+        didSet{
+            editButton.setTitle("edit".localizes, for: .normal)
+            editButton.layer.cornerRadius = 10
+        }
+    }
     
-    @IBOutlet weak var languageButton: UIButton!
-    
+    @IBOutlet weak var languageButton: UIButton!{
+        didSet{
+        languageButton.setTitle("language".localizes, for: .normal)
+    languageButton.layer.cornerRadius = 10
+        }
+    }
     @IBOutlet weak var logoutButton: UIButton!
     var delegate :HamburgerMenuControllerDelegate?
     var lang:String?
@@ -32,11 +53,6 @@ class HamburgerMenuViewController: UIViewController {
         englishButtonCenter = enButton.center
         arButton.center = languageButton.center
         enButton.center = languageButton.center
-    }
-    
-
-    
-    @IBAction func editProfile(_ sender: Any) {
     }
     
     @IBAction func changeLanguage(_ sender: UIButton) {
