@@ -37,6 +37,11 @@ class ServiceProvidersViewController: UIViewController {
         //            print("ERROR in signout",error.localizedDescription)
         //        }
         
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let myAlert = storyboard.instantiateViewController(withIdentifier: "alert")
+        myAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+                myAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+                self.present(myAlert, animated: true, completion: nil)
         
     }
     
@@ -98,7 +103,7 @@ class ServiceProvidersViewController: UIViewController {
                                            
                                             let newRequest = Request(dict: requestData, id: requestId, userRequest: user, userProvider: userProvider, requestType: service)
                                             print(newRequest)
-                                              //  self.serviceProviders[updateIndex] = newRequest
+                                            
                                             if newRequest.title != "" && newRequest.haveProvider{
                                             self.serviceProvidersTableView.beginUpdates()
                                             self.serviceProviders.append(newRequest)
@@ -114,20 +119,7 @@ class ServiceProvidersViewController: UIViewController {
                                                     
                                                 }
                                             }
-//                                            if let updateIndex = self.serviceProviders.firstIndex(where: {$0.id == requestId}){
-                                                
-                                              //  self.serviceProvidersTableView.beginUpdates()
-                                               
-//                                                self.serviceProviders.remove(at: updateIndex)
-//                                                self.serviceProvidersTableView.reloadData()
-                                              //  self.serviceProvidersTableView.deleteRows(at: [IndexPath(row: updateIndex, section: 0)], with: .left)
-//                                                if request.haveProvider {
-//                                                self.serviceProvidersTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .left)
-//                                            }
-                                                   //     self.serviceProvidersTableView.endUpdates()
-                                                        
-                                                        
-//                                            }
+
                                         case .removed:
                                             let requestId = documentChange.document.documentID
                                             if let deleteIndex = self.serviceProviders.firstIndex(where: {$0.id == requestId}){

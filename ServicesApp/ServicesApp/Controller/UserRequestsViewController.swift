@@ -71,8 +71,6 @@ class UserRequestsViewController: UIViewController {
                                             switch documentChange.type{
                                             case .added:
                                                 
-                                                
-                                                
                                                 if !request.haveProvider {
                                                     
                                                     for id in userProvider.service{
@@ -87,11 +85,10 @@ class UserRequestsViewController: UIViewController {
                                                 
                                             case .modified:
                                                 let requestId = documentChange.document.documentID
-//                                                if let updateIndex = self.userRequests.firstIndex(where: {$0.id == requestId}){
-                                               // if let updateIndex = self.userRequests.firstIndex(where: {$0.id == requestId}){
+
                                                     let newRequest = Request(dict: requestData, id: requestId, userRequest: user, userProvider: userProvider, requestType: service)
                                                     print(newRequest)
-                                                    //self.userRequests[updateIndex] = newRequest
+                                                  
                                                 if newRequest.title != "" && !newRequest.haveProvider{
                                                     self.requestsTableView.beginUpdates()
                                                     self.userRequests.append(newRequest)
@@ -108,18 +105,6 @@ class UserRequestsViewController: UIViewController {
                                                     }
                                                 }
                                                 
-                                             //   }
-                                                    // self.requestsTableView.beginUpdates()
-//                                                    self.userRequests.remove(at: updateIndex)
-//                                                    self.requestsTableView.reloadData()
-                                                    //                                                self.requestsTableView.deleteRows(at: [IndexPath(row: updateIndex, section: 0)], with: .left)
-                                                    ////                                                if !request.haveProvider {
-                                                    //                                              //  self.requestsTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .left)
-                                                    ////                                                }
-                                                    //                                                self.requestsTableView.endUpdates()
-                                                    
-                                                    
-                                              //  }
                                             case .removed:
                                                 let requestId = documentChange.document.documentID
                                                 if let deleteIndex = self.userRequests.firstIndex(where: {$0.id == requestId}){

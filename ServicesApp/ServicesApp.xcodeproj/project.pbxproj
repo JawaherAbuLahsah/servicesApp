@@ -41,6 +41,7 @@
 		9576FF8E277F5D7F00E1F583 /* CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576FF8D277F5D7F00E1F583 /* CLLocation.swift */; };
 		95B8322C2780C51600D674C4 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B8322B2780C51600D674C4 /* ChatViewController.swift */; };
 		95B8322E2780C88D00D674C4 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B8322D2780C88D00D674C4 /* Message.swift */; };
+		95CB72662783085800C691A5 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CB72652783085800C691A5 /* AlertViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +81,7 @@
 		9576FF8D277F5D7F00E1F583 /* CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocation.swift; sourceTree = "<group>"; };
 		95B8322B2780C51600D674C4 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		95B8322D2780C88D00D674C4 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		95CB72652783085800C691A5 /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
 		95F2E2A8277C55720066D83C /* ServicesApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ServicesApp.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -170,6 +172,7 @@
 				9515C523277D8A8500205358 /* EditProfileViewController.swift */,
 				9515C525277E29D300205358 /* ResetPasswordViewController.swift */,
 				95B8322B2780C51600D674C4 /* ChatViewController.swift */,
+				95CB72652783085800C691A5 /* AlertViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 				95034C8027774B6E006E37CD /* RegistrationViewController.swift in Sources */,
 				95B8322E2780C88D00D674C4 /* Message.swift in Sources */,
 				95034C8C27778B49006E37CD /* ChangeLanguage.swift in Sources */,
+				95CB72662783085800C691A5 /* AlertViewController.swift in Sources */,
 				95034CCC2778F3D5006E37CD /* ServiceProvidersViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

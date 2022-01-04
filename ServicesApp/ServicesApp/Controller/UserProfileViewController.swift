@@ -21,7 +21,11 @@ class UserProfileViewController: UIViewController {
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var userPhoneNumberLabel: UILabel!
     @IBOutlet weak var userEmailLabel: UILabel!
-    @IBOutlet weak var editProfileButton: UIButton!
+    @IBOutlet weak var editProfileButton: UIButton!{
+        didSet{
+            editProfileButton.layer.cornerRadius = 10
+        }
+    }
     
     
     var providerServices = [String]()
@@ -80,6 +84,10 @@ class UserProfileViewController: UIViewController {
                                             
                                             self.providerServicesTableView.endUpdates()
                                         }
+                                        self.userNameLabel.text = user.name
+                                        self.userPhoneNumberLabel.text = user.phoneNumber
+                                        self.userEmailLabel.text = user.email
+                                        self.profileImageView.lodingImage(user.profilePictuer)
                                         
                                     }
                                 case .removed:

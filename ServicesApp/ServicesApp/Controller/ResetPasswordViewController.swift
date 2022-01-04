@@ -9,6 +9,16 @@ import UIKit
 import Firebase
 class ResetPasswordViewController: UIViewController {
 
+    @IBOutlet weak var resetPasswordView: UIView!{
+        didSet{
+            resetPasswordView.layer.cornerRadius = 40
+//            resetPasswordView.layer.shadowColor = UIColor.black.cgColor
+//            resetPasswordView.layer.shadowOpacity = 0.3
+//            resetPasswordView.layer.shadowOffset = CGSize.zero
+//            resetPasswordView.layer.shadowRadius = 3
+           // resetPasswordView.layer.maskedCorners = [.layerMinXMinYCorner]
+        }
+    }
     @IBOutlet weak var emailLabel: UILabel!{
         didSet{
             emailLabel.text = "email".localizes

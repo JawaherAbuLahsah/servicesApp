@@ -8,6 +8,21 @@
 import UIKit
 import Firebase
 class LoginViewController: UIViewController {
+    
+    
+    @IBOutlet weak var loginView: UIView!{
+        didSet{
+            loginView.layer.cornerRadius = 40
+//            loginView.layer.shadowColor = UIColor.gray.cgColor
+//            loginView.layer.shadowOpacity = 0.3
+//            loginView.layer.shadowOffset = CGSize.zero
+//            loginView.layer.shadowRadius = 3
+            
+           // loginView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        }
+    }
+    
+    
     @IBOutlet weak var emailLabel: UILabel!{
         didSet{
             emailLabel.text = "email".localizes
@@ -31,11 +46,13 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!{
         didSet{
             loginButton.setTitle("login".localizes, for: .normal)
+            loginButton.layer.cornerRadius = 10
         }
     }
     @IBOutlet weak var signUpButton: UIButton!{
         didSet{
             signUpButton.setTitle("signup".localizes, for: .normal)
+            signUpButton.layer.cornerRadius = 10
         }
     }
     

@@ -10,6 +10,7 @@ import MapKit
 import Firebase
 class RequestDetailsViewController: UIViewController {
     
+    @IBOutlet weak var serviceNameLabel: UILabel!
     var selectServices : Service?
     
     @IBOutlet weak var chooseLocationButton: UIButton!
@@ -25,7 +26,7 @@ class RequestDetailsViewController: UIViewController {
     }
     @IBOutlet weak var mapView: MKMapView!{
         didSet{
-            mapView.isHidden = true
+            //mapView.isHidden = true
             let gestureRecognizer = UITapGestureRecognizer(
                 target: self, action:#selector(handleTap))
             gestureRecognizer.delegate = self
@@ -65,6 +66,9 @@ class RequestDetailsViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let selectServices = selectServices{
+            serviceNameLabel.text = selectServices.name
+        }
         
     }
     

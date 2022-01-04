@@ -21,7 +21,6 @@ class ServiceSelectionViewController: UIViewController {
         super.viewDidLoad()
         getData()
         
-        // Do any additional setup after loading the view.
     }
     
     
@@ -40,15 +39,13 @@ class ServiceSelectionViewController: UIViewController {
                     self.serviceSelectionTableView.reloadData()
                     print(self.services)
                 }
-                
             }
-            
         }
     }
     
     @IBAction func handleSave(_ sender: Any) {
         //add
-       
+        
         if let currentUser = Auth.auth().currentUser{
             let db = Firestore.firestore()
             db.collection("users").document(currentUser.uid).getDocument { snapshot, error in
@@ -60,42 +57,38 @@ class ServiceSelectionViewController: UIViewController {
                    let userData = snapshot.data(){
                     let user = User(dict: userData)
                     let dataBase = Firestore.firestore()
-              //  if let address = userData["address"] as? String{
-                        let userData:[String:Any] = [
-                            "id" : user.id,
-                            "name" : user.name,
-                            "email" : user.email,
-                            "phoneNumber" : user.phoneNumber,
-                            "userType" : user.userType,
-                            "profilePictuer": user.profilePictuer,
-                            "service":self.selectedServices,
-                            "address": user.address
-                        ]
-                
-                        dataBase.collection("users").document(user.id).setData(userData){ error in
-                            if let error = error{
-                                print(error)
-                                
-                                
-                            }else{
-                                
-                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                                
-                                let mainTabBarController = storyboard.instantiateViewController(identifier: "ServiceProviderNavigationController")
-                                mainTabBarController.modalPresentationStyle = .fullScreen
-                                
-                                self.present(mainTabBarController, animated: true, completion: nil)
-                            }
+                    //  if let address = userData["address"] as? Any{
+                    let userData:[String:Any] = [
+                        "id" : user.id,
+                        "name" : user.name,
+                        "email" : user.email,
+                        "phoneNumber" : user.phoneNumber,
+                        "userType" : user.userType,
+                        "profilePictuer": user.profilePictuer,
+                        "service":self.selectedServices,
+                        "address": user.address as Any
+                    ]
+                    
+                    dataBase.collection("users").document(user.id).setData(userData){ error in
+                        if let error = error{
+                            print(error)
                             
+                            
+                        }else{
+                            
+                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                            
+                            let mainTabBarController = storyboard.instantiateViewController(identifier: "ServiceProviderNavigationController")
+                            mainTabBarController.modalPresentationStyle = .fullScreen
+                            
+                            self.present(mainTabBarController, animated: true, completion: nil)
                         }
+                        
                     }
                 }
-                
             }
         }
-        
-    
-    
+    }
 }
 
 extension ServiceSelectionViewController:UITableViewDelegate,UITableViewDataSource{

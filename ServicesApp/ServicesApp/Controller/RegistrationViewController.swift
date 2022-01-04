@@ -13,6 +13,16 @@ import CoreLocation
 class RegistrationViewController: UIViewController, CLLocationManagerDelegate {
     let locationManager = CLLocationManager()
     
+    @IBOutlet weak var registrationView: UIView!{
+        didSet{
+    registrationView.layer.cornerRadius = 40
+//    registrationView.layer.shadowColor = UIColor.black.cgColor
+//    registrationView.layer.shadowOpacity = 0.3
+//    registrationView.layer.shadowOffset = CGSize.zero
+//    registrationView.layer.shadowRadius = 3
+  //  registrationView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        }
+    }
     @IBOutlet weak var userTypeButton: UIButton!{
         didSet{
             userTypeButton.layer.borderWidth = 0.5
@@ -71,8 +81,11 @@ class RegistrationViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var signInButton: UIButton!{
         didSet{
             signInButton.setTitle("signIn".localizes, for: .normal)
+            signInButton.layer.cornerRadius = 10
         }
     }
+    
+    
     var isProvider = false
     @IBAction func specifyType(_ sender: Any) {
         if isProvider{
@@ -83,6 +96,9 @@ class RegistrationViewController: UIViewController, CLLocationManagerDelegate {
             isProvider = true
         }
     }
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.delegate = self
