@@ -218,17 +218,32 @@ class RegistrationViewController: UIViewController, CLLocationManagerDelegate {
                                         print(error)
                                         
                                     }else{
+//
+//                                        let number = "+1\(phoneNumber)"
+//                                        AuthManager.shared.startAuth(phoneNumber: number) {  success in
+//                                            guard success else{return}
+//                                            DispatchQueue.main.async {
+//                                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//
+//                                                    let mainTabBarController = storyboard.instantiateViewController(identifier: "SMSCode")
+//                                                    mainTabBarController.modalPresentationStyle = .fullScreen
+//
+//                                                    self.present(mainTabBarController, animated: true, completion: nil)
+//
+//
+//                                            }
+//                                        }
                                         
                                         let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                         if self.isProvider{
                                             let mainTabBarController = storyboard.instantiateViewController(identifier: "ServicesSelectionNavigationController")
                                             mainTabBarController.modalPresentationStyle = .fullScreen
-                                            
+
                                             self.present(mainTabBarController, animated: true, completion: nil)
                                         }else{
                                             let mainTabBarController = storyboard.instantiateViewController(identifier: "ServiceRequesterNavigationController")
                                             mainTabBarController.modalPresentationStyle = .fullScreen
-                                            
+
                                             self.present(mainTabBarController, animated: true, completion: nil)
                                         }
                                     }

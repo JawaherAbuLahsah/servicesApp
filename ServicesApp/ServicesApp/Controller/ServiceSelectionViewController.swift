@@ -9,6 +9,11 @@ import UIKit
 import Firebase
 class ServiceSelectionViewController: UIViewController {
     
+    @IBOutlet weak var saveButton: UIButton!{
+        didSet{
+            saveButton.setTitle("save".localizes, for: .normal)
+        }
+    }
     @IBOutlet weak var serviceSelectionTableView: UITableView!{
         didSet{
             serviceSelectionTableView.dataSource = self
@@ -71,11 +76,11 @@ class ServiceSelectionViewController: UIViewController {
                     
                     dataBase.collection("users").document(user.id).setData(userData){ error in
                         if let error = error{
-                            print(error)
+                            print("errrooooo",error)
                             
                             
                         }else{
-                            
+                            print("omeokpre")
                             let storyboard = UIStoryboard(name: "Main", bundle: nil)
                             
                             let mainTabBarController = storyboard.instantiateViewController(identifier: "ServiceProviderNavigationController")

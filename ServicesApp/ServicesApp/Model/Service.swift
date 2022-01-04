@@ -14,7 +14,7 @@ struct Service{
            let arName = dict["arName"] as? String,
                let enName = dict["enName"] as? String{
             self.id = id
-            if UserDefaults.standard.object(forKey: "currentLanguage") as! String == "ar"{
+            if UserDefaults.standard.object(forKey: "currentLanguage") as? String == "ar"{
             self.name = arName
             }else{
             self.name = enName

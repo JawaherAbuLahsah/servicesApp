@@ -7,8 +7,10 @@
 
 import UIKit
 import Firebase
-class UserProfileViewController: UIViewController {
+class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegate {
     
+    @IBOutlet weak var hamburgerMenuView: UIView!
+    @IBOutlet weak var hamburgerMenuConstraintLeading: NSLayoutConstraint!
     @IBOutlet weak var profileImageView: UIImageView!
     
     @IBOutlet weak var serviceView: UIView!
@@ -27,7 +29,8 @@ class UserProfileViewController: UIViewController {
         }
     }
     
-    
+    var hamburgerMenuViewController:HamburgerMenuViewController?
+    var isHamburgerMenuShown:Bool = false
     var providerServices = [String]()
     var userProviderData = [User]()
     override func viewDidLoad() {
@@ -112,10 +115,12 @@ class UserProfileViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "toEditVC"{
+        if segue.identifier == "toEditServiceVC"{
 //            let sender = segue.destination as! ServiceSelectionViewController
 //            sender.selectedServices = providerServices
-        }else{
+            
+        }
+        if segue.identifier == "toEditVC"{
         let sender = segue.destination as! EditProfileViewController
         sender.providerServices = providerServices
         }
@@ -135,6 +140,50 @@ class UserProfileViewController: UIViewController {
         }
         
     }
+    
+    
+    
+    
+    func hideHamburgerMenu() {
+        UIView.animate(withDuration: 0.2) {
+            self.hamburgerMenuConstraintLeading.constant = 10
+            self.view.layoutIfNeeded()
+        } completion: { (status) in
+            self.hamburgerMenuView.alpha = 0.0
+            UIView.animate(withDuration: 0.2) {
+                self.hamburgerMenuConstraintLeading.constant = -140
+                self.view.layoutIfNeeded()
+            } completion: { (status) in
+                self.hamburgerMenuView.isHidden = true
+                self.isHamburgerMenuShown = false
+            }
+        }
+    }
+    
+    @IBAction func tappedOnBackView(_ sender: Any) {
+        hideHamburgerMenu()
+    }
+    
+    //show hamburgerMenu
+    @IBAction func hamburgerMenu(_ sender: Any) {
+        UIView.animate(withDuration: 0.2) {
+            self.hamburgerMenuConstraintLeading.constant = 10
+            self.view.layoutIfNeeded()
+        } completion: { (status) in
+            self.hamburgerMenuView.alpha = 0.9
+            self.hamburgerMenuView.isHidden = false
+            UIView.animate(withDuration: 0.2) {
+                self.hamburgerMenuConstraintLeading.constant = 0
+                self.view.layoutIfNeeded()
+            } completion: { (status) in
+                self.isHamburgerMenuShown = true
+            }
+        }
+        hamburgerMenuView.isHidden = false
+    }
+    
+    
+    
 }
 
 extension UserProfileViewController:UITableViewDelegate,UITableViewDataSource{

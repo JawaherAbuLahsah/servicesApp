@@ -17,23 +17,27 @@ class LandingViewController: UIViewController {
     @IBOutlet weak var languageButton: UIButton!{
         didSet{
             languageButton.setTitle("language".localizes, for: .normal)
+            languageButton.layer.cornerRadius = 10
         }
     }
     @IBOutlet weak var signInButton: UIButton!{
         didSet{
             signInButton.setTitle("signIn".localizes, for: .normal)
+            signInButton.layer.cornerRadius = 10
         }
     }
     @IBOutlet weak var arabicButton: UIButton!{
         didSet{
-            arabicButton.layer.borderColor = UIColor.brown.cgColor
+            arabicButton.layer.borderColor = UIColor.systemTeal.cgColor
             arabicButton.layer.borderWidth = 5
+            arabicButton.layer.cornerRadius = 10
         }
     }
     @IBOutlet weak var englishButton: UIButton!{
         didSet{
-            englishButton.layer.borderColor = UIColor.brown.cgColor
+            englishButton.layer.borderColor = UIColor.systemTeal.cgColor
             englishButton.layer.borderWidth = 5
+            englishButton.layer.cornerRadius = 10
         }
     }
     
@@ -86,5 +90,4 @@ class LandingViewController: UIViewController {
             isClick = true
         }
     }
-    
 }
