@@ -11,7 +11,13 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
     
     @IBOutlet weak var hamburgerMenuView: UIView!
     @IBOutlet weak var hamburgerMenuConstraintLeading: NSLayoutConstraint!
-    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var profileImageView: UIImageView!{
+        didSet{
+            profileImageView.isUserInteractionEnabled = true
+            let tabGesture = UITapGestureRecognizer(target: self, action: #selector(selectImage))
+            profileImageView.addGestureRecognizer(tabGesture)
+        }
+    }
     
     @IBOutlet weak var serviceView: UIView!
     @IBOutlet weak var providerServicesTableView: UITableView!{
@@ -28,7 +34,7 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
             editProfileButton.layer.cornerRadius = 10
         }
     }
-    
+    let imagePickerController = UIImagePickerController()
     var hamburgerMenuViewController:HamburgerMenuViewController?
     var isHamburgerMenuShown:Bool = false
     var providerServices = [String]()
@@ -36,6 +42,7 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         getData()
+        imagePickerController.delegate = self
         // Do any additional setup after loading the view.
     }
     func getData(){
@@ -194,6 +201,7 @@ extension UserProfileViewController:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "selectedServicesCell", for: indexPath)
+        cell.selectionStyle = .none
         var content = cell.defaultContentConfiguration()
         if !providerServices.isEmpty{
             let db = Firestore.firestore()
@@ -209,5 +217,44 @@ extension UserProfileViewController:UITableViewDelegate,UITableViewDataSource{
             }
         }
         return cell
+    }
+    
+}
+extension UserProfileViewController:UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    @objc func selectImage(){
+        showAlert()
+    }
+    func showAlert(){
+        let alert = UIAlertController(title: "Post Picture", message: "Pick your post image", preferredStyle: .actionSheet)
+        let cameraAction = UIAlertAction(title: "Camera", style: .default) { Action in
+            self.getImage(.camera)
+        }
+        let galaryAction = UIAlertAction(title: "Photo Album", style: .default) { Action in
+            self.getImage(.photoLibrary)
+        }
+        let dismissAction = UIAlertAction(title: "Cancle", style: .cancel) { Action in
+            self.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(cameraAction)
+        alert.addAction(galaryAction)
+        alert.addAction(dismissAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func getImage(_ sourceType: UIImagePickerController.SourceType) {
+        if UIImagePickerController.isSourceTypeAvailable(sourceType) {
+            imagePickerController.sourceType = sourceType
+            self.present(imagePickerController, animated: true, completion: nil)
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let chosenImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return}
+        profileImageView.image = chosenImage
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        
     }
 }

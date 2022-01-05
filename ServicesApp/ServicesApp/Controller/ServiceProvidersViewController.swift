@@ -178,10 +178,12 @@ extension ServiceProvidersViewController:UITableViewDelegate,UITableViewDataSour
                 }
             }
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let mainTabBarController = storyboard.instantiateViewController(identifier: "ChatNavigationController")
-            mainTabBarController.modalPresentationStyle = .fullScreen
+           if let mainTabBarController = storyboard.instantiateViewController(identifier: "ChatNavigationController") as? UITabBarController{
+               mainTabBarController.modalPresentationStyle = .automatic
             
-            self.present(mainTabBarController, animated: true, completion: nil)
+            
+               self.present(mainTabBarController, animated: true, completion: nil)
+        }
         }
         let deleteAction = UIAlertAction(title: "delete".localizes, style: .destructive){ Action in
             

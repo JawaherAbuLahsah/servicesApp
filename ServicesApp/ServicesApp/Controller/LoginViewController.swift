@@ -81,6 +81,12 @@ class LoginViewController: UIViewController {
                              let user = User(dict: userData)
                                 
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                            if authDataResult.user.uid == "TeGLA3gVl3SudOGtFtVvwbwzs192"{
+                                let mainTabBarController = storyboard.instantiateViewController(identifier: "AdminNavigationController")
+                                mainTabBarController.modalPresentationStyle = .fullScreen
+                                
+                                self.present(mainTabBarController, animated: true, completion: nil)
+                            }else{
                             if user.userType {
                                     let mainTabBarController = storyboard.instantiateViewController(identifier: "ServiceProviderNavigationController")
                                     mainTabBarController.modalPresentationStyle = .fullScreen
@@ -91,7 +97,7 @@ class LoginViewController: UIViewController {
                                     mainTabBarController.modalPresentationStyle = .fullScreen
                                     
                                     self.present(mainTabBarController, animated: true, completion: nil)
-                             
+                                }
                             }
                         }
                     }

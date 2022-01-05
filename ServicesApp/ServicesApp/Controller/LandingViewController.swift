@@ -53,8 +53,10 @@ class LandingViewController: UIViewController {
     @IBAction func changeLanguage(_ sender: UIButton) {
         if sender.tag == 0 {
             lang = "ar"
+            UIView.appearance().semanticContentAttribute = .forceRightToLeft
         }else{
             lang = "en"
+            UIView.appearance().semanticContentAttribute = .forceLeftToRight
         }
         if let lang = lang{
             UserDefaults.standard.set(lang, forKey: "currentLanguage")

@@ -62,16 +62,24 @@ class HamburgerMenuViewController: UIViewController {
             lang = "en"
         }
         if let lang = lang{
+           
+            UserDefaults.standard.setValue([lang], forKey: "AppleLanguages")
             UserDefaults.standard.set(lang, forKey: "currentLanguage")
             Bundle.setLanguage(lang)
-            let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-               let sceneDelegate = windowScene.delegate as? SceneDelegate {
-                sceneDelegate.window?.rootViewController = storyboard.instantiateInitialViewController()
+            exit(0)
+            //let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+//            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+//               let sceneDelegate = windowScene.delegate as? SceneDelegate {
+//                sceneDelegate.window?.rootViewController = storyboard.instantiateInitialViewController()
+//            }
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            let mainTabBarController = storyboard.instantiateViewController(identifier: "userProfile")
+//            mainTabBarController.modalPresentationStyle = .automatic
+//
+//            self.present(mainTabBarController, animated: true, completion: nil)
+           
             }
         }
-    }
-    
     @IBAction func showLanguages(_ sender: Any) {
         if isClick{
             UIView.animate(withDuration: 0.3) {

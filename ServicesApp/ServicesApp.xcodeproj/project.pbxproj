@@ -41,6 +41,7 @@
 		950F1B8627846B43005C92D1 /* HamburgerMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950F1B8527846B43005C92D1 /* HamburgerMenuViewController.swift */; };
 		950F1B882784D5B4005C92D1 /* ProviderTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950F1B872784D5B4005C92D1 /* ProviderTabBarViewController.swift */; };
 		950F1B8A2784D7BB005C92D1 /* RequesterTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950F1B892784D7BB005C92D1 /* RequesterTabBarViewController.swift */; };
+		950F1B8C2785F6F6005C92D1 /* AddServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950F1B8B2785F6F6005C92D1 /* AddServicesViewController.swift */; };
 		9515C524277D8A8500205358 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9515C523277D8A8500205358 /* EditProfileViewController.swift */; };
 		9515C526277E29D400205358 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9515C525277E29D300205358 /* ResetPasswordViewController.swift */; };
 		9576FF8E277F5D7F00E1F583 /* CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576FF8D277F5D7F00E1F583 /* CLLocation.swift */; };
@@ -85,6 +86,7 @@
 		950F1B8527846B43005C92D1 /* HamburgerMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamburgerMenuViewController.swift; sourceTree = "<group>"; };
 		950F1B872784D5B4005C92D1 /* ProviderTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderTabBarViewController.swift; sourceTree = "<group>"; };
 		950F1B892784D7BB005C92D1 /* RequesterTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequesterTabBarViewController.swift; sourceTree = "<group>"; };
+		950F1B8B2785F6F6005C92D1 /* AddServicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddServicesViewController.swift; sourceTree = "<group>"; };
 		9515C523277D8A8500205358 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		9515C525277E29D300205358 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		9576FF8D277F5D7F00E1F583 /* CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocation.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 				950F1B8527846B43005C92D1 /* HamburgerMenuViewController.swift */,
 				950F1B872784D5B4005C92D1 /* ProviderTabBarViewController.swift */,
 				950F1B892784D7BB005C92D1 /* RequesterTabBarViewController.swift */,
+				950F1B8B2785F6F6005C92D1 /* AddServicesViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 				95034CB82778617B006E37CD /* User.swift in Sources */,
 				95034CC02778BC06006E37CD /* UserRequestsViewController.swift in Sources */,
 				95034CC22778C449006E37CD /* ServicesViewController.swift in Sources */,
+				950F1B8C2785F6F6005C92D1 /* AddServicesViewController.swift in Sources */,
 				9576FF8E277F5D7F00E1F583 /* CLLocation.swift in Sources */,
 				95034CBE27789578006E37CD /* RequestDetailsViewController.swift in Sources */,
 				95034CC42778C4AE006E37CD /* ServiceCollectionViewCell.swift in Sources */,
