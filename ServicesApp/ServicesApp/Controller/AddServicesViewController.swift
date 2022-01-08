@@ -9,13 +9,21 @@ import UIKit
 import Firebase
 class AddServicesViewController: UIViewController {
     
-    @IBOutlet weak var enNameLabel: UILabel!
+    @IBOutlet weak var enNameLabel: UILabel!{
+        didSet{
+            enNameLabel.text = "enName".localizes
+        }
+    }
     @IBOutlet weak var enNameTextField: UITextField!{
         didSet{
             enNameTextField.delegate = self
         }
     }
-    @IBOutlet weak var arNameLabel: UILabel!
+    @IBOutlet weak var arNameLabel: UILabel!{
+        didSet{
+            arNameLabel.text = "arName".localizes
+        }
+    }
     @IBOutlet weak var arNameTextField: UITextField!{
         didSet{
             arNameTextField.delegate = self
@@ -29,23 +37,23 @@ class AddServicesViewController: UIViewController {
         }
     }
     @IBOutlet weak var actionButton: UIButton!
+    let activityIndicator = UIActivityIndicatorView()
     let imagePickerController = UIImagePickerController()
     var selectServices : Service?
     var selectedServiceImage:UIImage?
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePickerController.delegate = self
-        if let selectServices = selectServices,
-        let selectedServiceImage = selectedServiceImage{
+        if let selectServices = selectServices{
             enNameTextField.text = selectServices.name
             arNameTextField.text = selectServices.name
-            serviceImage.image = selectedServiceImage
+            serviceImage.lodingImage(selectServices.imageUrl)
             
-            actionButton.setTitle("Update", for: .normal)
+            actionButton.setTitle("edit".localizes, for: .normal)
             let deleteBarButton = UIBarButtonItem(image: UIImage(systemName: "trash.fill"), style: .plain, target: self, action: #selector(handleDelete))
             self.navigationItem.rightBarButtonItem = deleteBarButton
         }else {
-            actionButton.setTitle("Add", for: .normal)
+            actionButton.setTitle("save".localizes, for: .normal)
             self.navigationItem.rightBarButtonItem = nil
         }
     }
@@ -106,6 +114,7 @@ class AddServicesViewController: UIViewController {
 @objc func handleDelete(){
     let ref = Firestore.firestore().collection("services")
     if let selectServices = selectServices {
+        Activity.showIndicator(parentView: self.view, childView: activityIndicator)
         ref.document(selectServices.id).delete { error in
             if let error = error {
                 print("Error in db delete",error)
@@ -116,8 +125,8 @@ class AddServicesViewController: UIViewController {
                     if let error = error {
                         print("Error in storage delete",error)
                     } else {
-                        //                            self.activityIndicator.stopAnimating()
-                        //                            self.navigationController?.popViewController(animated: true)
+                        self.activityIndicator.stopAnimating()
+                        self.navigationController?.popViewController(animated: true)
                     }
                 }
             }
@@ -125,18 +134,18 @@ class AddServicesViewController: UIViewController {
     }
 }
     
-    @IBAction func logout(_ sender: Any) {
-        do {
-            try Auth.auth().signOut()
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LandingNavigationController") as? UINavigationController {
-                vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true, completion: nil)
-            }
-        } catch  {
-            print("ERROR in signout",error.localizedDescription)
-        }
-
-    }
+//    @IBAction func logout(_ sender: Any) {
+//        do {
+//            try Auth.auth().signOut()
+//            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LandingNavigationController") as? UINavigationController {
+//                vc.modalPresentationStyle = .fullScreen
+//                self.present(vc, animated: true, completion: nil)
+//            }
+//        } catch  {
+//            print("ERROR in signout",error.localizedDescription)
+//        }
+//
+//    }
     
 }
 extension AddServicesViewController:UIImagePickerControllerDelegate, UINavigationControllerDelegate{

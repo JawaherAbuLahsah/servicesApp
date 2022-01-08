@@ -12,6 +12,7 @@ import Firebase
 class RegistrationViewController: UIViewController {
 
     
+    @IBOutlet weak var showPasswordButton: UIButton!
     @IBOutlet weak var registrationView: UIView!{
         didSet{
     registrationView.layer.cornerRadius = 40
@@ -95,10 +96,24 @@ class RegistrationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
-        
     }
+    
+    var isShowPassword = true
+    @IBAction func showPassword(_ sender: Any) {
+        if isShowPassword {
+            passWordTextField.isSecureTextEntry = false
+            
+            showPasswordButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+            isShowPassword = false
+        }else{
+            passWordTextField.isSecureTextEntry = true
+            showPasswordButton.setImage(UIImage(systemName: "eye"), for: .normal)
+            isShowPassword = true
+        }
+    }
+    
+    
+    
     
     
     let image = UIImage(systemName: "person.fill")

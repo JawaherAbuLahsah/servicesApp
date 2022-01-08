@@ -61,7 +61,7 @@ class ServicesViewController: UIViewController {
                             let newService = Service(dict: serviceData)
                             self.services[updateIndex] = newService
                             self.servicesCollectionView.reloadData()
-                            
+
                         }
                         
                     case .removed:
@@ -83,12 +83,12 @@ class ServicesViewController: UIViewController {
         if segue.identifier == "toRequestDetailsVC"{
             let sender = segue.destination as! RequestDetailsViewController
             sender.selectServices = selectServices
-        }else if segue.identifier == "toAddVC"{
-            
-        }else{
+        }else if segue.identifier == "toAddServicesVC"{
             let sender = segue.destination as! AddServicesViewController
-            sender.selectServices = selectServices
-            sender.selectedServiceImage = selectedServiceImage
+                        sender.selectServices = selectServices
+                        sender.selectedServiceImage = selectedServiceImage
+        }else{
+            
         }
     }
     

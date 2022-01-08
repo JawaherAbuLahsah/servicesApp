@@ -34,3 +34,6 @@
 "1tabBar" = "PROVIDER";
 "2tabBar" = "CHAT";
 "3tabBar" = "PROFILE";
+"arName" = "ARABIC NAME";
+"enName" = "ENGLISH NAME";
+

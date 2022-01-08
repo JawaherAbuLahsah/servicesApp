@@ -8,7 +8,8 @@
 import UIKit
 import Firebase
 class ChatViewController: UIViewController {
-
+    
+    
     @IBOutlet weak var chatTextField: UITextField!{
         didSet{
             chatTextField.delegate = self
@@ -66,8 +67,8 @@ class ChatViewController: UIViewController {
                                     let messageChat = Message(dict: messageData)
                                     
                                     self.chatTableView.beginUpdates()
-//                                    self.messages.append(messageChat)
-//                                    self.chatTableView.insertRows(at: [IndexPath(row:self.messages.count-1,section: 0)],with: .automatic)
+                                    //                                    self.messages.append(messageChat)
+                                    //                                    self.chatTableView.insertRows(at: [IndexPath(row:self.messages.count-1,section: 0)],with: .automatic)
                                     
                                     if querySnapshot.documentChanges.count != 1 {
                                         
@@ -75,7 +76,7 @@ class ChatViewController: UIViewController {
                                         self.chatTableView.insertRows(at: [IndexPath(row:self.messages.count-1,section: 0)],with: .automatic)
                                         
                                     }else {
-
+                                        
                                         self.messages.insert(messageChat,at:0)
                                         self.chatTableView.insertRows(at: [IndexPath(row: 0,section: 0)],with: .automatic)
                                         
@@ -87,14 +88,14 @@ class ChatViewController: UIViewController {
                     case .modified:
                         
                         let messId = documentChange.document.documentID
-                         if let updateIndex = self.messages.firstIndex(where: {$0.id == messId}){
-                        
+                        if let updateIndex = self.messages.firstIndex(where: {$0.id == messId}){
+                            
                             self.chatTableView.beginUpdates()
                             
-                        self.chatTableView.insertRows(at: [IndexPath(row: updateIndex, section: 0)], with: .top)
+                            self.chatTableView.insertRows(at: [IndexPath(row: updateIndex, section: 0)], with: .top)
                             self.chatTableView.endUpdates()
                         }
-                            
+                        
                     case .removed:
                         let messId = documentChange.document.documentID
                         if let deleteIndex = self.messages.firstIndex(where: {$0.id == messId}){
@@ -102,34 +103,34 @@ class ChatViewController: UIViewController {
                             self.chatTableView.beginUpdates()
                             self.chatTableView.deleteRows(at: [IndexPath(row: deleteIndex, section: 0)], with: .automatic)
                             self.chatTableView.endUpdates()
-
-                        }
+                            
                         }
                     }
                 }
             }
         }
+    }
     
     
     
-
+    
     @IBAction func sendMessage(_ sender: Any) {
         saveData()
     }
     @objc func keyboardWillShow(notification: NSNotification) {
-//        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y == 0 {
-                self.view.frame.origin.y -= 300
-            }
+        //        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+        if self.view.frame.origin.y == 0 {
+            self.view.frame.origin.y -= 300
+        }
         //}
     }
-
+    
     @objc func keyboardWillHide(notification: NSNotification) {
         if self.view.frame.origin.y != 0 {
             self.view.frame.origin.y = 0
         }
     }
-
+    
 }
 extension ChatViewController:UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -137,17 +138,29 @@ extension ChatViewController:UITableViewDelegate,UITableViewDataSource,UITextFie
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell", for: indexPath)
-        var content = cell.defaultContentConfiguration()
-        
-        content.text = messages[indexPath.row].message
-        cell.contentConfiguration = content
+        let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell", for: indexPath) as! ChatTableViewCell
+        cell.messageLabel.text = messages[indexPath.row].message
+        let width = cell.messageLabel.intrinsicContentSize.width
+        let height = cell.messageLabel.intrinsicContentSize.height
+       let bezierPath = UIBezierPath(rect : CGRect(x: 0, y: 0, width: width+30, height: height+20))
+       
+        bezierPath.move(to: CGPoint(x: width, y: 25))
+        bezierPath.addLine(to: CGPoint(x: 0, y: 50))
+       bezierPath.addLine(to: CGPoint(x: width, y: 0))
+        let shape = CAShapeLayer()
+        shape.path = bezierPath.cgPath
+        shape.fillColor = UIColor.systemBlue.cgColor
+        cell.messageView.layer.addSublayer(shape)
+        cell.messageView.addSubview(cell.messageLabel)
         return cell
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         
         return true
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
     }
     
 }

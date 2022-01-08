@@ -10,6 +10,7 @@ import Firebase
 class LoginViewController: UIViewController {
     
     
+    @IBOutlet weak var showPasswordButton: UIButton!
     @IBOutlet weak var loginView: UIView!{
         didSet{
             loginView.layer.cornerRadius = 40
@@ -35,6 +36,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!{
         didSet{
             passwordTextField.delegate = self
+            passwordTextField.isSecureTextEntry = true
         }
     }
     @IBOutlet weak var loginButton: UIButton!{
@@ -61,7 +63,19 @@ class LoginViewController: UIViewController {
         
         // Do any additional setup after loading the view.
     }
-    
+    var isShowPassword = true
+    @IBAction func showPassword(_ sender: Any) {
+        if isShowPassword {
+            passwordTextField.isSecureTextEntry = false
+            
+            showPasswordButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+            isShowPassword = false
+        }else{
+            passwordTextField.isSecureTextEntry = true
+            showPasswordButton.setImage(UIImage(systemName: "eye"), for: .normal)
+            isShowPassword = true
+        }
+    }
     
     @IBAction func handleLogin(_ sender: Any) {
         if let email = emailTextField.text,
