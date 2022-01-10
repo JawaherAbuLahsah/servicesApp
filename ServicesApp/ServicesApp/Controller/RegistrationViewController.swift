@@ -80,7 +80,7 @@ class RegistrationViewController: UIViewController {
         }
     }
     
-    
+    var activityIndicator = UIActivityIndicatorView()
     var isProvider = false
     @IBAction func specifyType(_ sender: Any) {
         if isProvider{
@@ -125,9 +125,12 @@ class RegistrationViewController: UIViewController {
            let email = userEmailTextField.text ,
            let phoneNumber = userPhoneNumberTextField.text ,
            let password = passWordTextField.text  {
+            Activity.showIndicator(parentView: self.view, childView: activityIndicator)
             Auth.auth().createUser(withEmail: email, password: password) { authDataResult, error in
                 if let error = error{
-                    print(error)
+                    
+                        Alert.showAlertError(error.localizedDescription)
+                        self.present(Alert.alert, animated: true, completion: nil)
                 }
                 if let authDataResult = authDataResult {
                     
@@ -136,11 +139,13 @@ class RegistrationViewController: UIViewController {
                     uploadMeta.contentType = "image/png"
                     storageReference.putData(imageData, metadata: uploadMeta) { storageMeta, error in
                         if let error = error {
-                            print("Registration Storage Error",error.localizedDescription)
+                            Alert.showAlertError(error.localizedDescription)
+                            self.present(Alert.alert, animated: true, completion: nil)
                         }
                         storageReference.downloadURL { url, error in
                             if let error = error {
-                                print("Registration Storage Download Url Error",error.localizedDescription)
+                                Alert.showAlertError(error.localizedDescription)
+                                self.present(Alert.alert, animated: true, completion: nil)
                             }
                             if let url = url {
                                 print("URL",url.absoluteString)
@@ -161,8 +166,9 @@ class RegistrationViewController: UIViewController {
                                         print(error)
                                         
                                     }else{
-
+                                        
                                         let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                        Activity.removeIndicator(parentView: self.view, childView: self.activityIndicator)
                                         if self.isProvider{
                                             let mainTabBarController = storyboard.instantiateViewController(identifier: "ServicesSelectionNavigationController")
                                             mainTabBarController.modalPresentationStyle = .fullScreen
@@ -174,6 +180,7 @@ class RegistrationViewController: UIViewController {
 
                                             self.present(mainTabBarController, animated: true, completion: nil)
                                         }
+                                        
                                     }
                                 }
                             }

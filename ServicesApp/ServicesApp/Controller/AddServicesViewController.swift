@@ -61,7 +61,7 @@ class AddServicesViewController: UIViewController {
     
     @IBAction func handleActionTouch(_ sender: Any) {
         if let image = serviceImage.image,
-           let imageData = image.jpegData(compressionQuality: 0.25),
+           let imageData = image.pngData(),
            let enName = enNameTextField.text,
            let arName = arNameTextField.text{
             var serviceId = ""

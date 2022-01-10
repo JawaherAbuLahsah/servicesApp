@@ -10,6 +10,15 @@ import UIKit
 class LandingViewController: UIViewController {
     
 
+    @IBOutlet weak var infoImage: UIImageView!{
+        didSet{
+            if UserDefaults.standard.object(forKey: "currentLanguage") as? String == "ar"{
+                infoImage.image = UIImage(named: "a")
+            }else{
+                infoImage.image = UIImage(named: "e")
+            }
+        }
+    }
     @IBOutlet weak var languageButton: UIButton!{
         didSet{
             languageButton.setTitle("language".localizes, for: .normal)
@@ -54,9 +63,11 @@ class LandingViewController: UIViewController {
         if sender.tag == 0 {
             lang = "ar"
             UIView.appearance().semanticContentAttribute = .forceRightToLeft
+            infoImage.image = UIImage(named: "a")
         }else{
             lang = "en"
             UIView.appearance().semanticContentAttribute = .forceLeftToRight
+            infoImage.image = UIImage(named: "e")
         }
         if let lang = lang{
             UserDefaults.standard.set(lang, forKey: "currentLanguage")

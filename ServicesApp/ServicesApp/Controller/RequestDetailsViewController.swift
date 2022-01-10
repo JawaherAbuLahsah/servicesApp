@@ -78,7 +78,11 @@ class RequestDetailsViewController: UIViewController {
             }
         }
         
-        self.dismiss(animated: true, completion: nil)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let mainTabBarController = storyboard.instantiateViewController(identifier: "ServiceRequesterNavigationController")
+        mainTabBarController.modalPresentationStyle = .fullScreen
+        
+        self.present(mainTabBarController, animated: true, completion: nil)
     }
     
     

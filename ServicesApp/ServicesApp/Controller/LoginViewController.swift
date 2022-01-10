@@ -57,13 +57,14 @@ class LoginViewController: UIViewController {
             forgotPasswordButton.setTitle("forgot".localizes, for: .normal)
         }
     }
-    
+    var activityIndicator = UIActivityIndicatorView()
+    var isShowPassword = true
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
     }
-    var isShowPassword = true
+    
     @IBAction func showPassword(_ sender: Any) {
         if isShowPassword {
             passwordTextField.isSecureTextEntry = false
@@ -80,9 +81,11 @@ class LoginViewController: UIViewController {
     @IBAction func handleLogin(_ sender: Any) {
         if let email = emailTextField.text,
            let password = passwordTextField.text{
+            Activity.showIndicator(parentView: self.view, childView: activityIndicator)
             Auth.auth().signIn(withEmail: email, password: password) { authDataResult, error in
-                if let error = error{
-                    print(error)
+                if let _ = error{
+                        Alert.showAlertError("Plase check password or email")
+                        self.present(Alert.alert, animated: true, completion: nil)
                 }
                 if let authDataResult = authDataResult{
                     let db = Firestore.firestore()
@@ -95,6 +98,7 @@ class LoginViewController: UIViewController {
                              let user = User(dict: userData)
                                 
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                            Activity.removeIndicator(parentView: self.view, childView: self.activityIndicator)
                             if authDataResult.user.uid == "TeGLA3gVl3SudOGtFtVvwbwzs192"{
                                 let mainTabBarController = storyboard.instantiateViewController(identifier: "AdminNavigationController")
                                 mainTabBarController.modalPresentationStyle = .fullScreen
@@ -117,6 +121,11 @@ class LoginViewController: UIViewController {
                     }
                 }
             }
+        }else{
+            Activity.removeIndicator(parentView: self.view, childView: self.activityIndicator)
+            Alert.showAlertError("Plase check password or email")
+            self.present(Alert.alert, animated: true, completion: nil)
+            
         }
     }
     

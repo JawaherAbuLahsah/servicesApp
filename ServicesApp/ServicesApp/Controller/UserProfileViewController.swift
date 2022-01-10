@@ -177,7 +177,7 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
             self.hamburgerMenuConstraintLeading.constant = 10
             self.view.layoutIfNeeded()
         } completion: { (status) in
-            self.hamburgerMenuView.alpha = 0.9
+            self.hamburgerMenuView.alpha = 1
             self.hamburgerMenuView.isHidden = false
             UIView.animate(withDuration: 0.2) {
                 self.hamburgerMenuConstraintLeading.constant = 0

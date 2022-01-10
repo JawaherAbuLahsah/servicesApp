@@ -16,22 +16,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="6478825" translatesAutoresizingMaskIntoConstraints="NO" id="JV1-eE-Np4">
-                                <rect key="frame" x="87" y="326" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="u" translatesAutoresizingMaskIntoConstraints="NO" id="RND-C7-Mgx">
+                                <rect key="frame" x="87" y="367" width="240" height="424"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="RND-C7-Mgx" secondAttribute="trailing" constant="87" id="PCd-mc-1Yc"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="RND-C7-Mgx" secondAttribute="bottom" constant="367" id="gUA-Ka-Okw"/>
+                            <constraint firstItem="RND-C7-Mgx" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="323" id="kgf-4c-Tsh"/>
+                            <constraint firstItem="RND-C7-Mgx" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="87" id="zG3-3v-JG3"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52.173913043478265" y="375"/>
         </scene>
     </scenes>
     <resources>
-        <image name="6478825" width="128" height="128"/>
+        <image name="u" width="589" height="424"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

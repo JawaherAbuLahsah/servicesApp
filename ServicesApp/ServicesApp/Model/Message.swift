@@ -6,15 +6,15 @@
 //
 
 import Foundation
-struct Message{
-    var id = ""
-    var message = ""
-    init(dict:[String:Any]) {
-        if let id = dict["id"] as? String,
-           let message = dict["message"] as? String{
-            self.id = id
-            self.message = message
-            
-        }
-    }
-}
+//struct Message{
+//    var id = ""
+//    var message = ""
+//    init(dict:[String:Any]) {
+//        if let id = dict["id"] as? String,
+//           let message = dict["message"] as? String{
+//            self.id = id
+//            self.message = message
+//            
+//        }
+//    }
+//}
