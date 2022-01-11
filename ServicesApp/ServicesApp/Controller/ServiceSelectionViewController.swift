@@ -70,7 +70,9 @@ class ServiceSelectionViewController: UIViewController {
                         "phoneNumber" : user.phoneNumber,
                         "userType" : user.userType,
                         "profilePictuer": user.profilePictuer,
-                        "service":self.selectedServices
+                        "service":self.selectedServices,
+                        "latitude" : user.latitude,
+                        "longitude" : user.longitude
                     ]
                     
                     dataBase.collection("users").document(user.id).setData(userData){ error in

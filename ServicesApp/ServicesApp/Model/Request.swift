@@ -7,6 +7,7 @@
 
 import Foundation
 import Firebase
+import CoreLocation
 struct Request{
     var id = ""
     var title = ""
@@ -17,7 +18,8 @@ struct Request{
     var userRequest:User
     var haveProvider = false
     var requestType :Service
- 
+    var latitude = 0.0
+    var longitude = 0.0
 
     
     init(dict:[String:Any],id:String,userRequest:User,userProvider:User,requestType :Service){
@@ -25,17 +27,28 @@ struct Request{
            let details = dict["details"] as? String,
            let price = dict["price"] as? String,
            let haveProvider = dict["haveProvider"] as? Bool,
-           let createAt = dict["createAt"] as? Timestamp {
+           let createAt = dict["createAt"] as? Timestamp ,
+           let latitude = dict["latitude"] as? Double,
+           let longitude = dict["longitude"] as? Double{
             self.title = title
             self.details = details
             self.price = price
             self.createAt = createAt
             self.haveProvider = haveProvider
+            self.latitude = latitude
+            self.longitude = longitude
            
         }
         self.id = id
         self.userRequest = userRequest
         self.userProvider = userProvider
         self.requestType = requestType
+    }
+    var location: CLLocation {
+        return CLLocation(latitude: self.latitude, longitude: self.longitude)
+    }
+
+    func distance(to location: CLLocation) -> CLLocationDistance {
+        return location.distance(from: self.location)
     }
 }

@@ -13,7 +13,8 @@ protocol HamburgerMenuControllerDelegate{
 class HamburgerMenuViewController: UIViewController {
     @IBOutlet weak var arButton: UIButton!{
         didSet{
-            arButton.layer.borderColor = UIColor.systemTeal.cgColor
+            arButton.layer.borderColor = UIColor(named: "Color-1")?.cgColor
+            arButton.setTitle("ع", for: .normal)
             arButton.layer.borderWidth = 5
             arButton.layer.cornerRadius = 10
         }
@@ -21,7 +22,8 @@ class HamburgerMenuViewController: UIViewController {
     
     @IBOutlet weak var enButton: UIButton!{
         didSet{
-            enButton.layer.borderColor = UIColor.systemTeal.cgColor
+            enButton.layer.borderColor = UIColor(named: "Color-1")?.cgColor
+            enButton.setTitle("E", for: .normal)
             enButton.layer.borderWidth = 5
             enButton.layer.cornerRadius = 10
         }

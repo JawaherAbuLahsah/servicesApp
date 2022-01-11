@@ -11,6 +11,7 @@ struct Activity {
     static func showIndicator(parentView:UIView,childView activityIndicator:UIActivityIndicatorView) {
         parentView.addSubview(activityIndicator)
         activityIndicator.center = parentView.center
+        activityIndicator.color = UIColor(named: "Color-1")
         activityIndicator.startAnimating()
         parentView.isUserInteractionEnabled = false
     }

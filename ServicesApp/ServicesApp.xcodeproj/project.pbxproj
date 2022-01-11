@@ -41,6 +41,7 @@
 		950F1B8C2785F6F6005C92D1 /* AddServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950F1B8B2785F6F6005C92D1 /* AddServicesViewController.swift */; };
 		9515C524277D8A8500205358 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9515C523277D8A8500205358 /* EditProfileViewController.swift */; };
 		9515C526277E29D400205358 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9515C525277E29D300205358 /* ResetPasswordViewController.swift */; };
+		95293030278DD06D00B000A9 /* ReviewProviderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9529302F278DD06D00B000A9 /* ReviewProviderViewController.swift */; };
 		955042D92786ECB4002A0071 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955042D82786ECB4002A0071 /* Activity.swift */; };
 		955042DB2786ECE4002A0071 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955042DA2786ECE4002A0071 /* Alert.swift */; };
 		955042DD27870F84002A0071 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955042DC27870F84002A0071 /* ChatTableViewCell.swift */; };
@@ -96,6 +97,7 @@
 		950F1B8B2785F6F6005C92D1 /* AddServicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddServicesViewController.swift; sourceTree = "<group>"; };
 		9515C523277D8A8500205358 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		9515C525277E29D300205358 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
+		9529302F278DD06D00B000A9 /* ReviewProviderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewProviderViewController.swift; sourceTree = "<group>"; };
 		955042D82786ECB4002A0071 /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		955042DA2786ECE4002A0071 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		955042DC27870F84002A0071 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				950F1B892784D7BB005C92D1 /* RequesterTabBarViewController.swift */,
 				950F1B8B2785F6F6005C92D1 /* AddServicesViewController.swift */,
 				95679D37278B2BD900C84028 /* ChatsViewController.swift */,
+				9529302F278DD06D00B000A9 /* ReviewProviderViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 				955042D92786ECB4002A0071 /* Activity.swift in Sources */,
 				95034C6927765C40006E37CD /* LandingViewController.swift in Sources */,
 				950F1B8627846B43005C92D1 /* HamburgerMenuViewController.swift in Sources */,
+				95293030278DD06D00B000A9 /* ReviewProviderViewController.swift in Sources */,
 				950C9C7F27843E43002982CE /* AuthManager.swift in Sources */,
 				95034C6527765C40006E37CD /* AppDelegate.swift in Sources */,
 				95034CBC277861AA006E37CD /* Request.swift in Sources */,

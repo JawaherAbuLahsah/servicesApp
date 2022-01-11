@@ -70,12 +70,15 @@ class UserRequestsViewController: UIViewController {
                                             let request = Request(dict: requestData,id: documentChange.document.documentID,userRequest: user ,userProvider: userProvider, requestType: service)
                                             switch documentChange.type{
                                             case .added:
-                                                
+                                              
                                                 if !request.haveProvider {
                                                     
                                                     for id in userProvider.service{
                                                         if id == service.id{
+                                                            let loc = userProvider.location.distance(from: request.location) / 1000
+                                                            if loc < 30{
                                                             self.userRequests.append(request)
+                                                            }
                                                         }
                                                     }
                                                     self.requestsTableView.reloadData()
@@ -85,10 +88,10 @@ class UserRequestsViewController: UIViewController {
                                                 
                                             case .modified:
                                                 let requestId = documentChange.document.documentID
-
-                                                    let newRequest = Request(dict: requestData, id: requestId, userRequest: user, userProvider: userProvider, requestType: service)
-                                                    print(newRequest)
-                                                  
+                                                
+                                                let newRequest = Request(dict: requestData, id: requestId, userRequest: user, userProvider: userProvider, requestType: service)
+                                                print(newRequest)
+                                                
                                                 if newRequest.title != "" && !newRequest.haveProvider{
                                                     self.requestsTableView.beginUpdates()
                                                     self.userRequests.append(newRequest)
@@ -98,10 +101,10 @@ class UserRequestsViewController: UIViewController {
                                                 
                                                 if newRequest.haveProvider{
                                                     if let deleteIndex = self.userRequests.firstIndex(where: {$0.id == requestId}){
-                                                    self.userRequests.remove(at: deleteIndex)
-                                                    self.requestsTableView.beginUpdates()
-                                                    self.requestsTableView.deleteRows(at: [IndexPath(row: deleteIndex, section: 0)], with: .automatic)
-                                                    self.requestsTableView.endUpdates()
+                                                        self.userRequests.remove(at: deleteIndex)
+                                                        self.requestsTableView.beginUpdates()
+                                                        self.requestsTableView.deleteRows(at: [IndexPath(row: deleteIndex, section: 0)], with: .automatic)
+                                                        self.requestsTableView.endUpdates()
                                                     }
                                                 }
                                                 
@@ -130,15 +133,15 @@ class UserRequestsViewController: UIViewController {
 
 extension UserRequestsViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
+        
         if userRequests.count == 0 {
             tableView.setEmptyMessage("noRequest".localizes)
-    }else {
-               tableView.restore()
-               
-           }
-    return userRequests.count
-    
+        }else {
+            tableView.restore()
+            
+        }
+        return userRequests.count
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -183,13 +186,15 @@ extension UserRequestsViewController:UITableViewDelegate,UITableViewDataSource{
                     let ref = db.collection("requests")
                     
                     let priceData:[String:Any] = ["price": price,
-                                 "requestsId" : self.userRequests[indexPath.row].userRequest.id,
-                                 "providerId":self.userRequests[indexPath.row].userProvider.id,
-                                 "title" : self.userRequests[indexPath.row].title ,
-                                 "details" : self.userRequests[indexPath.row].details ,
-                                 "createAt" : FieldValue.serverTimestamp(),
-                                 "haveProvider":true,
-                                 "serviceId":self.userRequests[indexPath.row].requestType.id
+                                                  "requestsId" : self.userRequests[indexPath.row].userRequest.id,
+                                                  "providerId":self.userRequests[indexPath.row].userProvider.id,
+                                                  "title" : self.userRequests[indexPath.row].title ,
+                                                  "details" : self.userRequests[indexPath.row].details ,
+                                                  "createAt" : FieldValue.serverTimestamp(),
+                                                  "haveProvider":true,
+                                                  "serviceId":self.userRequests[indexPath.row].requestType.id,
+                                                  "latitude" : self.userRequests[indexPath.row].latitude,
+                                                  "longitude" : self.userRequests[indexPath.row].longitude
                     ]
                     
                     ref.document(self.userRequests[indexPath.row].id).setData(priceData) { error in

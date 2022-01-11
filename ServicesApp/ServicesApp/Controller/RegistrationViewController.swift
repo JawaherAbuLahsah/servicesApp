@@ -7,11 +7,11 @@
 
 import UIKit
 import Firebase
+import CoreLocation
 
+class RegistrationViewController: UIViewController ,CLLocationManagerDelegate {
 
-class RegistrationViewController: UIViewController {
-
-    
+    let locationManager = CLLocationManager()
     @IBOutlet weak var showPasswordButton: UIButton!
     @IBOutlet weak var registrationView: UIView!{
         didSet{
@@ -96,8 +96,20 @@ class RegistrationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startUpdatingLocation()
     }
     
+    var latitude = 0.0
+    var longitude = 0.0
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+            let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+        latitude = locValue.latitude
+        longitude = locValue.longitude
+    }
     var isShowPassword = true
     @IBAction func showPassword(_ sender: Any) {
         if isShowPassword {
@@ -158,7 +170,9 @@ class RegistrationViewController: UIViewController {
                                     "phoneNumber" : phoneNumber,
                                     "userType" : self.isProvider,
                                     "profilePictuer": url.absoluteString,
-                                    "service":[]
+                                    "service":[],
+                                    "latitude" : self.latitude,
+                                    "longitude" : self.longitude
                                 ]
                                 
                                 dataBase.collection("users").document(authDataResult.user.uid).setData(userData){ error in

@@ -69,6 +69,10 @@ class ServiceProvidersViewController: UIViewController {
                                         let request = Request(dict: requestData,id: documentChange.document.documentID,userRequest: user ,userProvider: userProvider, requestType: service)
                                         print("provider>>,",userProvider)
                                         print("Requesterr>>",user)
+                                        
+                                        print("test location ",user.location,">>",user.location.distance(from: request.location) / 1000)
+                                        
+                                        
                                         switch documentChange.type{
                                         case .added:
                                             let currentUser = Auth.auth().currentUser
@@ -167,7 +171,9 @@ extension ServiceProvidersViewController:UITableViewDelegate,UITableViewDataSour
                                           "details" : self.serviceProviders[indexPath.row].details ,
                                           "createAt" : FieldValue.serverTimestamp(),
                                           "haveProvider": false,
-                                          "serviceId": self.serviceProviders[indexPath.row].requestType.id
+                                          "serviceId": self.serviceProviders[indexPath.row].requestType.id,
+                                          "latitude" : self.serviceProviders[indexPath.row].latitude,
+                                          "longitude" : self.serviceProviders[indexPath.row].longitude
             ]
             ref.document(self.serviceProviders[indexPath.row].id).setData(priceData) { error in
                 if let error = error {

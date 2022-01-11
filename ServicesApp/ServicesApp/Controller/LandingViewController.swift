@@ -33,14 +33,16 @@ class LandingViewController: UIViewController {
     }
     @IBOutlet weak var arabicButton: UIButton!{
         didSet{
-            arabicButton.layer.borderColor = UIColor.systemTeal.cgColor
+            arabicButton.layer.borderColor = UIColor(named: "Color-1")?.cgColor
+            arabicButton.setTitle("ع", for: .normal)
             arabicButton.layer.borderWidth = 5
             arabicButton.layer.cornerRadius = 10
         }
     }
     @IBOutlet weak var englishButton: UIButton!{
         didSet{
-            englishButton.layer.borderColor = UIColor.systemTeal.cgColor
+            englishButton.layer.borderColor = UIColor(named: "Color-1")?.cgColor
+            englishButton.setTitle("E", for: .normal)
             englishButton.layer.borderWidth = 5
             englishButton.layer.cornerRadius = 10
         }
