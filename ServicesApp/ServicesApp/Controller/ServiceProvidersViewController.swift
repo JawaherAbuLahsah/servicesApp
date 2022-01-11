@@ -15,7 +15,7 @@ class ServiceProvidersViewController: UIViewController {
             serviceProvidersTableView.dataSource = self
         }
     }
-  
+    
     
     var serviceProviders = [Request]()
     
@@ -26,7 +26,7 @@ class ServiceProvidersViewController: UIViewController {
         getData()
     }
     
-
+    
     
     func getData(){
         let db = Firestore.firestore()
@@ -83,15 +83,15 @@ class ServiceProvidersViewController: UIViewController {
                                         case .modified:
                                             
                                             let requestId = documentChange.document.documentID
-                                           
+                                            
                                             let newRequest = Request(dict: requestData, id: requestId, userRequest: user, userProvider: userProvider, requestType: service)
                                             print(newRequest)
                                             
                                             if newRequest.title != "" && newRequest.haveProvider{
-                                            self.serviceProvidersTableView.beginUpdates()
-                                            self.serviceProviders.append(newRequest)
-                                            self.serviceProvidersTableView.insertRows(at: [IndexPath(row:self.serviceProviders.count - 1,section: 0)],with: .automatic)
-                                            self.serviceProvidersTableView.endUpdates()
+                                                self.serviceProvidersTableView.beginUpdates()
+                                                self.serviceProviders.append(newRequest)
+                                                self.serviceProvidersTableView.insertRows(at: [IndexPath(row:self.serviceProviders.count - 1,section: 0)],with: .automatic)
+                                                self.serviceProvidersTableView.endUpdates()
                                             }
                                             if !newRequest.haveProvider{
                                                 if let deleteIndex = self.serviceProviders.firstIndex(where: {$0.id == requestId}){
@@ -102,7 +102,7 @@ class ServiceProvidersViewController: UIViewController {
                                                     
                                                 }
                                             }
-
+                                            
                                         case .removed:
                                             let requestId = documentChange.document.documentID
                                             if let deleteIndex = self.serviceProviders.firstIndex(where: {$0.id == requestId}){
@@ -129,13 +129,10 @@ class ServiceProvidersViewController: UIViewController {
 extension ServiceProvidersViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if serviceProviders.count == 0{
-            let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
-                 label.text = "There are no service providers yet"
-                 label.textColor = UIColor.black
-                 label.textAlignment = .center
-                 label.sizeToFit()
-                 tableView.backgroundView = label
-                 tableView.separatorStyle = .none
+            tableView.setEmptyMessage("noProvider".localizes)
+        }else {
+            tableView.restore()
+            
         }
         return serviceProviders.count
     }
@@ -187,12 +184,12 @@ extension ServiceProvidersViewController:UITableViewDelegate,UITableViewDataSour
                 }
             }
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-           if let mainTabBarController = storyboard.instantiateViewController(identifier: "ChatNavigationController") as? UITabBarController{
-               mainTabBarController.modalPresentationStyle = .automatic
-            
-            
-               self.present(mainTabBarController, animated: true, completion: nil)
-        }
+            if let mainTabBarController = storyboard.instantiateViewController(identifier: "ChatNavigationController") as? UITabBarController{
+                mainTabBarController.modalPresentationStyle = .automatic
+                
+                
+                self.present(mainTabBarController, animated: true, completion: nil)
+            }
         }
         let deleteAction = UIAlertAction(title: "delete".localizes, style: .destructive){ Action in
             

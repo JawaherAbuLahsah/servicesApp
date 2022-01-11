@@ -17,14 +17,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="u" translatesAutoresizingMaskIntoConstraints="NO" id="RND-C7-Mgx">
-                                <rect key="frame" x="87" y="367" width="240" height="424"/>
+                                <rect key="frame" x="87" y="367" width="240" height="192"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="RND-C7-Mgx" secondAttribute="bottom" constant="303" id="5Qz-xr-PjC"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="RND-C7-Mgx" secondAttribute="trailing" constant="87" id="PCd-mc-1Yc"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="RND-C7-Mgx" secondAttribute="bottom" constant="367" id="gUA-Ka-Okw"/>
                             <constraint firstItem="RND-C7-Mgx" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="323" id="kgf-4c-Tsh"/>
                             <constraint firstItem="RND-C7-Mgx" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="87" id="zG3-3v-JG3"/>
                         </constraints>

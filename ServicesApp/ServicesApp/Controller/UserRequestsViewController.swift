@@ -130,20 +130,15 @@ class UserRequestsViewController: UIViewController {
 
 extension UserRequestsViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
-       
-        if userRequests.count == 0{
-            label.text = "No Requests"
-            label.textColor = UIColor.black
-            label.textAlignment = .center
-           // label.sizeToFit()
-            tableView.backgroundView = label
-            tableView.separatorStyle = .none
-        }else{
-            label.isHidden = true
-        }
-       // tableView.reloadData()
-        return userRequests.count
+
+        if userRequests.count == 0 {
+            tableView.setEmptyMessage("noRequest".localizes)
+    }else {
+               tableView.restore()
+               
+           }
+    return userRequests.count
+    
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

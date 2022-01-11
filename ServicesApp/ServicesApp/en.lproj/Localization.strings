@@ -36,4 +36,5 @@
 "3tabBar" = "PROFILE";
 "arName" = "ARABIC NAME";
 "enName" = "ENGLISH NAME";
-
+"noRequest" = "No Requests";
+"noProvider" = "There are no service providers";

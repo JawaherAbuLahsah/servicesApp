@@ -27,19 +27,11 @@ struct Message:MessageType{
 
     var kind : MessageKind
 
-//    var sender: Sender?
-//
-//    var messageId = ""
-//
-//    var sentDate: Timestamp?
-//
    var text = ""
     init(dict:[String:Any],sender:Sender,kind: MessageKind,sentDate: Date) {
         if let messageId = dict["messageId"] as? String,
-//           let sentDate = dict["sentDate"] as? Date,
            let text = dict["text"] as? String{
             self.messageId = messageId
-          //  self.sentDate = sentDate
             self.text = text
         }
         self.sentDate = sentDate
@@ -53,6 +45,7 @@ class ChatsViewController: MessagesViewController {
     let currentUser = Auth.auth().currentUser
  //   let database = Firestore.firestore()
     var sender :Sender?
+    var chat :Message?
     override func viewDidLoad() {
         super.viewDidLoad()
         messageInputBar.delegate = self
@@ -90,20 +83,13 @@ class ChatsViewController: MessagesViewController {
                                         let date = Date()
                                     switch documentChange.type{
                                     case .added:
-                                       // let userId = documentChange.document.documentID
-                                       // if userId == currentUser.uid{
                                         let messageChat = Message(dict: message, sender: sender, kind: .text(text), sentDate: date)
+                                        self.chat = messageChat
                                         self.messages.append(messageChat)
                                         self.messagesCollectionView.reloadData()
-                                       // }
+                                        
                                         print(self.messages)
                                     case .modified:
-//                                        let userId = documentChange.document.documentID
-//                                        if userId == currentUser.uid{
-//                                        let messageChat = Message(dict: message, sender: sender, kind: .text(text), sentDate: date)
-//                                        self.messages.append(messageChat)
-//                                        self.messagesCollectionView.reloadData()
-//                                        }
                                         break
                                     case .removed:
                                         let userId = documentChange.document.documentID
@@ -128,13 +114,8 @@ extension ChatsViewController: MessagesDataSource {
         return messages.count
     }
     func currentSender() -> SenderType {
-//        if let currentUser = currentUser , let displayName = currentUser.displayName, currentUser.uid == senderId{
-        if let sender = sender{
-        //if let senderId = sender.senderId, let displayName = sender.displayName{
-            return Sender(senderId: sender.senderId, displayName: sender.displayName)
-        }else{
-            return Sender(senderId: "no one", displayName: "no one")
-        }
+       
+        return Sender(senderId: "me", displayName: "me")
         
     }
 
