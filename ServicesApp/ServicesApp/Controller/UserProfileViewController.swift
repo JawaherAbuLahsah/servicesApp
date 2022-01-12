@@ -16,6 +16,9 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
             profileImageView.isUserInteractionEnabled = true
             let tabGesture = UITapGestureRecognizer(target: self, action: #selector(selectImage))
             profileImageView.addGestureRecognizer(tabGesture)
+            profileImageView.layer.borderWidth = 2.0
+            profileImageView.layer.cornerRadius = profileImageView.bounds.height / 2
+            profileImageView.layer.masksToBounds = true
         }
     }
     
@@ -32,6 +35,16 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
     @IBOutlet weak var editProfileButton: UIButton!{
         didSet{
             editProfileButton.layer.cornerRadius = 10
+        }
+    }
+    @IBOutlet weak var profileView: UIView!{
+        didSet{
+            profileView.layer.cornerRadius = 20
+        }
+    }
+    @IBOutlet weak var editButton: UIButton!{
+        didSet{
+            editButton.layer.cornerRadius = 10
         }
     }
     let imagePickerController = UIImagePickerController()

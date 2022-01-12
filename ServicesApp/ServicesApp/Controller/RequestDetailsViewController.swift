@@ -79,6 +79,9 @@ class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate 
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+                tap.cancelsTouchesInView = false
+                view.addGestureRecognizer(tap)
     }
     var latitude = 0.0
     var longitude = 0.0
@@ -114,7 +117,8 @@ class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate 
                                 "haveProvider": false,
                                 "serviceId":selectServices.id,
                                 "latitude" : user.latitude,
-                                "longitude" : user.longitude
+                                "longitude" : user.longitude,
+                                "accept" : false
                             ]
                         }else{
                             requestData = [
@@ -127,7 +131,8 @@ class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate 
                                 "haveProvider": false,
                                 "serviceId":selectServices.id,
                                 "latitude" : self.latitude,
-                                "longitude" : self.longitude
+                                "longitude" : self.longitude,
+                                "accept" : false
                             ]
                         }
                         dataBase.collection("requests").document(requestId).setData(requestData){ error in

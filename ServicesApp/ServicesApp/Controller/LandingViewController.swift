@@ -10,6 +10,12 @@ import UIKit
 class LandingViewController: UIViewController {
     
 
+    @IBOutlet weak var languageView: UIView!{
+        didSet{
+            languageView.layer.cornerRadius = 40
+            languageView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        }
+    }
     @IBOutlet weak var infoImage: UIImageView!{
         didSet{
             if UserDefaults.standard.object(forKey: "currentLanguage") as? String == "ar"{

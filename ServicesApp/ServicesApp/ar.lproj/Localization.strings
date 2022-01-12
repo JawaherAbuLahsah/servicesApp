@@ -5,7 +5,7 @@
   Created by Jawaher Mohammad on 21/05/1443 AH.
   
 */
-"language" = "اللغة";
+"language" = "الـلــغــة";
 "signIn" = "التسجيل";
 "email" = "البريد الإلكتروني";
 "password" = "كلمة المرور";
@@ -38,3 +38,5 @@
 "enName" = "الاسم بالانجليزي";
 "noRequest" = "لا يوجد طلبات";
 "noProvider" = "لا يوجد مقدمي خدمات";
+"error" = "خطأ";
+"check" = "الرجاء التأكد من البيانات المدخله";

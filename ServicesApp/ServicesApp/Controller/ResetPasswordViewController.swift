@@ -12,6 +12,8 @@ class ResetPasswordViewController: UIViewController {
     @IBOutlet weak var resetPasswordView: UIView!{
         didSet{
             resetPasswordView.layer.cornerRadius = 40
+            resetPasswordView.layer.shadowRadius = 30
+            resetPasswordView.layer.shadowOpacity = 0.5
         }
     }
     @IBOutlet weak var emailLabel: UILabel!{
@@ -28,6 +30,9 @@ class ResetPasswordViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+                tap.cancelsTouchesInView = false
+                view.addGestureRecognizer(tap)
 
         // Do any additional setup after loading the view.
     }

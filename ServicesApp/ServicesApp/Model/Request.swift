@@ -20,7 +20,7 @@ struct Request{
     var requestType :Service
     var latitude = 0.0
     var longitude = 0.0
-
+    var accept = false
     
     init(dict:[String:Any],id:String,userRequest:User,userProvider:User,requestType :Service){
         if let title = dict["title"] as? String,
@@ -29,7 +29,8 @@ struct Request{
            let haveProvider = dict["haveProvider"] as? Bool,
            let createAt = dict["createAt"] as? Timestamp ,
            let latitude = dict["latitude"] as? Double,
-           let longitude = dict["longitude"] as? Double{
+           let longitude = dict["longitude"] as? Double,
+           let accept = dict["accept"] as? Bool{
             self.title = title
             self.details = details
             self.price = price
@@ -37,6 +38,7 @@ struct Request{
             self.haveProvider = haveProvider
             self.latitude = latitude
             self.longitude = longitude
+            self.accept = accept
            
         }
         self.id = id

@@ -14,6 +14,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginView: UIView!{
         didSet{
             loginView.layer.cornerRadius = 40
+            loginView.layer.shadowRadius = 30
+            loginView.layer.shadowOpacity = 0.5
         }
     }
     
@@ -61,7 +63,9 @@ class LoginViewController: UIViewController {
     var isShowPassword = true
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+                tap.cancelsTouchesInView = false
+                view.addGestureRecognizer(tap)
         // Do any additional setup after loading the view.
     }
     
@@ -84,8 +88,9 @@ class LoginViewController: UIViewController {
             Activity.showIndicator(parentView: self.view, childView: activityIndicator)
             Auth.auth().signIn(withEmail: email, password: password) { authDataResult, error in
                 if let _ = error{
-                        Alert.showAlertError("Plase check password or email")
+                        Alert.showAlertError("check".localizes)
                         self.present(Alert.alert, animated: true, completion: nil)
+                    Activity.removeIndicator(parentView: self.view, childView: self.activityIndicator)
                 }
                 if let authDataResult = authDataResult{
                     let db = Firestore.firestore()
@@ -99,7 +104,7 @@ class LoginViewController: UIViewController {
                                 
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                             Activity.removeIndicator(parentView: self.view, childView: self.activityIndicator)
-                            if authDataResult.user.uid == "TeGLA3gVl3SudOGtFtVvwbwzs192"{
+                            if authDataResult.user.uid == "VdFN5IFctCcM2CdaIIAfSQMX6fT2"{
                                 let mainTabBarController = storyboard.instantiateViewController(identifier: "AdminNavigationController")
                                 mainTabBarController.modalPresentationStyle = .fullScreen
                                 
@@ -122,10 +127,10 @@ class LoginViewController: UIViewController {
                 }
             }
         }else{
-            Activity.removeIndicator(parentView: self.view, childView: self.activityIndicator)
-            Alert.showAlertError("Plase check password or email")
+           
+            Alert.showAlertError("check".localizes)
             self.present(Alert.alert, animated: true, completion: nil)
-            
+            Activity.removeIndicator(parentView: self.view, childView: self.activityIndicator)
         }
     }
     

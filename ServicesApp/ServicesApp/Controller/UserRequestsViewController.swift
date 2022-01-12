@@ -25,6 +25,9 @@ class UserRequestsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         getData()
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+                tap.cancelsTouchesInView = false
+                view.addGestureRecognizer(tap)
     }
     
     
@@ -77,7 +80,9 @@ class UserRequestsViewController: UIViewController {
                                                         if id == service.id{
                                                             let loc = userProvider.location.distance(from: request.location) / 1000
                                                             if loc < 30{
+                                                                
                                                             self.userRequests.append(request)
+                                                                
                                                             }
                                                         }
                                                     }
@@ -92,7 +97,7 @@ class UserRequestsViewController: UIViewController {
                                                 let newRequest = Request(dict: requestData, id: requestId, userRequest: user, userProvider: userProvider, requestType: service)
                                                 print(newRequest)
                                                 
-                                                if newRequest.title != "" && !newRequest.haveProvider{
+                                                if newRequest.title != "" && !newRequest.haveProvider {
                                                     self.requestsTableView.beginUpdates()
                                                     self.userRequests.append(newRequest)
                                                     self.requestsTableView.insertRows(at: [IndexPath(row:self.userRequests.count - 1,section: 0)],with: .automatic)
@@ -194,7 +199,8 @@ extension UserRequestsViewController:UITableViewDelegate,UITableViewDataSource{
                                                   "haveProvider":true,
                                                   "serviceId":self.userRequests[indexPath.row].requestType.id,
                                                   "latitude" : self.userRequests[indexPath.row].latitude,
-                                                  "longitude" : self.userRequests[indexPath.row].longitude
+                                                  "longitude" : self.userRequests[indexPath.row].longitude,
+                                                  "accept" : false
                     ]
                     
                     ref.document(self.userRequests[indexPath.row].id).setData(priceData) { error in

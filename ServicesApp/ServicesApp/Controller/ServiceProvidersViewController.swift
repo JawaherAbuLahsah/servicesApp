@@ -24,6 +24,9 @@ class ServiceProvidersViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         getData()
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+                tap.cancelsTouchesInView = false
+                view.addGestureRecognizer(tap)
     }
     
     
@@ -76,7 +79,7 @@ class ServiceProvidersViewController: UIViewController {
                                         switch documentChange.type{
                                         case .added:
                                             let currentUser = Auth.auth().currentUser
-                                            if let currentUser = currentUser, currentUser.uid ==  user.id, request.haveProvider{
+                                            if let currentUser = currentUser, currentUser.uid ==  user.id, request.haveProvider,!request.accept{
                                                 self.serviceProviders.append(request)
                                                 self.serviceProvidersTableView.reloadData()
                                                 print(self.serviceProviders)
@@ -91,13 +94,13 @@ class ServiceProvidersViewController: UIViewController {
                                             let newRequest = Request(dict: requestData, id: requestId, userRequest: user, userProvider: userProvider, requestType: service)
                                             print(newRequest)
                                             
-                                            if newRequest.title != "" && newRequest.haveProvider{
+                                            if newRequest.title != "" && newRequest.haveProvider && !newRequest.accept{
                                                 self.serviceProvidersTableView.beginUpdates()
                                                 self.serviceProviders.append(newRequest)
                                                 self.serviceProvidersTableView.insertRows(at: [IndexPath(row:self.serviceProviders.count - 1,section: 0)],with: .automatic)
                                                 self.serviceProvidersTableView.endUpdates()
                                             }
-                                            if !newRequest.haveProvider{
+                                            if !newRequest.haveProvider && !newRequest.accept{
                                                 if let deleteIndex = self.serviceProviders.firstIndex(where: {$0.id == requestId}){
                                                     self.serviceProviders.remove(at: deleteIndex)
                                                     self.serviceProvidersTableView.beginUpdates()
@@ -173,7 +176,8 @@ extension ServiceProvidersViewController:UITableViewDelegate,UITableViewDataSour
                                           "haveProvider": false,
                                           "serviceId": self.serviceProviders[indexPath.row].requestType.id,
                                           "latitude" : self.serviceProviders[indexPath.row].latitude,
-                                          "longitude" : self.serviceProviders[indexPath.row].longitude
+                                          "longitude" : self.serviceProviders[indexPath.row].longitude,
+                                          "accept" : false
             ]
             ref.document(self.serviceProviders[indexPath.row].id).setData(priceData) { error in
                 if let error = error {
@@ -183,19 +187,27 @@ extension ServiceProvidersViewController:UITableViewDelegate,UITableViewDataSour
             
         }
         let sendAction = UIAlertAction(title: "send".localizes, style: .default) { Action in
-            let ref = Firestore.firestore().collection("requests")
-            ref.document(self.serviceProviders[indexPath.row].id).delete { error in
+            let db = Firestore.firestore()
+            let ref = db.collection("requests")
+            
+            let priceData:[String:Any] = ["price": self.serviceProviders[indexPath.row].price,
+                                          "requestsId" : self.serviceProviders[indexPath.row].userRequest.id,
+                                          "providerId":self.serviceProviders[indexPath.row].userProvider.id,
+                                          "title" : self.serviceProviders[indexPath.row].title ,
+                                          "details" : self.serviceProviders[indexPath.row].details ,
+                                          "createAt" : FieldValue.serverTimestamp(),
+                                          "haveProvider": true,
+                                          "serviceId": self.serviceProviders[indexPath.row].requestType.id,
+                                          "latitude" : self.serviceProviders[indexPath.row].latitude,
+                                          "longitude" : self.serviceProviders[indexPath.row].longitude,
+                                          "accept" : true
+            ]
+            ref.document(self.serviceProviders[indexPath.row].id).setData(priceData) { error in
                 if let error = error {
-                    print("Error in db delete",error)
+                    print("FireStore Error",error.localizedDescription)
                 }
             }
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            if let mainTabBarController = storyboard.instantiateViewController(identifier: "ChatNavigationController") as? UITabBarController{
-                mainTabBarController.modalPresentationStyle = .automatic
-                
-                
-                self.present(mainTabBarController, animated: true, completion: nil)
-            }
+           
         }
         let deleteAction = UIAlertAction(title: "delete".localizes, style: .destructive){ Action in
             

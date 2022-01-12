@@ -10,8 +10,8 @@ import UIKit
 struct Alert{
     static var alert = UIAlertController()
     static func showAlertError(_ messageOnAlart:String){
-        alert = UIAlertController(title: "ERROR", message: messageOnAlart, preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "cancel", style: .cancel) { Action in
+        alert = UIAlertController(title: "error".localizes, message: messageOnAlart, preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "cancel".localizes, style: .cancel) { Action in
         }
         alert.addAction(alertAction)
     }

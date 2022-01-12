@@ -38,3 +38,5 @@
 "enName" = "ENGLISH NAME";
 "noRequest" = "No Requests";
 "noProvider" = "There are no service providers";
+"error" = "ERROR";
+"check" = "Plase verify the data entered";

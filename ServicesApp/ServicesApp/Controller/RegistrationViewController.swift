@@ -16,6 +16,8 @@ class RegistrationViewController: UIViewController ,CLLocationManagerDelegate {
     @IBOutlet weak var registrationView: UIView!{
         didSet{
     registrationView.layer.cornerRadius = 40
+            registrationView.layer.shadowRadius = 30
+            registrationView.layer.shadowOpacity = 0.5
         }
     }
     @IBOutlet weak var userTypeButton: UIButton!{
@@ -100,6 +102,10 @@ class RegistrationViewController: UIViewController ,CLLocationManagerDelegate {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
+        
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+                tap.cancelsTouchesInView = false
+                view.addGestureRecognizer(tap)
     }
     
     var latitude = 0.0
@@ -141,8 +147,9 @@ class RegistrationViewController: UIViewController ,CLLocationManagerDelegate {
             Auth.auth().createUser(withEmail: email, password: password) { authDataResult, error in
                 if let error = error{
                     
-                        Alert.showAlertError(error.localizedDescription)
+                        Alert.showAlertError("check".localizes)
                         self.present(Alert.alert, animated: true, completion: nil)
+                    Activity.removeIndicator(parentView: self.view, childView: self.activityIndicator)
                 }
                 if let authDataResult = authDataResult {
                     
@@ -150,9 +157,10 @@ class RegistrationViewController: UIViewController ,CLLocationManagerDelegate {
                     let uploadMeta = StorageMetadata.init()
                     uploadMeta.contentType = "image/png"
                     storageReference.putData(imageData, metadata: uploadMeta) { storageMeta, error in
-                        if let error = error {
-                            Alert.showAlertError(error.localizedDescription)
+                        if let _ = error {
+                            Alert.showAlertError("check".localizes)
                             self.present(Alert.alert, animated: true, completion: nil)
+                            Activity.removeIndicator(parentView: self.view, childView: self.activityIndicator)
                         }
                         storageReference.downloadURL { url, error in
                             if let error = error {
@@ -202,6 +210,10 @@ class RegistrationViewController: UIViewController ,CLLocationManagerDelegate {
                     }
                 }
             }
+        }else{
+            Alert.showAlertError("check".localizes)
+            self.present(Alert.alert, animated: true, completion: nil)
+            Activity.removeIndicator(parentView: self.view, childView: self.activityIndicator)
         }
     }
 }

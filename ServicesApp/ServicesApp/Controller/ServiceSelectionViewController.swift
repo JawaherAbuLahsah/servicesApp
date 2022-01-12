@@ -105,21 +105,22 @@ extension ServiceSelectionViewController:UITableViewDelegate,UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "serviceSelectionCell", for: indexPath) as! ServiceSelectionTableViewCell
         cell.serviceNameLabel.text = services[indexPath.row].name
-        
         let selectServiceSwitch = UISwitch()
-        
+        //selectServiceSwitch.isOn = false
         selectServiceSwitch.tag = indexPath.row
         selectServiceSwitch.addTarget(self, action: #selector(didChangeswitch(_:)), for: .valueChanged)
         cell.accessoryView = selectServiceSwitch
         
         return cell
     }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200
-    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 200
+//    }
     @objc func didChangeswitch(_ sender:UISwitch){
         if sender.isOn{
             selectedServices.append(services[sender.tag].id)
+        }else{
+            selectedServices.remove(at: sender.tag)
         }
     }
 }
