@@ -147,7 +147,7 @@ class RegistrationViewController: UIViewController ,CLLocationManagerDelegate {
            let password = passWordTextField.text  {
             Activity.showIndicator(parentView: self.view, childView: activityIndicator)
             Auth.auth().createUser(withEmail: email, password: password) { authDataResult, error in
-                if let error = error{
+                if let _ = error{
                     
                         Alert.showAlertError("check".localizes)
                         self.present(Alert.alert, animated: true, completion: nil)

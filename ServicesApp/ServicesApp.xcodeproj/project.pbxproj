@@ -45,6 +45,7 @@
 		955042DB2786ECE4002A0071 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955042DA2786ECE4002A0071 /* Alert.swift */; };
 		955042DD27870F84002A0071 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955042DC27870F84002A0071 /* ChatTableViewCell.swift */; };
 		9576FF8E277F5D7F00E1F583 /* CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576FF8D277F5D7F00E1F583 /* CLLocation.swift */; };
+		95A7AE8A279338C600E07281 /* AMKeyboardFrameTracker in Frameworks */ = {isa = PBXBuildFile; productRef = 95A7AE89279338C600E07281 /* AMKeyboardFrameTracker */; };
 		95B01C3B278C803A00FCD909 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 95B01C3A278C803A00FCD909 /* IQKeyboardManagerSwift */; };
 		95B01C3E278C817400FCD909 /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 95B01C3D278C817400FCD909 /* MessageKit */; };
 		95B01C41278C820800FCD909 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 95B01C40278C820800FCD909 /* FirebaseAuth */; };
@@ -110,6 +111,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95A7AE8A279338C600E07281 /* AMKeyboardFrameTracker in Frameworks */,
 				95B01C3B278C803A00FCD909 /* IQKeyboardManagerSwift in Frameworks */,
 				95B01C43278C820800FCD909 /* FirebaseFirestore in Frameworks */,
 				95B01C41278C820800FCD909 /* FirebaseAuth in Frameworks */,
@@ -241,6 +243,7 @@
 				95B01C40278C820800FCD909 /* FirebaseAuth */,
 				95B01C42278C820800FCD909 /* FirebaseFirestore */,
 				95B01C44278C820800FCD909 /* FirebaseStorage */,
+				95A7AE89279338C600E07281 /* AMKeyboardFrameTracker */,
 			);
 			productName = ServicesApp;
 			productReference = 95034C6127765C40006E37CD /* ServicesApp.app */;
@@ -275,6 +278,7 @@
 				95B01C39278C803A00FCD909 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				95B01C3C278C817400FCD909 /* XCRemoteSwiftPackageReference "MessageKit" */,
 				95B01C3F278C820800FCD909 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				95A7AE88279338C600E07281 /* XCRemoteSwiftPackageReference "AMKeyboardFrameTracker" */,
 			);
 			productRefGroup = 95034C6227765C40006E37CD /* Products */;
 			projectDirPath = "";
@@ -585,6 +589,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		95A7AE88279338C600E07281 /* XCRemoteSwiftPackageReference "AMKeyboardFrameTracker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/iAmrMohamed/AMKeyboardFrameTracker";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		95B01C39278C803A00FCD909 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
@@ -612,6 +624,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		95A7AE89279338C600E07281 /* AMKeyboardFrameTracker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 95A7AE88279338C600E07281 /* XCRemoteSwiftPackageReference "AMKeyboardFrameTracker" */;
+			productName = AMKeyboardFrameTracker;
+		};
 		95B01C3A278C803A00FCD909 /* IQKeyboardManagerSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 95B01C39278C803A00FCD909 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;

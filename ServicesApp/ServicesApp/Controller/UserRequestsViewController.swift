@@ -10,7 +10,8 @@
 
 import UIKit
 import Firebase
-class UserRequestsViewController: UIViewController {
+import CoreLocation
+class UserRequestsViewController: UIViewController ,CLLocationManagerDelegate{
     
     
     @IBOutlet weak var requestsTableView: UITableView!{
@@ -20,15 +21,38 @@ class UserRequestsViewController: UIViewController {
         }
     }
     var userRequests = [Request]()
-    
+    var latitude = 0.0
+    var longitude = 0.0
+    let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       // upDateData()
         getData()
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
                 tap.cancelsTouchesInView = false
                 view.addGestureRecognizer(tap)
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startUpdatingLocation()
     }
+    
+    
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+            let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+        latitude = locValue.latitude
+        longitude = locValue.longitude
+    }
+    
+//    func upDateData(){
+//        let db = Firestore.firestore()
+//        if let currentUser = Auth.auth().currentUser{
+//            db.collection("users").document(currentUser.uid).updateData(["latitude":latitude])
+//            db.collection("users").document(currentUser.uid).updateData(["longitude":longitude])
+//        }
+//    }
     
     
     func getData(){

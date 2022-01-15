@@ -41,7 +41,7 @@
 "error" = "ERROR";
 "check" = "Plase verify the data entered";
 "accept" = "ACCEPT";
-"show" = "If You Want to Choose Another Location";
+"show" = "Choose Another Location";
 "reject" = "Reject";
 "rating" = "Rating";
 "services" = "SERVICES";

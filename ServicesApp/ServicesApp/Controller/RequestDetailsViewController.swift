@@ -73,7 +73,8 @@ class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate 
     }
     
     var isShow = true
-    
+    var latitude = 0.0
+        var longitude = 0.0
     override func viewDidLoad() {
         super.viewDidLoad()
         if let selectServices = selectServices{
@@ -85,12 +86,33 @@ class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate 
         locationManager.startUpdatingLocation()
         mapView.showsUserLocation = true
         mapView.mapType = .standard
+        mapView.isZoomEnabled = true
+        mapView.isScrollEnabled = true
+        if let coor = mapView.userLocation.location?.coordinate{
+               mapView.setCenter(coor, animated: true)
+           }
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
                 tap.cancelsTouchesInView = false
                 view.addGestureRecognizer(tap)
     }
-    var latitude = 0.0
-    var longitude = 0.0
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+
+        mapView.mapType = MKMapType.standard
+
+        let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        let region = MKCoordinateRegion(center: locValue, span: span)
+        mapView.setRegion(region, animated: true)
+
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = locValue
+        mapView.addAnnotation(annotation)
+
+        locationManager.stopUpdatingLocation()
+        latitude = manager.location!.coordinate.latitude
+        longitude = manager.location!.coordinate.longitude
+    }
+    
     
     @IBAction func sendRequest(_ sender: Any) {
         if let title = requestTitleTextField.text,
@@ -196,6 +218,7 @@ extension RequestDetailsViewController:UITextFieldDelegate,UITextViewDelegate{
 
 extension RequestDetailsViewController:MKMapViewDelegate, UIGestureRecognizerDelegate{
     @objc func handleTap(gestureRecognizer: UITapGestureRecognizer) {
+        locationManager.stopUpdatingLocation()
         let annotations = mapView.annotations.filter({ !($0 is MKUserLocation) })
         mapView.removeAnnotations(annotations)
         let location = gestureRecognizer.location(in: mapView)

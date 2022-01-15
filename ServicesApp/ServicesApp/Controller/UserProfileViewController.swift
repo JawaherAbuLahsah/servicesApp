@@ -9,7 +9,11 @@ import UIKit
 import Firebase
 class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegate {
     
-    @IBOutlet weak var userRatingLabel: UILabel!
+    @IBOutlet weak var userRatingLabel: UILabel!{
+        didSet{
+            userRatingLabel.isHidden = true
+        }
+    }
     @IBOutlet weak var servicesLabel: UILabel!{
         didSet{
             servicesLabel.text = "services".localizes
@@ -33,6 +37,7 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
             serviceView.layer.cornerRadius = 10
             serviceView.layer.shadowRadius = 5
             serviceView.layer.shadowOpacity = 0.5
+            //serviceView.isHidden = true
         }
     }
     @IBOutlet weak var providerServicesTableView: UITableView!{
@@ -66,6 +71,7 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
     var isHamburgerMenuShown:Bool = false
     var providerServices = [String]()
     var userProviderData = [User]()
+    var requests = [String]()
     override func viewDidLoad() {
         super.viewDidLoad()
         getData()
@@ -79,6 +85,24 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
                 if let error = error{
                     print(error)
                 }
+                
+            
+                db.collection("requests").whereField("requestsId", isEqualTo: currentUser.uid).getDocuments { querySnapshot, erroe in
+                    if let _ = error{
+                        
+                    }
+                    
+                    
+                    if let querySnapshot = querySnapshot{
+                        for doc in querySnapshot.documents{
+                            let titleRequests = doc.data()
+                            if let titleRequests = titleRequests["title"] as? String {
+                            self.requests.append(titleRequests)
+                                }
+                        }
+                        print("requestsArray>>>",self.requests)
+                
+                
                 
                 
                 if let snapshot = snapshot{
@@ -102,15 +126,18 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
                                     self.userEmailLabel.text = user.email
                                     self.profileImageView.lodingImage(user.profilePictuer)
                                     self.userRatingLabel.text = "\(user.rating)"
-                                    if !user.userType{
-                                        self.serviceView.isHidden = true
-                                        self.userRatingLabel.isHidden = true
-                                    }
+//                                    if user.userType{
+//                                        self.serviceView.isHidden = false
+//                                        self.userRatingLabel.isHidden = false
+//                                    }
                                     
                                     self.userProviderData.append(user)
                                     DispatchQueue.main.async {
-                                        
+                                        if user.userType{
                                     self.providerServices = user.service
+                                        }else{
+                                            
+                                        }
                                     self.providerServicesTableView.reloadData()
                                     }
                                     
@@ -147,6 +174,10 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
                 }
             }
         }
+            }
+            
+        }
+        
         
     }
     
@@ -226,14 +257,21 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
 extension UserProfileViewController:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if providerServices.isEmpty{
+        return requests.count
+        }else{
         return providerServices.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "selectedServicesCell", for: indexPath)
         cell.selectionStyle = .none
         var content = cell.defaultContentConfiguration()
-        if !providerServices.isEmpty{
+        if providerServices.isEmpty{
+            content.text = "\(requests[indexPath.row])"
+            cell.contentConfiguration = content
+        }else{
             let db = Firestore.firestore()
             db.collection("services").document(providerServices[indexPath.row]).getDocument { documentSnapshot, error in
                 if let error = error{
@@ -263,7 +301,6 @@ extension UserProfileViewController:UIImagePickerControllerDelegate, UINavigatio
             self.getImage(.photoLibrary)
         }
         let dismissAction = UIAlertAction(title: "Cancle", style: .cancel) { Action in
-            self.dismiss(animated: true, completion: nil)
         }
         alert.addAction(cameraAction)
         alert.addAction(galaryAction)

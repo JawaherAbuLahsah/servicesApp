@@ -7,8 +7,13 @@
 
 import UIKit
 import Firebase
+import IQKeyboardManagerSwift
+//import InputBarAccessoryView
+import AMKeyboardFrameTracker
 class ChatViewController: UIViewController {
     
+  //  let inputBar = InputBarAccessoryView()
+    @IBOutlet weak var inputViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var endServiceButton: UIButton!{
         didSet{
             endServiceButton.isHidden = true
@@ -20,19 +25,39 @@ class ChatViewController: UIViewController {
             chatTextField.delegate = self
         }
     }
+    @IBOutlet weak var inputContainerView: UIView!
     @IBOutlet weak var chatTableView: UITableView!{
         didSet{
             chatTableView.delegate = self
             chatTableView.dataSource = self
         }
     }
+    let keyboardFrameTrackerView = AMKeyboardFrameTrackerView.init(height: 60)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        IQKeyboardManager.shared.enable = false
         getData()
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
+        
+         self.chatTableView.keyboardDismissMode = .interactive
+        
+        self.keyboardFrameTrackerView.delegate = self
+        self.chatTextField.inputAccessoryView = self.keyboardFrameTrackerView
+        //inputBar.chatTextField.keyboardType =
     }
+    
+    override func viewDidLayoutSubviews() {
+            super.viewDidLayoutSubviews()
+            /* you need to set the inputAccessoryView height if you need
+             the keyboard to start dismissing exactly when the touch hits the inputContainerView while panning
+             if your view interacts with the safeAreas you should be using a height constraint better
+             */
+            self.keyboardFrameTrackerView.setHeight(self.inputContainerView.frame.height)
+        }
+    
     
     var messages = [Message]()
     var requestData :[String:Any] = [:]
@@ -196,6 +221,14 @@ class ChatViewController: UIViewController {
 }
 extension ChatViewController:UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if messages.count == 0 {
+            tableView.setEmptyMessage("....")
+        }else {
+            tableView.restore()
+            
+        }
+        
         return messages.count
     }
     
@@ -221,5 +254,24 @@ extension ChatViewController:UITableViewDelegate,UITableViewDataSource,UITextFie
         textField.resignFirstResponder()
         
         return true
+    }
+}
+
+
+//extension ChatViewController: InputBarAccessoryViewDelegate {
+//  func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
+//
+//    inputBar.inputTextView.text = ""
+//  }
+//}
+
+
+extension ChatViewController: AMKeyboardFrameTrackerDelegate {
+    func keyboardFrameDidChange(with frame: CGRect) {
+        let tabBarHeight = self.tabBarController?.tabBar.frame.height ?? 0.0
+        let bottomSapcing = self.view.frame.height - frame.origin.y - tabBarHeight - self.keyboardFrameTrackerView.frame.height
+        
+        self.inputViewBottomConstraint.constant = bottomSapcing > 0 ? bottomSapcing : 0
+        self.view.layoutIfNeeded()
     }
 }

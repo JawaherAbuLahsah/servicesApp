@@ -84,7 +84,7 @@ class ServiceProvidersViewController: UIViewController {
                                                 print(self.serviceProviders)
                                                 print("myyy",request,"vvv",self.serviceProviders)
                                             }
-                                            if request.done == true{
+                                            if let currentUser = currentUser, currentUser.uid ==  user.id, request.done == true{
                                                 self.serviceProviders.append(request)
                                             }
                                             
@@ -94,7 +94,8 @@ class ServiceProvidersViewController: UIViewController {
                                             
                                             let newRequest = Request(dict: requestData, id: requestId, userRequest: user, userProvider: userProvider, requestType: service)
                                             print(newRequest)
-                                            
+                                            let currentUser = Auth.auth().currentUser
+                                            if let currentUser = currentUser, currentUser.uid ==  user.id{
                                             if newRequest.title != "" && newRequest.haveProvider && !newRequest.accept{
                                                 self.serviceProvidersTableView.beginUpdates()
                                                 self.serviceProviders.append(newRequest)
@@ -116,7 +117,7 @@ class ServiceProvidersViewController: UIViewController {
                                                 self.serviceProvidersTableView.insertRows(at: [IndexPath(row:self.serviceProviders.count - 1,section: 0)],with: .automatic)
                                                 self.serviceProvidersTableView.endUpdates()
                                             }
-                                            
+                                            }
                                         case .removed:
                                             let requestId = documentChange.document.documentID
                                             if let deleteIndex = self.serviceProviders.firstIndex(where: {$0.id == requestId}){

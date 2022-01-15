@@ -25,10 +25,6 @@ class EditProfileViewController: UIViewController {
         super.viewDidLoad()
         imagePickerController.delegate = self
         // Do any additional setup after loading the view.
-    }
-    
-    @IBAction func handleSave(_ sender: Any) {
-        
         if let currentUser = Auth.auth().currentUser{
         let db = Firestore.firestore()
         db.collection("users").document(currentUser.uid).getDocument { userSnapshot, error in
@@ -43,7 +39,28 @@ class EditProfileViewController: UIViewController {
                 self.userNameTextField.text = user.name
                 self.emailTextField.text = user.email
                 self.phoneNumberTextField.text = user.phoneNumber
-                
+            }
+        }
+        }
+    }
+    
+    @IBAction func handleSave(_ sender: Any) {
+        
+        if let currentUser = Auth.auth().currentUser{
+        let db = Firestore.firestore()
+        db.collection("users").document(currentUser.uid).getDocument { userSnapshot, error in
+            if let error = error{
+                print("Error in get provider data ",error)
+            }
+            if let userSnapshot = userSnapshot,
+               let userData = userSnapshot.data(){
+                let user = User(dict: userData)
+
+//
+//                self.userNameTextField.text = user.name
+//                self.emailTextField.text = user.email
+//                self.phoneNumberTextField.text = user.phoneNumber
+//
                 if let name = self.userNameTextField.text,
                    let email = self.emailTextField.text,
                    let phoneNumber = self.phoneNumberTextField.text ,

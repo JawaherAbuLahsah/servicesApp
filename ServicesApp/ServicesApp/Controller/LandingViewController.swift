@@ -14,6 +14,8 @@ class LandingViewController: UIViewController {
         didSet{
             languageView.layer.cornerRadius = 40
             languageView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+            languageView.layer.shadowRadius = 30
+            languageView.layer.shadowOpacity = 0.5
         }
     }
     @IBOutlet weak var infoImage: UIImageView!{

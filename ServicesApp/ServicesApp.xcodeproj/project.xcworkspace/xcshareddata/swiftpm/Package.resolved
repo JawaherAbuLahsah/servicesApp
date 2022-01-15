@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "AMKeyboardFrameTracker",
+        "repositoryURL": "https://github.com/iAmrMohamed/AMKeyboardFrameTracker",
+        "state": {
+          "branch": null,
+          "revision": "4275e58ef78c8229740d72806c99ead38845cff5",
+          "version": "1.0.4"
+        }
+      },
+      {
         "package": "BoringSSL-GRPC",
         "repositoryURL": "https://github.com/firebase/boringssl-SwiftPM.git",
         "state": {

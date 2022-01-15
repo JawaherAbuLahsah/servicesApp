@@ -36,7 +36,11 @@ class AddServicesViewController: UIViewController {
             serviceImage.addGestureRecognizer(tabGesture)
         }
     }
-    @IBOutlet weak var actionButton: UIButton!
+    @IBOutlet weak var actionButton: UIButton!{
+        didSet{
+            actionButton.layer.cornerRadius = 10
+        }
+    }
     let activityIndicator = UIActivityIndicatorView()
     let imagePickerController = UIImagePickerController()
     var selectServices : Service?
@@ -45,17 +49,28 @@ class AddServicesViewController: UIViewController {
         super.viewDidLoad()
         imagePickerController.delegate = self
         if let selectServices = selectServices{
-            enNameTextField.text = selectServices.name
-            arNameTextField.text = selectServices.name
-            serviceImage.lodingImage(selectServices.imageUrl)
+            let db = Firestore.firestore()
+            db.collection("services").document(selectServices.id).getDocument { documentSnapshot, error in
+                if let _ = error{
+            }
+                if let documentSnapshot = documentSnapshot, let data = documentSnapshot.data(){
+                    if let enName = data["enName"] as? String, let arName = data["arName"] as? String{
+                self.enNameTextField.text = enName
+                self.arNameTextField.text = arName
+                self.serviceImage.lodingImage(selectServices.imageUrl)
             
-            actionButton.setTitle("edit".localizes, for: .normal)
-            let deleteBarButton = UIBarButtonItem(image: UIImage(systemName: "trash.fill"), style: .plain, target: self, action: #selector(handleDelete))
+                self.actionButton.setTitle("edit".localizes, for: .normal)
+                let deleteBarButton = UIBarButtonItem(image: UIImage(systemName: "trash.fill"), style: .plain, target: self, action: #selector(self.handleDelete))
             self.navigationItem.rightBarButtonItem = deleteBarButton
+            }
+                }
+            }
         }else {
-            actionButton.setTitle("save".localizes, for: .normal)
+            self.actionButton.setTitle("save".localizes, for: .normal)
             self.navigationItem.rightBarButtonItem = nil
         }
+        
+        
     }
     
     
@@ -133,19 +148,6 @@ class AddServicesViewController: UIViewController {
         }
     }
 }
-    
-//    @IBAction func logout(_ sender: Any) {
-//        do {
-//            try Auth.auth().signOut()
-//            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LandingNavigationController") as? UINavigationController {
-//                vc.modalPresentationStyle = .fullScreen
-//                self.present(vc, animated: true, completion: nil)
-//            }
-//        } catch  {
-//            print("ERROR in signout",error.localizedDescription)
-//        }
-//
-//    }
     
 }
 extension AddServicesViewController:UIImagePickerControllerDelegate, UINavigationControllerDelegate{
