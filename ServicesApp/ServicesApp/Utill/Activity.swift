@@ -12,6 +12,7 @@ struct Activity {
         parentView.addSubview(activityIndicator)
         activityIndicator.center = parentView.center
         activityIndicator.color = UIColor(named: "Color-1")
+        activityIndicator.style = .large
         activityIndicator.startAnimating()
         parentView.isUserInteractionEnabled = false
     }

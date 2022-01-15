@@ -158,6 +158,8 @@ extension UserRequestsViewController:UITableViewDelegate,UITableViewDataSource{
         
         cell.accessoryType = .detailButton
         
+        cell.selectionStyle = .none
+        
         cell.contentConfiguration = content
         
         return cell
@@ -200,7 +202,8 @@ extension UserRequestsViewController:UITableViewDelegate,UITableViewDataSource{
                                                   "serviceId":self.userRequests[indexPath.row].requestType.id,
                                                   "latitude" : self.userRequests[indexPath.row].latitude,
                                                   "longitude" : self.userRequests[indexPath.row].longitude,
-                                                  "accept" : false
+                                                  "accept" : false,
+                                                  "done" : false
                     ]
                     
                     ref.document(self.userRequests[indexPath.row].id).setData(priceData) { error in

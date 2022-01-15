@@ -16,9 +16,8 @@ class ServiceProvidersViewController: UIViewController {
         }
     }
     
-    
+    var selectUser : User?
     var serviceProviders = [Request]()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,7 +84,9 @@ class ServiceProvidersViewController: UIViewController {
                                                 print(self.serviceProviders)
                                                 print("myyy",request,"vvv",self.serviceProviders)
                                             }
-                                            
+                                            if request.done == true{
+                                                self.serviceProviders.append(request)
+                                            }
                                             
                                         case .modified:
                                             
@@ -108,6 +109,12 @@ class ServiceProvidersViewController: UIViewController {
                                                     self.serviceProvidersTableView.endUpdates()
                                                     
                                                 }
+                                            }
+                                            if request.done == true{
+                                                self.serviceProvidersTableView.beginUpdates()
+                                                self.serviceProviders.append(newRequest)
+                                                self.serviceProvidersTableView.insertRows(at: [IndexPath(row:self.serviceProviders.count - 1,section: 0)],with: .automatic)
+                                                self.serviceProvidersTableView.endUpdates()
                                             }
                                             
                                         case .removed:
@@ -148,12 +155,15 @@ extension ServiceProvidersViewController:UITableViewDelegate,UITableViewDataSour
         let cell = tableView.dequeueReusableCell(withIdentifier: "serviceProvidersCell" , for: indexPath)
         var content = cell.defaultContentConfiguration()
         
-        
+        if serviceProviders[indexPath.row].done == true{
+            content.text = serviceProviders[indexPath.row].userProvider.name
+            content.secondaryText = "rating"
+        }else{
         content.text = serviceProviders[indexPath.row].title
         content.secondaryText = serviceProviders[indexPath.row].price
-        
+        }
         cell.accessoryType = .detailButton
-        
+        cell.selectionStyle = .none
         cell.contentConfiguration = content
         return cell
     }
@@ -161,9 +171,30 @@ extension ServiceProvidersViewController:UITableViewDelegate,UITableViewDataSour
         
         
         
-        let alert = UIAlertController(title: serviceProviders[indexPath.row].userProvider.name , message: "\(serviceProviders[indexPath.row].userProvider.phoneNumber)", preferredStyle: .alert)
-        
-        let cancelAction = UIAlertAction(title: "cancel".localizes, style: .cancel) { [self] Action in
+        let alert = UIAlertController(title: serviceProviders[indexPath.row].userProvider.name , message: "\(serviceProviders[indexPath.row].userProvider.phoneNumber)\n \(serviceProviders[indexPath.row].userProvider.rating)", preferredStyle: .alert)
+        if serviceProviders[indexPath.row].done == true{
+           
+
+            let rating = UIAlertAction(title: "rating".localizes, style: .cancel) { Action in
+                
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                if let viewController = storyboard.instantiateViewController(identifier: "ReviweCV") as? ReviewProviderViewController{
+                
+                
+                viewController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+                viewController.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+                    self.selectUser = self.serviceProviders[indexPath.row].userProvider
+                    viewController.selectUser = self.selectUser
+                    viewController.id = self.serviceProviders[indexPath.row].id
+            self.present(viewController, animated: true, completion: nil)
+                }
+            }
+            alert.addAction(rating)
+            self.present(alert, animated: true, completion: nil)
+            
+        }else{
+        let cancelAction = UIAlertAction(title: "reject".localizes, style: .cancel) { [self] Action in
             let db = Firestore.firestore()
             let ref = db.collection("requests")
             
@@ -177,7 +208,8 @@ extension ServiceProvidersViewController:UITableViewDelegate,UITableViewDataSour
                                           "serviceId": self.serviceProviders[indexPath.row].requestType.id,
                                           "latitude" : self.serviceProviders[indexPath.row].latitude,
                                           "longitude" : self.serviceProviders[indexPath.row].longitude,
-                                          "accept" : false
+                                          "accept" : false,
+                                          "done" : false
             ]
             ref.document(self.serviceProviders[indexPath.row].id).setData(priceData) { error in
                 if let error = error {
@@ -186,7 +218,7 @@ extension ServiceProvidersViewController:UITableViewDelegate,UITableViewDataSour
             }
             
         }
-        let sendAction = UIAlertAction(title: "send".localizes, style: .default) { Action in
+        let sendAction = UIAlertAction(title: "accept".localizes, style: .default) { Action in
             let db = Firestore.firestore()
             let ref = db.collection("requests")
             
@@ -200,7 +232,8 @@ extension ServiceProvidersViewController:UITableViewDelegate,UITableViewDataSour
                                           "serviceId": self.serviceProviders[indexPath.row].requestType.id,
                                           "latitude" : self.serviceProviders[indexPath.row].latitude,
                                           "longitude" : self.serviceProviders[indexPath.row].longitude,
-                                          "accept" : true
+                                          "accept" : true,
+                                          "done" : false
             ]
             ref.document(self.serviceProviders[indexPath.row].id).setData(priceData) { error in
                 if let error = error {
@@ -221,6 +254,8 @@ extension ServiceProvidersViewController:UITableViewDelegate,UITableViewDataSour
         alert.addAction(cancelAction)
         alert.addAction(sendAction)
         alert.addAction(deleteAction)
-        self.present(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
+        }
+       
     }
 }

@@ -9,6 +9,12 @@ import UIKit
 import Firebase
 class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegate {
     
+    @IBOutlet weak var userRatingLabel: UILabel!
+    @IBOutlet weak var servicesLabel: UILabel!{
+        didSet{
+            servicesLabel.text = "services".localizes
+        }
+    }
     @IBOutlet weak var hamburgerMenuView: UIView!
     @IBOutlet weak var hamburgerMenuConstraintLeading: NSLayoutConstraint!
     @IBOutlet weak var profileImageView: UIImageView!{
@@ -22,7 +28,13 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
         }
     }
     
-    @IBOutlet weak var serviceView: UIView!
+    @IBOutlet weak var serviceView: UIView!{
+        didSet{
+            serviceView.layer.cornerRadius = 10
+            serviceView.layer.shadowRadius = 5
+            serviceView.layer.shadowOpacity = 0.5
+        }
+    }
     @IBOutlet weak var providerServicesTableView: UITableView!{
         didSet{
             providerServicesTableView.delegate = self
@@ -35,6 +47,7 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
     @IBOutlet weak var editProfileButton: UIButton!{
         didSet{
             editProfileButton.layer.cornerRadius = 10
+            editProfileButton.setTitle("edit".localizes, for: .normal)
         }
     }
     @IBOutlet weak var profileView: UIView!{
@@ -45,6 +58,7 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
     @IBOutlet weak var editButton: UIButton!{
         didSet{
             editButton.layer.cornerRadius = 10
+            
         }
     }
     let imagePickerController = UIImagePickerController()
@@ -87,15 +101,18 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
                                     self.userPhoneNumberLabel.text = user.phoneNumber
                                     self.userEmailLabel.text = user.email
                                     self.profileImageView.lodingImage(user.profilePictuer)
+                                    self.userRatingLabel.text = "\(user.rating)"
                                     if !user.userType{
                                         self.serviceView.isHidden = true
+                                        self.userRatingLabel.isHidden = true
                                     }
                                     
                                     self.userProviderData.append(user)
-                                    
+                                    DispatchQueue.main.async {
+                                        
                                     self.providerServices = user.service
                                     self.providerServicesTableView.reloadData()
-                                    
+                                    }
                                     
                                 case .modified:
                                     let userId = documentChange.document.documentID

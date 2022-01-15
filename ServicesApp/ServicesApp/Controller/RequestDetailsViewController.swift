@@ -50,7 +50,11 @@ class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate 
     
     
     
-    @IBOutlet weak var showMapButton: UIButton!
+    @IBOutlet weak var showMapButton: UIButton!{
+        didSet{
+            showMapButton.setTitle("show".localizes, for: .normal)
+        }
+    }
     
     @IBOutlet weak var removeAnnotationButton: UIButton!{
         didSet{
@@ -79,17 +83,15 @@ class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate 
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
+        mapView.showsUserLocation = true
+        mapView.mapType = .standard
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
                 tap.cancelsTouchesInView = false
                 view.addGestureRecognizer(tap)
     }
     var latitude = 0.0
     var longitude = 0.0
-    //    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-    //            let locValue:CLLocationCoordinate2D = manager.location!.coordinate
-    //        latitude = locValue.latitude
-    //        longitude = locValue.longitude
-    //    }
+    
     @IBAction func sendRequest(_ sender: Any) {
         if let title = requestTitleTextField.text,
            let details = requestDetailsTextView.text ,
@@ -118,7 +120,8 @@ class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate 
                                 "serviceId":selectServices.id,
                                 "latitude" : user.latitude,
                                 "longitude" : user.longitude,
-                                "accept" : false
+                                "accept" : false,
+                                "done" : false
                             ]
                         }else{
                             requestData = [
@@ -132,7 +135,8 @@ class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate 
                                 "serviceId":selectServices.id,
                                 "latitude" : self.latitude,
                                 "longitude" : self.longitude,
-                                "accept" : false
+                                "accept" : false,
+                                "done" : false
                             ]
                         }
                         dataBase.collection("requests").document(requestId).setData(requestData){ error in
@@ -160,6 +164,8 @@ class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate 
         
         let annotations = mapView.annotations.filter({ !($0 is MKUserLocation) })
         mapView.removeAnnotations(annotations)
+         latitude = 0.0
+         longitude = 0.0
         
     }
     
@@ -190,7 +196,8 @@ extension RequestDetailsViewController:UITextFieldDelegate,UITextViewDelegate{
 
 extension RequestDetailsViewController:MKMapViewDelegate, UIGestureRecognizerDelegate{
     @objc func handleTap(gestureRecognizer: UITapGestureRecognizer) {
-        
+        let annotations = mapView.annotations.filter({ !($0 is MKUserLocation) })
+        mapView.removeAnnotations(annotations)
         let location = gestureRecognizer.location(in: mapView)
         let coordinate = mapView.convert(location, toCoordinateFrom: mapView)
         

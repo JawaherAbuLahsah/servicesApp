@@ -34,7 +34,6 @@
 		95034CCE2779B250006E37CD /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 95034CCD2779B250006E37CD /* README.md */; };
 		95034CD02779B2B9006E37CD /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 95034CCF2779B2B8006E37CD /* .gitignore */; };
 		950C9C7F27843E43002982CE /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950C9C7E27843E43002982CE /* AuthManager.swift */; };
-		950C9C8127844381002982CE /* SMSCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950C9C8027844380002982CE /* SMSCodeViewController.swift */; };
 		950F1B8627846B43005C92D1 /* HamburgerMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950F1B8527846B43005C92D1 /* HamburgerMenuViewController.swift */; };
 		950F1B882784D5B4005C92D1 /* ProviderTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950F1B872784D5B4005C92D1 /* ProviderTabBarViewController.swift */; };
 		950F1B8A2784D7BB005C92D1 /* RequesterTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950F1B892784D7BB005C92D1 /* RequesterTabBarViewController.swift */; };
@@ -45,7 +44,6 @@
 		955042D92786ECB4002A0071 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955042D82786ECB4002A0071 /* Activity.swift */; };
 		955042DB2786ECE4002A0071 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955042DA2786ECE4002A0071 /* Alert.swift */; };
 		955042DD27870F84002A0071 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955042DC27870F84002A0071 /* ChatTableViewCell.swift */; };
-		95679D38278B2BD900C84028 /* ChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95679D37278B2BD900C84028 /* ChatsViewController.swift */; };
 		9576FF8E277F5D7F00E1F583 /* CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576FF8D277F5D7F00E1F583 /* CLLocation.swift */; };
 		95B01C3B278C803A00FCD909 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 95B01C3A278C803A00FCD909 /* IQKeyboardManagerSwift */; };
 		95B01C3E278C817400FCD909 /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 95B01C3D278C817400FCD909 /* MessageKit */; };
@@ -90,7 +88,6 @@
 		95034CCD2779B250006E37CD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		95034CCF2779B2B8006E37CD /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = .gitignore; path = ../.gitignore; sourceTree = "<group>"; };
 		950C9C7E27843E43002982CE /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
-		950C9C8027844380002982CE /* SMSCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSCodeViewController.swift; sourceTree = "<group>"; };
 		950F1B8527846B43005C92D1 /* HamburgerMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamburgerMenuViewController.swift; sourceTree = "<group>"; };
 		950F1B872784D5B4005C92D1 /* ProviderTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderTabBarViewController.swift; sourceTree = "<group>"; };
 		950F1B892784D7BB005C92D1 /* RequesterTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequesterTabBarViewController.swift; sourceTree = "<group>"; };
@@ -101,7 +98,6 @@
 		955042D82786ECB4002A0071 /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		955042DA2786ECE4002A0071 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		955042DC27870F84002A0071 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
-		95679D37278B2BD900C84028 /* ChatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsViewController.swift; sourceTree = "<group>"; };
 		9576FF8D277F5D7F00E1F583 /* CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocation.swift; sourceTree = "<group>"; };
 		95B8322B2780C51600D674C4 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		95B8322D2780C88D00D674C4 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -200,12 +196,10 @@
 				9515C523277D8A8500205358 /* EditProfileViewController.swift */,
 				9515C525277E29D300205358 /* ResetPasswordViewController.swift */,
 				95B8322B2780C51600D674C4 /* ChatViewController.swift */,
-				950C9C8027844380002982CE /* SMSCodeViewController.swift */,
 				950F1B8527846B43005C92D1 /* HamburgerMenuViewController.swift */,
 				950F1B872784D5B4005C92D1 /* ProviderTabBarViewController.swift */,
 				950F1B892784D7BB005C92D1 /* RequesterTabBarViewController.swift */,
 				950F1B8B2785F6F6005C92D1 /* AddServicesViewController.swift */,
-				95679D37278B2BD900C84028 /* ChatsViewController.swift */,
 				9529302F278DD06D00B000A9 /* ReviewProviderViewController.swift */,
 			);
 			path = Controller;
@@ -340,11 +334,9 @@
 				95034CC82778DBEE006E37CD /* ServiceSelectionTableViewCell.swift in Sources */,
 				95034CBA2778618A006E37CD /* Service.swift in Sources */,
 				95034C8027774B6E006E37CD /* RegistrationViewController.swift in Sources */,
-				95679D38278B2BD900C84028 /* ChatsViewController.swift in Sources */,
 				950F1B882784D5B4005C92D1 /* ProviderTabBarViewController.swift in Sources */,
 				955042DD27870F84002A0071 /* ChatTableViewCell.swift in Sources */,
 				95B8322E2780C88D00D674C4 /* Message.swift in Sources */,
-				950C9C8127844381002982CE /* SMSCodeViewController.swift in Sources */,
 				95CD0ADA278C8D9F00C0BEF5 /* TableView.swift in Sources */,
 				95034C8C27778B49006E37CD /* ChangeLanguage.swift in Sources */,
 				955042DB2786ECE4002A0071 /* Alert.swift in Sources */,

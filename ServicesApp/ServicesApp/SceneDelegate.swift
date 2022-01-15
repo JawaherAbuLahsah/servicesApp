@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let window = window {
             if let currentUser = Auth.auth().currentUser {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                if currentUser.uid == "VdFN5IFctCcM2CdaIIAfSQMX6fT2"{
+                if currentUser.email == "j@j.com"{
                     let mainTabBarController = storyboard.instantiateViewController(identifier: "AdminNavigationController")
                     window.rootViewController = mainTabBarController
                     window.makeKeyAndVisible()

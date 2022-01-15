@@ -18,7 +18,9 @@ struct User {
     var service = [""]
     var latitude = 0.0
     var longitude = 0.0
-    
+    var rating = 0.0
+    var numberRating = 1
+    var numberStar = 0
     init(dict:[String:Any]) {
         if let id = dict["id"] as? String,
            let name = dict["name"] as? String,
@@ -28,7 +30,10 @@ struct User {
            let profilePictuer = dict["profilePictuer"] as? String,
            let service = dict["service"] as? [String],
            let latitude = dict["latitude"] as? Double,
-           let longitude = dict["longitude"] as? Double{
+           let longitude = dict["longitude"] as? Double,
+           let rating = dict["rating"] as? Double,
+           let numberRating = dict["numberRating"] as? Int,
+           let numberStar = dict["numberStar"] as? Int{
             self.name = name
             self.id = id
             self.email = email
@@ -38,7 +43,9 @@ struct User {
             self.service = service
             self.latitude = latitude
             self.longitude = longitude
-            
+            self.rating = rating
+            self.numberRating = numberRating
+            self.numberStar = numberStar
         }
     }
     var location: CLLocation {

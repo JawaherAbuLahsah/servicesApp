@@ -25,7 +25,7 @@ class ServicesViewController: UIViewController {
         // Do any additional setup after loading the view.
         //TeGLA3gVl3SudOGtFtVvwbwzs192
         if let currentUser = Auth.auth().currentUser{
-            if currentUser.uid == "VdFN5IFctCcM2CdaIIAfSQMX6fT2"{
+            if currentUser.email == "j@j.com"{
                 navigationItem.rightBarButtonItem = addServiceBarButton
                 navigationItem.leftBarButtonItem = logoutBarButton
             }else{
@@ -123,7 +123,7 @@ extension ServicesViewController:UICollectionViewDelegate,UICollectionViewDataSo
         selectServices = services[indexPath.row]
         selectedServiceImage = cell.serviceImage.image
         if let currentUser = Auth.auth().currentUser{
-            if currentUser.uid == "VdFN5IFctCcM2CdaIIAfSQMX6fT2"{
+            if currentUser.email == "j@j.com"{
                 performSegue(withIdentifier: "toAddServicesVC", sender: self)
             }else{
                 performSegue(withIdentifier: "toRequestDetailsVC", sender: self)

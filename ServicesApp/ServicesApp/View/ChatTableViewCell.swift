@@ -9,6 +9,12 @@ import UIKit
 
 class ChatTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var chatView: UIView!{
+        didSet{
+            chatView.layer.cornerRadius = 10
+            chatView.layer.shadowRadius = 5
+        }
+    }
     @IBOutlet weak var messageView: UIView!
     @IBOutlet weak var messageLabel: UILabel!
     override func awakeFromNib() {

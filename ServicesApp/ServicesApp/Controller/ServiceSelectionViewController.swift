@@ -72,7 +72,10 @@ class ServiceSelectionViewController: UIViewController {
                         "profilePictuer": user.profilePictuer,
                         "service":self.selectedServices,
                         "latitude" : user.latitude,
-                        "longitude" : user.longitude
+                        "longitude" : user.longitude,
+                        "rating" : user.rating,
+                        "numberRating": user.numberRating,
+                        "numberStar":user.numberStar
                     ]
                     
                     dataBase.collection("users").document(user.id).setData(userData){ error in
@@ -110,7 +113,7 @@ extension ServiceSelectionViewController:UITableViewDelegate,UITableViewDataSour
         selectServiceSwitch.tag = indexPath.row
         selectServiceSwitch.addTarget(self, action: #selector(didChangeswitch(_:)), for: .valueChanged)
         cell.accessoryView = selectServiceSwitch
-        
+        cell.selectionStyle = .none
         return cell
     }
 //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

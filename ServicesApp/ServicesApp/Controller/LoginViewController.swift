@@ -67,9 +67,13 @@ class LoginViewController: UIViewController {
                 tap.cancelsTouchesInView = false
                 view.addGestureRecognizer(tap)
         // Do any additional setup after loading the view.
+        passwordTextField.rightView = showPasswordButton
+        passwordTextField.rightViewMode = .always
+        
+        
     }
     
-    @IBAction func showPassword(_ sender: Any) {
+    @IBAction func showPassword(_ sender: UIButton) {
         if isShowPassword {
             passwordTextField.isSecureTextEntry = false
             
@@ -104,7 +108,7 @@ class LoginViewController: UIViewController {
                                 
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                             Activity.removeIndicator(parentView: self.view, childView: self.activityIndicator)
-                            if authDataResult.user.uid == "VdFN5IFctCcM2CdaIIAfSQMX6fT2"{
+                            if authDataResult.user.email == "j@j.com"{
                                 let mainTabBarController = storyboard.instantiateViewController(identifier: "AdminNavigationController")
                                 mainTabBarController.modalPresentationStyle = .fullScreen
                                 

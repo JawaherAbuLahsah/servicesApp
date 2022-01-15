@@ -23,9 +23,9 @@ class RegistrationViewController: UIViewController ,CLLocationManagerDelegate {
     @IBOutlet weak var userTypeButton: UIButton!{
         didSet{
             userTypeButton.layer.borderWidth = 0.5
-            userTypeButton.layer.borderColor = UIColor.systemBlue.cgColor
+            userTypeButton.layer.borderColor = UIColor.black.cgColor
             userTypeButton.layer.cornerRadius = userTypeButton.frame.size.width / 2.0
-            userTypeButton.backgroundColor = .systemBackground
+            userTypeButton.backgroundColor = .white
         }
     }
     
@@ -86,10 +86,10 @@ class RegistrationViewController: UIViewController ,CLLocationManagerDelegate {
     var isProvider = false
     @IBAction func specifyType(_ sender: Any) {
         if isProvider{
-            userTypeButton.backgroundColor = .systemBackground
+            userTypeButton.backgroundColor = .white
             isProvider = false
         }else{
-            userTypeButton.backgroundColor = .systemBlue
+            userTypeButton.backgroundColor = .darkGray
             isProvider = true
         }
     }
@@ -106,6 +106,8 @@ class RegistrationViewController: UIViewController ,CLLocationManagerDelegate {
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
                 tap.cancelsTouchesInView = false
                 view.addGestureRecognizer(tap)
+        passWordTextField.rightView = showPasswordButton
+        passWordTextField.rightViewMode = .always
     }
     
     var latitude = 0.0
@@ -180,7 +182,10 @@ class RegistrationViewController: UIViewController ,CLLocationManagerDelegate {
                                     "profilePictuer": url.absoluteString,
                                     "service":[],
                                     "latitude" : self.latitude,
-                                    "longitude" : self.longitude
+                                    "longitude" : self.longitude,
+                                    "rating" : 0.0,
+                                    "numberRating":1,
+                                    "numberStar":0
                                 ]
                                 
                                 dataBase.collection("users").document(authDataResult.user.uid).setData(userData){ error in

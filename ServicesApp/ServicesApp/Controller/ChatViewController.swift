@@ -9,6 +9,11 @@ import UIKit
 import Firebase
 class ChatViewController: UIViewController {
     
+    @IBOutlet weak var endServiceButton: UIButton!{
+        didSet{
+            endServiceButton.isHidden = true
+        }
+    }
     
     @IBOutlet weak var chatTextField: UITextField!{
         didSet{
@@ -25,14 +30,15 @@ class ChatViewController: UIViewController {
         super.viewDidLoad()
         getData()
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
-                tap.cancelsTouchesInView = false
-                view.addGestureRecognizer(tap)
-//        self.tabBarController?.tabBar.isHidden = true
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
     }
     
     var messages = [Message]()
-    
-    
+    var requestData :[String:Any] = [:]
+    var providerId = ""
+    var requsterId = ""
+    var requsetId = ""
     func saveData(){
         if let chat = chatTextField.text{
             let messageId = "\(Firebase.UUID())"
@@ -44,7 +50,7 @@ class ChatViewController: UIViewController {
                     "message":chat,
                     "userId": currentUser.uid
                 ]
-                db.collection("chat").document(messageId).setData(message){error in
+                db.collection("chat").document(currentUser.uid).setData(message){error in
                     if let error = error{
                         print("chat error",error)
                     }
@@ -56,20 +62,22 @@ class ChatViewController: UIViewController {
     func getData(){
         let db = Firestore.firestore()
         
-        db.collection("requests").whereField("accept", isEqualTo: true).getDocuments { requestsSnapshot, error in
+        db.collection("requests").whereField("accept", isEqualTo: true).whereField("done", isEqualTo: false).getDocuments { requestsSnapshot, error in
             if let error = error{
                 print("chat error",error)
             }
             
             if let requestsSnapshot = requestsSnapshot {
-                var requestData :[String:Any] = [:]
-                for doc in requestsSnapshot.documents{
-                    requestData = doc.data()
-                    print("llll",requestData)
-                }
                 
-                if let requesterUser = requestData["requestsId"] as? String,let providerUser = requestData["providerId"] as? String{
-                  
+                for doc in requestsSnapshot.documents{
+                    self.requestData = doc.data()
+                    print("llll",self.requestData)
+                }
+            
+                if let requesterUser = self.requestData["requestsId"] as? String,let providerUser = self.requestData["providerId"] as? String{
+                    self.providerId = providerUser
+                    self.requsterId = requesterUser
+                    
                     db.collection("chat").addSnapshotListener { querySnapshot, error in
                         if let error = error{
                             print("chat error",error)
@@ -78,6 +86,10 @@ class ChatViewController: UIViewController {
                         
                         if let querySnapshot = querySnapshot {
                             querySnapshot.documentChanges.forEach { documentChange in
+                                if documentChange.type == .removed{
+                                    self.messages.removeAll()
+                                    self.chatTableView.reloadData()
+                                }
                                 let message = documentChange.document.data()
                                 if let userId = message["userId"] as? String{
                                     db.collection("users").document(userId).getDocument { documentSnapshot, error in
@@ -87,14 +99,18 @@ class ChatViewController: UIViewController {
                                         if let documentSnapshot = documentSnapshot,
                                            let userData = documentSnapshot.data(){
                                             let user = User(dict: userData)
-                                            if let messageId = message["id"] as? String{
-                                                db.collection("chat").document(messageId).getDocument { documentSnapshot, error in
-                                                    if let error = error{
-                                                        print("chat error",error)
-                                                    }
-                                                    if let documentSnapshot = documentSnapshot, let messageData = documentSnapshot.data(){
-                                                        let messageChat = Message(dict: messageData,userId: user)
-                                                        if let currentUser = Auth.auth().currentUser{
+                                            
+                                            db.collection("chat").document(userId).getDocument { documentSnapshot, error in
+                                                if let error = error{
+                                                    print("chat error",error)
+                                                }
+                                                if let documentSnapshot = documentSnapshot, let messageData = documentSnapshot.data(){
+                                                    let messageChat = Message(dict: messageData,userId: user)
+                                                    if let currentUser = Auth.auth().currentUser{
+                                                        if currentUser.uid == providerUser{
+                                                            self.endServiceButton.isHidden = false
+                                                        }
+                                                        
                                                         switch documentChange.type{
                                                         case .added:
                                                             
@@ -107,32 +123,27 @@ class ChatViewController: UIViewController {
                                                             self.chatTableView.endUpdates()
                                                             
                                                         case .modified:
-                                                            
-//                                                            let messId = documentChange.document.documentID
-//                                                            if let updateIndex = self.messages.firstIndex(where: {$0.id == messId}){
-//
-//                                                                self.chatTableView.beginUpdates()
-//                                                                if user.id == requesterUser || user.id == providerUser {
-//                                                                self.chatTableView.insertRows(at: [IndexPath(row: updateIndex, section: 0)], with: .top)
-//                                                                }
-//                                                                self.chatTableView.endUpdates()
-//                                                            }
-                                                            break
-                                                        case .removed:
-                                                            let messId = documentChange.document.documentID
-                                                            if let deleteIndex = self.messages.firstIndex(where: {$0.id == messId}){
-                                                                self.messages.remove(at: deleteIndex)
+                    
+                                                            if  currentUser.uid == requesterUser || currentUser.uid == providerUser {
                                                                 self.chatTableView.beginUpdates()
-                                                                self.chatTableView.deleteRows(at: [IndexPath(row: deleteIndex, section: 0)], with: .automatic)
+                                                                let newMess = Message(dict: messageData, userId: user)
+                                                                
+                                                                self.messages.append(newMess)
+                                                                self.chatTableView.insertRows(at: [IndexPath(row:self.messages.count-1,section: 0)],with: .automatic)
+                                                                
                                                                 self.chatTableView.endUpdates()
                                                             }
-                                                        }
+                                                            
+                                                        case .removed:
+                                                            self.messages.removeAll()
+                                                            self.chatTableView.reloadData()
                                                         }
                                                     }
                                                 }
                                             }
                                         }
                                     }
+                                    
                                 }
                             }
                         }
@@ -148,6 +159,39 @@ class ChatViewController: UIViewController {
         saveData()
     }
     
+    @IBAction func endService(_ sender: Any) {
+        print("button eeeee")
+        if let currentUser = Auth.auth().currentUser{
+                    let db = Firestore.firestore()
+            db.collection("requests").whereField("providerId", isEqualTo: currentUser.uid).getDocuments { querySnapshot, error in
+                if let error = error{
+                    print("eeee",error)
+                }
+                if let querySnapshot = querySnapshot{
+                    let document = querySnapshot.documents.first
+                    document?.reference.updateData(["done":true])
+                }
+                
+            
+            
+        
+        let chatRef = Firestore.firestore().collection("chat")
+                chatRef.document(self.providerId).delete { error in
+            if let error = error {
+                print("Error in db delete",error)
+            }
+            
+                        chatRef.document(self.requsterId).delete { error in
+                            if let error = error {
+                                print("Error in db delete",error)
+                            }
+            
+                        }
+        }
+        
+       }
+    }
+    }
     
 }
 extension ChatViewController:UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate{
@@ -165,7 +209,7 @@ extension ChatViewController:UITableViewDelegate,UITableViewDataSource,UITextFie
                 cell.messageView.backgroundColor = .systemGray6
             }
         }
-        
+        cell.selectionStyle = .none
         return cell
     }
     

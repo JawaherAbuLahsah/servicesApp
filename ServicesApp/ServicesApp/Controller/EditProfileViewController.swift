@@ -28,12 +28,27 @@ class EditProfileViewController: UIViewController {
     }
     
     @IBAction func handleSave(_ sender: Any) {
-        if let name = userNameTextField.text,
-           let email = emailTextField.text,
-           let phoneNumber = phoneNumberTextField.text ,
-           let image = profileImageView.image,
-           let imageData = image.jpegData(compressionQuality: 0.25),
-           let currentUser = Auth.auth().currentUser{
+        
+        if let currentUser = Auth.auth().currentUser{
+        let db = Firestore.firestore()
+        db.collection("users").document(currentUser.uid).getDocument { userSnapshot, error in
+            if let error = error{
+                print("Error in get provider data ",error)
+            }
+            if let userSnapshot = userSnapshot,
+               let userData = userSnapshot.data(){
+                let user = User(dict: userData)
+
+                
+                self.userNameTextField.text = user.name
+                self.emailTextField.text = user.email
+                self.phoneNumberTextField.text = user.phoneNumber
+                
+                if let name = self.userNameTextField.text,
+                   let email = self.emailTextField.text,
+                   let phoneNumber = self.phoneNumberTextField.text ,
+                   let image = self.profileImageView.image,
+           let imageData = image.jpegData(compressionQuality: 0.25){
             currentUser.updateEmail(to: email) { error in
                 if let error = error {
                     print(error)
@@ -55,14 +70,6 @@ class EditProfileViewController: UIViewController {
                                 print("URL",url.absoluteString)
                                 
                                 
-                                let db = Firestore.firestore()
-                                db.collection("users").document(currentUser.uid).getDocument { userSnapshot, error in
-                                    if let error = error{
-                                        print("Error in get provider data ",error)
-                                    }
-                                    if let userSnapshot = userSnapshot,
-                                       let userData = userSnapshot.data(){
-                                        let user = User(dict: userData)
                                         let dataBase = Firestore.firestore()
                                         
                                         let userData:[String:Any]
@@ -74,7 +81,10 @@ class EditProfileViewController: UIViewController {
                                                 "phoneNumber" : phoneNumber,
                                                 "userType" : user.userType,
                                                 "profilePictuer": url.absoluteString,
-                                                "service":self.providerServices
+                                                "service":self.providerServices,
+                                                "rating" : user.rating,
+                                                "numberRating":user.numberRating,
+                                                "numberStar":user.numberStar
                                             ]
                                         }else{
                                             userData = [
@@ -84,7 +94,10 @@ class EditProfileViewController: UIViewController {
                                                 "phoneNumber" : phoneNumber,
                                                 "userType" : user.userType,
                                                 "profilePictuer": url.absoluteString,
-                                                "service":[]
+                                                "service":[],
+                                                "rating" : user.rating,
+                                                "numberRating":user.numberRating,
+                                                "numberStar":user.numberStar
                                             ]
                                         }
                                         
@@ -92,7 +105,7 @@ class EditProfileViewController: UIViewController {
                                             if let error = error{
                                                 print(error)
                                             }
-                                            
+                                        }
                                         }
                                     }
                                 }
