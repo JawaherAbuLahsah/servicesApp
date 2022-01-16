@@ -16,9 +16,21 @@ class EditProfileViewController: UIViewController {
             profileImageView.addGestureRecognizer(tabGesture)
         }
     }
-    @IBOutlet weak var userNameTextField: UITextField!
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var phoneNumberTextField: UITextField!
+    @IBOutlet weak var userNameTextField: UITextField!{
+        didSet{
+            userNameTextField.delegate = self
+        }
+    }
+    @IBOutlet weak var emailTextField: UITextField!{
+        didSet{
+            emailTextField.delegate = self
+        }
+    }
+    @IBOutlet weak var phoneNumberTextField: UITextField!{
+        didSet{
+            phoneNumberTextField.delegate = self
+        }
+    }
     var providerServices = [String]()
     let imagePickerController = UIImagePickerController()
     override func viewDidLoad() {
@@ -98,10 +110,13 @@ class EditProfileViewController: UIViewController {
                                                 "phoneNumber" : phoneNumber,
                                                 "userType" : user.userType,
                                                 "profilePictuer": url.absoluteString,
-                                                "service":self.providerServices,
+                                                "service":user.service,
                                                 "rating" : user.rating,
                                                 "numberRating":user.numberRating,
-                                                "numberStar":user.numberStar
+                                                "numberStar":user.numberStar,
+                                                "latitude" : user.latitude,
+                                                "longitude" : user.longitude
+                                                
                                             ]
                                         }else{
                                             userData = [
@@ -111,10 +126,12 @@ class EditProfileViewController: UIViewController {
                                                 "phoneNumber" : phoneNumber,
                                                 "userType" : user.userType,
                                                 "profilePictuer": url.absoluteString,
-                                                "service":[],
+                                                "service": user.service,
                                                 "rating" : user.rating,
                                                 "numberRating":user.numberRating,
-                                                "numberStar":user.numberStar
+                                                "numberStar":user.numberStar,
+                                                "latitude" : user.latitude,
+                                                "longitude" : user.longitude
                                             ]
                                         }
                                         
@@ -132,6 +149,7 @@ class EditProfileViewController: UIViewController {
                 }
             }
         }
+        self.dismiss(animated: true, completion: nil)
     }
 }
 extension EditProfileViewController:UIImagePickerControllerDelegate, UINavigationControllerDelegate{
@@ -170,5 +188,12 @@ extension EditProfileViewController:UIImagePickerControllerDelegate, UINavigatio
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         
+    }
+}
+extension EditProfileViewController:UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        
+        return true
     }
 }

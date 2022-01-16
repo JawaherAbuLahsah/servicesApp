@@ -9,16 +9,15 @@ import UIKit
 import Firebase
 class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegate {
     
-    @IBOutlet weak var userRatingLabel: UILabel!{
+    
+    @IBOutlet var ratingStarButton: [UIButton]!{
         didSet{
-            userRatingLabel.isHidden = true
+            for button in ratingStarButton {
+                button.isHidden = true
+            }
         }
     }
-    @IBOutlet weak var servicesLabel: UILabel!{
-        didSet{
-            servicesLabel.text = "services".localizes
-        }
-    }
+    @IBOutlet weak var servicesLabel: UILabel!
     @IBOutlet weak var hamburgerMenuView: UIView!
     @IBOutlet weak var hamburgerMenuConstraintLeading: NSLayoutConstraint!
     @IBOutlet weak var profileImageView: UIImageView!{
@@ -53,6 +52,7 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
         didSet{
             editProfileButton.layer.cornerRadius = 10
             editProfileButton.setTitle("edit".localizes, for: .normal)
+            editProfileButton.isHidden = true
         }
     }
     @IBOutlet weak var profileView: UIView!{
@@ -81,33 +81,33 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
     func getData(){
         let db = Firestore.firestore()
         if let currentUser = Auth.auth().currentUser{
+            
+            db.collection("requests").whereField("requestsId", isEqualTo: currentUser.uid).whereField("haveProvider", isEqualTo: false).addSnapshotListener{ querySnapshot, error in
+                if let _ = error{
+                    
+                }
+                if let querySnapshot = querySnapshot {
+                    for doc in querySnapshot.documents{
+                        let titleRequests = doc.data()
+                        if let titleRequests = titleRequests["title"] as? String {
+                            self.requests.append(titleRequests)
+                        }
+                    }
+                    print("requestsArray>>>",self.requests)
+                }
+                self.providerServicesTableView.reloadData()
+                
+            }
+            
+            
             db.collection("users").addSnapshotListener { snapshot, error in
                 if let error = error{
                     print(error)
                 }
                 
-            
-                db.collection("requests").whereField("requestsId", isEqualTo: currentUser.uid).getDocuments { querySnapshot, erroe in
-                    if let _ = error{
-                        
-                    }
-                    
-                    
-                    if let querySnapshot = querySnapshot{
-                        for doc in querySnapshot.documents{
-                            let titleRequests = doc.data()
-                            if let titleRequests = titleRequests["title"] as? String {
-                            self.requests.append(titleRequests)
-                                }
-                        }
-                        print("requestsArray>>>",self.requests)
-                
-                
-                
                 
                 if let snapshot = snapshot{
                     snapshot.documentChanges.forEach { documentChange in
-                        // let requestData = documentChange.document.data()
                         
                         
                         db.collection("users").document(currentUser.uid).getDocument { documentSnapshot, error in
@@ -118,6 +118,7 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
                                let userData = documentSnapshot.data(){
                                 let user = User(dict: userData)
                                 
+                                
                                 switch documentChange.type{
                                 case .added:
                                     
@@ -125,38 +126,51 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
                                     self.userPhoneNumberLabel.text = user.phoneNumber
                                     self.userEmailLabel.text = user.email
                                     self.profileImageView.lodingImage(user.profilePictuer)
-                                    self.userRatingLabel.text = "\(user.rating)"
-//                                    if user.userType{
-//                                        self.serviceView.isHidden = false
-//                                        self.userRatingLabel.isHidden = false
-//                                    }
+                                    
+                                    if user.userType{
+                                        
+                                        for button in self.ratingStarButton {
+                                            button.isHidden = false
+                                        }
+                                        self.servicesLabel.text = "services".localizes
+                                        self.editProfileButton.isHidden = false
+                                    }else{
+                                        self.servicesLabel.text = "requests".localizes
+                                    }
+                                    for starButton in self.ratingStarButton{
+                                        let imageName = (starButton.tag < Int(user.rating) ? "star.fill" : "star")
+                                        starButton.setImage(UIImage(systemName: imageName), for: .normal)
+                                        starButton.tintColor = (starButton.tag < Int(user.rating) ? .systemYellow : .darkText)
+                                    }
                                     
                                     self.userProviderData.append(user)
                                     DispatchQueue.main.async {
                                         if user.userType{
-                                    self.providerServices = user.service
-                                        }else{
-                                            
+                                            self.providerServices = user.service
+                                            self.providerServicesTableView.reloadData()
                                         }
-                                    self.providerServicesTableView.reloadData()
                                     }
                                     
                                 case .modified:
-                                    let userId = documentChange.document.documentID
-                                    if let updateIndex = self.userProviderData.firstIndex(where: {$0.id == userId}){
-                                        if !self.providerServices.isEmpty{
-                                            self.providerServicesTableView.beginUpdates()
-                                            self.providerServicesTableView.deleteRows(at: [IndexPath(row: updateIndex, section: 0)], with: .left)
-                                            self.providerServicesTableView.insertRows(at: [IndexPath(row: updateIndex, section: 0)], with: .left)
-                                            
-                                            self.providerServicesTableView.endUpdates()
-                                        }
+                                    //                                    let userId = documentChange.document.documentID
+                                    //                                    if let updateIndex = self.userProviderData.firstIndex(where: {$0.id == userId}){
+                                    //                                        if !self.providerServices.isEmpty{
+                                    //                                            self.providerServicesTableView.beginUpdates()
+                                    //                                            self.providerServicesTableView.deleteRows(at: [IndexPath(row: updateIndex, section: 0)], with: .left)
+                                    //                                            self.providerServicesTableView.insertRows(at: [IndexPath(row: updateIndex, section: 0)], with: .left)
+                                    //
+                                    //                                            self.providerServicesTableView.endUpdates()
+                                    //                                        }
+                                    DispatchQueue.main.async {
                                         self.userNameLabel.text = user.name
                                         self.userPhoneNumberLabel.text = user.phoneNumber
                                         self.userEmailLabel.text = user.email
                                         self.profileImageView.lodingImage(user.profilePictuer)
-                                        
                                     }
+                                    //}
+                                    
+                                    //                                    }
+                                    //self.providerServicesTableView.reloadData()
                                 case .removed:
                                     let userId = documentChange.document.documentID
                                     if let deleteIndex = self.userProviderData.firstIndex(where: {$0.id == userId}){
@@ -167,47 +181,45 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
                                         
                                     }
                                     
+                                    
                                 }
                             }
                         }
                     }
                 }
+                
             }
         }
-            }
-            
-        }
-        
         
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "toEditServiceVC"{
-//            let sender = segue.destination as! ServiceSelectionViewController
-//            sender.selectedServices = providerServices
+            //            let sender = segue.destination as! ServiceSelectionViewController
+            //            sender.selectedServices = providerServices
             
         }
         if segue.identifier == "toEditVC"{
-        let sender = segue.destination as! EditProfileViewController
-        sender.providerServices = providerServices
+            let sender = segue.destination as! EditProfileViewController
+            sender.providerServices = providerServices
         }
     }
     
     
     
-    @IBAction func handleLogout(_ sender: Any) {
-        do {
-            try Auth.auth().signOut()
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LandingNavigationController") as? UINavigationController {
-                vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true, completion: nil)
-            }
-        } catch  {
-            print("ERROR in signout",error.localizedDescription)
-        }
-        
-    }
+    //    @IBAction func handleLogout(_ sender: Any) {
+    //        do {
+    //            try Auth.auth().signOut()
+    //            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LandingNavigationController") as? UINavigationController {
+    //                vc.modalPresentationStyle = .fullScreen
+    //                self.present(vc, animated: true, completion: nil)
+    //            }
+    //        } catch  {
+    //            print("ERROR in signout",error.localizedDescription)
+    //        }
+    //
+    //    }
     
     
     
@@ -257,10 +269,17 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
 extension UserProfileViewController:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if providerServices.isEmpty{
-        return requests.count
+        if providerServices.isEmpty {
+            if requests.count == 0 {
+                tableView.setEmptyMessage("nothing".localizes)
+            }else {
+                tableView.restore()
+                
+            }
+            return requests.count
         }else{
-        return providerServices.count
+            tableView.restore()
+            return providerServices.count
         }
     }
     
@@ -270,6 +289,7 @@ extension UserProfileViewController:UITableViewDelegate,UITableViewDataSource{
         var content = cell.defaultContentConfiguration()
         if providerServices.isEmpty{
             content.text = "\(requests[indexPath.row])"
+            content.secondaryText = "swipe".localizes
             cell.contentConfiguration = content
         }else{
             let db = Firestore.firestore()
@@ -287,6 +307,82 @@ extension UserProfileViewController:UITableViewDelegate,UITableViewDataSource{
         return cell
     }
     
+    //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    //      //  if !requests.isEmpty {
+    //            let alert = UIAlertController(title: self.requests[indexPath.row] , message: "  ", preferredStyle: .alert)
+    //            let cancelAction = UIAlertAction(title: "cancel".localizes, style: .destructive){ Action in
+    //
+    //            }
+    //            let deleteAction = UIAlertAction(title: "delete".localizes, style: .destructive){ Action in
+    //
+    //                let db = Firestore.firestore()
+    //                let ref = db.collection("requests").whereField("title", isEqualTo: self.requests[indexPath.row])
+    //                var id = ""
+    //                ref.getDocuments { querySnapshot, error in
+    //                    if let error = error {
+    //                                            print("Error in db delete",error)
+    //                                        }
+    //                    if let querySnapshot = querySnapshot {
+    //                        for doc in querySnapshot.documents {
+    //                             id = doc.documentID
+    //                        }
+    //                    }
+    //                    db.collection("requests").document(id).delete { error in
+    //                        if let error = error {
+    //                            print("Error in db delete",error)
+    //                        }
+    //                    }
+    //                }
+    //                self.providerServicesTableView.beginUpdates()
+    //                self.requests.remove(at: indexPath.row)
+    //                self.providerServicesTableView.deleteRows(at: [IndexPath(row: indexPath.row, section: 0)], with: .automatic)
+    //                self.providerServicesTableView.endUpdates()
+    //            }
+    //            alert.addAction(cancelAction)
+    //            alert.addAction(deleteAction)
+    //            self.present(alert, animated: true, completion: nil)
+    //            }
+    //
+    
+    // }
+    
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if providerServices.isEmpty {
+            return true
+        }else{
+            return false
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if providerServices.isEmpty {
+            if (editingStyle == .delete) {
+                let db = Firestore.firestore()
+                let ref = db.collection("requests").whereField("title", isEqualTo: self.requests[indexPath.row])
+                var id = ""
+                ref.getDocuments { querySnapshot, error in
+                    if let error = error {
+                        print("Error in db delete",error)
+                    }
+                    if let querySnapshot = querySnapshot {
+                        for doc in querySnapshot.documents {
+                            id = doc.documentID
+                        }
+                    }
+                    db.collection("requests").document(id).delete { error in
+                        if let error = error {
+                            print("Error in db delete",error)
+                        }
+                    }
+                }
+                self.providerServicesTableView.beginUpdates()
+                self.requests.remove(at: indexPath.row)
+                self.providerServicesTableView.deleteRows(at: [IndexPath(row: indexPath.row, section: 0)], with: .automatic)
+                self.providerServicesTableView.endUpdates()
+            }
+        }
+    }
 }
 extension UserProfileViewController:UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     @objc func selectImage(){

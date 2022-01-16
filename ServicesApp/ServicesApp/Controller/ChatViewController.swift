@@ -38,9 +38,9 @@ class ChatViewController: UIViewController {
         super.viewDidLoad()
         IQKeyboardManager.shared.enable = false
         getData()
-        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
+//        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+//        tap.cancelsTouchesInView = false
+//        view.addGestureRecognizer(tap)
         
          self.chatTableView.keyboardDismissMode = .interactive
         

@@ -113,6 +113,7 @@ extension ServiceSelectionViewController:UITableViewDelegate,UITableViewDataSour
         selectServiceSwitch.tag = indexPath.row
         selectServiceSwitch.addTarget(self, action: #selector(didChangeswitch(_:)), for: .valueChanged)
         cell.accessoryView = selectServiceSwitch
+        cell.backgroundColor = .clear
         cell.selectionStyle = .none
         return cell
     }

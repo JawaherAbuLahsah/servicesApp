@@ -74,7 +74,7 @@ class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate 
     
     var isShow = true
     var latitude = 0.0
-        var longitude = 0.0
+    var longitude = 0.0
     override func viewDidLoad() {
         super.viewDidLoad()
         if let selectServices = selectServices{

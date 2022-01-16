@@ -44,15 +44,17 @@ class UserRequestsViewController: UIViewController ,CLLocationManagerDelegate{
             let locValue:CLLocationCoordinate2D = manager.location!.coordinate
         latitude = locValue.latitude
         longitude = locValue.longitude
+        upDateData()
     }
     
-//    func upDateData(){
-//        let db = Firestore.firestore()
-//        if let currentUser = Auth.auth().currentUser{
-//            db.collection("users").document(currentUser.uid).updateData(["latitude":latitude])
-//            db.collection("users").document(currentUser.uid).updateData(["longitude":longitude])
-//        }
-//    }
+    func upDateData(){
+        let db = Firestore.firestore()
+        if let currentUser = Auth.auth().currentUser{
+            db.collection("users").document(currentUser.uid).updateData(["latitude":latitude])
+            db.collection("users").document(currentUser.uid).updateData(["longitude":longitude])
+            print(">>>>",longitude)
+        }
+    }
     
     
     func getData(){

@@ -158,7 +158,7 @@ extension ServiceProvidersViewController:UITableViewDelegate,UITableViewDataSour
         
         if serviceProviders[indexPath.row].done == true{
             content.text = serviceProviders[indexPath.row].userProvider.name
-            content.secondaryText = "rating"
+            content.secondaryText = "rating".localizes
         }else{
         content.text = serviceProviders[indexPath.row].title
         content.secondaryText = serviceProviders[indexPath.row].price
@@ -172,7 +172,7 @@ extension ServiceProvidersViewController:UITableViewDelegate,UITableViewDataSour
         
         
         
-        let alert = UIAlertController(title: serviceProviders[indexPath.row].userProvider.name , message: "\(serviceProviders[indexPath.row].userProvider.phoneNumber)\n \(serviceProviders[indexPath.row].userProvider.rating)", preferredStyle: .alert)
+        let alert = UIAlertController(title: serviceProviders[indexPath.row].userProvider.name , message: "\(serviceProviders[indexPath.row].userProvider.phoneNumber)\n "+"rating".localizes+" : \(serviceProviders[indexPath.row].userProvider.rating)", preferredStyle: .alert)
         if serviceProviders[indexPath.row].done == true{
            
 

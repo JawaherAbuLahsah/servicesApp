@@ -45,3 +45,6 @@
 "reject" = "Reject";
 "rating" = "Rating";
 "services" = "SERVICES";
+"requests" = "REQUESTS";
+"nothing" = "No Data";
+"swipe" = "Swipe to delete";
