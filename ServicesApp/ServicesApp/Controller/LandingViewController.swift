@@ -9,7 +9,7 @@ import UIKit
 
 class LandingViewController: UIViewController {
     
-
+    // MARK: - Outlet
     @IBOutlet weak var languageView: UIView!{
         didSet{
             languageView.layer.cornerRadius = 40
@@ -56,9 +56,13 @@ class LandingViewController: UIViewController {
         }
     }
     
+    // MARK: - Definitions
     var arabicButtonCenter:CGPoint!
     var englishButtonCenter:CGPoint!
+    var lang:String?
+    var isClick = true
     
+    // MARK: - View Did Load
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -68,7 +72,7 @@ class LandingViewController: UIViewController {
         englishButton.center = languageButton.center
     }
     
-    var lang:String?
+    // MARK: - Change language action
     @IBAction func changeLanguage(_ sender: UIButton) {
         if sender.tag == 0 {
             lang = "ar"
@@ -89,7 +93,8 @@ class LandingViewController: UIViewController {
             }
         }
     }
-    var isClick = true
+    
+    // MARK: - Animation > to show button language
     @IBAction func showView(_ sender: Any) {
         if isClick{
             UIView.animate(withDuration: 0.3) {

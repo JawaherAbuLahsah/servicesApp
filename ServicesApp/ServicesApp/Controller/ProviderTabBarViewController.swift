@@ -8,7 +8,7 @@
 import UIKit
 
 class ProviderTabBarViewController: UITabBarController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         localizeTabBar()
@@ -20,5 +20,5 @@ class ProviderTabBarViewController: UITabBarController {
             item.title = "\(index)tab".localizes
         }
     }
-
+    
 }

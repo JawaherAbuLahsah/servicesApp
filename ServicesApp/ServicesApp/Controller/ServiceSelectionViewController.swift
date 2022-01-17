@@ -8,7 +8,7 @@
 import UIKit
 import Firebase
 class ServiceSelectionViewController: UIViewController {
-    
+    // MARK: - outlat
     @IBOutlet weak var saveButton: UIButton!{
         didSet{
             saveButton.setTitle("save".localizes, for: .normal)
@@ -20,16 +20,18 @@ class ServiceSelectionViewController: UIViewController {
             serviceSelectionTableView.delegate = self
         }
     }
+    // MARK: - Definitions
     var activityIndicator = UIActivityIndicatorView()
     var services = [Service]()
     var selectedServices = [String]()
+    // MARK: - View Did Load
     override func viewDidLoad() {
         super.viewDidLoad()
         getData()
         
     }
     
-    
+    // MARK: - get data function
     func getData(){
         let db = Firestore.firestore()
         db.collection("services").addSnapshotListener { snapshot, error in
@@ -49,6 +51,7 @@ class ServiceSelectionViewController: UIViewController {
         }
     }
     
+    // MARK: - save function
     @IBAction func handleSave(_ sender: Any) {
         //add
         Activity.showIndicator(parentView: self.view, childView: activityIndicator)
@@ -63,7 +66,6 @@ class ServiceSelectionViewController: UIViewController {
                    let userData = snapshot.data(){
                     let user = User(dict: userData)
                     let dataBase = Firestore.firestore()
-                    //  if let address = userData["address"] as? Any{
                     let userData:[String:Any] = [
                         "id" : user.id,
                         "name" : user.name,
@@ -101,7 +103,7 @@ class ServiceSelectionViewController: UIViewController {
         }
     }
 }
-
+// MARK: - extension
 extension ServiceSelectionViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return services.count
@@ -111,7 +113,7 @@ extension ServiceSelectionViewController:UITableViewDelegate,UITableViewDataSour
         let cell = tableView.dequeueReusableCell(withIdentifier: "serviceSelectionCell", for: indexPath) as! ServiceSelectionTableViewCell
         cell.serviceNameLabel.text = services[indexPath.row].name
         let selectServiceSwitch = UISwitch()
-        //selectServiceSwitch.isOn = false
+        
         selectServiceSwitch.tag = indexPath.row
         selectServiceSwitch.addTarget(self, action: #selector(didChangeswitch(_:)), for: .valueChanged)
         cell.accessoryView = selectServiceSwitch
@@ -119,16 +121,13 @@ extension ServiceSelectionViewController:UITableViewDelegate,UITableViewDataSour
         cell.selectionStyle = .none
         return cell
     }
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 200
-//    }
     @objc func didChangeswitch(_ sender:UISwitch){
         if sender.isOn{
             selectedServices.append(services[sender.tag].id)
             print(services[sender.tag].id)
         }else{
             if sender.tag >= 0 {
-            selectedServices.remove(at: sender.tag)
+                selectedServices.remove(at: sender.tag)
             }
         }
     }

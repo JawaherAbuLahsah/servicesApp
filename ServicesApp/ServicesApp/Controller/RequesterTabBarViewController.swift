@@ -8,10 +8,10 @@
 import UIKit
 
 class RequesterTabBarViewController: UITabBarController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         localizeTabBar()
         // Do any additional setup after loading the view.
     }
@@ -21,5 +21,5 @@ class RequesterTabBarViewController: UITabBarController {
             item.title = "\(index)tabBar".localizes
         }
     }
-
+    
 }

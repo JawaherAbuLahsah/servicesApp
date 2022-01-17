@@ -7,10 +7,12 @@
 
 import UIKit
 import Firebase
+// MARK: - Protocol
 protocol HamburgerMenuControllerDelegate{
     func hideHamburgerMenu()
 }
 class HamburgerMenuViewController: UIViewController {
+    // MARK: - Outlat
     @IBOutlet weak var arButton: UIButton!{
         didSet{
             arButton.layer.borderColor = UIColor(named: "Color-1")?.cgColor
@@ -19,7 +21,6 @@ class HamburgerMenuViewController: UIViewController {
             arButton.layer.cornerRadius = 10
         }
     }
-    
     @IBOutlet weak var enButton: UIButton!{
         didSet{
             enButton.layer.borderColor = UIColor(named: "Color-1")?.cgColor
@@ -37,26 +38,28 @@ class HamburgerMenuViewController: UIViewController {
     
     @IBOutlet weak var languageButton: UIButton!{
         didSet{
-        languageButton.setTitle("language".localizes, for: .normal)
-    languageButton.layer.cornerRadius = 10
+            languageButton.setTitle("language".localizes, for: .normal)
+            languageButton.layer.cornerRadius = 10
         }
     }
     @IBOutlet weak var logoutButton: UIButton!
+    // MARK: - Definitions
     var delegate :HamburgerMenuControllerDelegate?
     var lang:String?
     var isClick = true
     var arabicButtonCenter:CGPoint!
     var englishButtonCenter:CGPoint!
+    // MARK: - view did load
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         arabicButtonCenter = arButton.center
         englishButtonCenter = enButton.center
         arButton.center = languageButton.center
         enButton.center = languageButton.center
     }
-    
+    // MARK: - change language action
     @IBAction func changeLanguage(_ sender: UIButton) {
         if sender.tag == 0 {
             lang = "ar"
@@ -64,13 +67,14 @@ class HamburgerMenuViewController: UIViewController {
             lang = "en"
         }
         if let lang = lang{
-           
+            
             UserDefaults.standard.setValue([lang], forKey: "AppleLanguages")
             UserDefaults.standard.set(lang, forKey: "currentLanguage")
             Bundle.setLanguage(lang)
             exit(0)
-            }
         }
+    }
+    // MARK: - show languages button
     @IBAction func showLanguages(_ sender: Any) {
         if isClick{
             UIView.animate(withDuration: 0.3) {
@@ -90,7 +94,7 @@ class HamburgerMenuViewController: UIViewController {
             isClick = true
         }
     }
-    
+    // MARK: - logout action
     @IBAction func logout(_ sender: Any) {
         do {
             try Auth.auth().signOut()

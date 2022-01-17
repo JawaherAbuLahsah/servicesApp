@@ -9,7 +9,7 @@ import UIKit
 import Firebase
 class LoginViewController: UIViewController {
     
-    
+    // MARK: - Outlet
     @IBOutlet weak var showPasswordButton: UIButton!
     @IBOutlet weak var loginView: UIView!{
         didSet{
@@ -18,8 +18,6 @@ class LoginViewController: UIViewController {
             loginView.layer.shadowOpacity = 0.5
         }
     }
-    
-    
     @IBOutlet weak var emailLabel: UILabel!{
         didSet{
             emailLabel.text = "email".localizes
@@ -59,20 +57,24 @@ class LoginViewController: UIViewController {
             forgotPasswordButton.setTitle("forgot".localizes, for: .normal)
         }
     }
+    
+    // MARK: - variables
     var activityIndicator = UIActivityIndicatorView()
     var isShowPassword = true
+    
+    // MARK: - view did load
     override func viewDidLoad() {
         super.viewDidLoad()
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
-                tap.cancelsTouchesInView = false
-                view.addGestureRecognizer(tap)
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
         // Do any additional setup after loading the view.
         passwordTextField.rightView = showPasswordButton
         passwordTextField.rightViewMode = .always
         
         
     }
-    
+    // MARK: - Show password action
     @IBAction func showPassword(_ sender: UIButton) {
         if isShowPassword {
             passwordTextField.isSecureTextEntry = false
@@ -86,14 +88,15 @@ class LoginViewController: UIViewController {
         }
     }
     
+    // MARK: - Login action
     @IBAction func handleLogin(_ sender: Any) {
         if let email = emailTextField.text,
            let password = passwordTextField.text{
             Activity.showIndicator(parentView: self.view, childView: activityIndicator)
             Auth.auth().signIn(withEmail: email, password: password) { authDataResult, error in
                 if let _ = error{
-                        Alert.showAlertError("check".localizes)
-                        self.present(Alert.alert, animated: true, completion: nil)
+                    Alert.showAlertError("check".localizes)
+                    self.present(Alert.alert, animated: true, completion: nil)
                     Activity.removeIndicator(parentView: self.view, childView: self.activityIndicator)
                 }
                 if let authDataResult = authDataResult{
@@ -104,9 +107,9 @@ class LoginViewController: UIViewController {
                         }
                         if let userSnapshot = userSnapshot,
                            let userData = userSnapshot.data(){
-                             let user = User(dict: userData)
-                                
-                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                            let user = User(dict: userData)
+                            
+                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
                             Activity.removeIndicator(parentView: self.view, childView: self.activityIndicator)
                             if authDataResult.user.email == "j@j.com"{
                                 let mainTabBarController = storyboard.instantiateViewController(identifier: "AdminNavigationController")
@@ -114,7 +117,7 @@ class LoginViewController: UIViewController {
                                 
                                 self.present(mainTabBarController, animated: true, completion: nil)
                             }else{
-                            if user.userType {
+                                if user.userType {
                                     let mainTabBarController = storyboard.instantiateViewController(identifier: "ServiceProviderNavigationController")
                                     mainTabBarController.modalPresentationStyle = .fullScreen
                                     
@@ -131,7 +134,7 @@ class LoginViewController: UIViewController {
                 }
             }
         }else{
-           
+            
             Alert.showAlertError("check".localizes)
             self.present(Alert.alert, animated: true, completion: nil)
             Activity.removeIndicator(parentView: self.view, childView: self.activityIndicator)
@@ -139,6 +142,7 @@ class LoginViewController: UIViewController {
     }
     
 }
+// MARK: - Extension
 extension LoginViewController:UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

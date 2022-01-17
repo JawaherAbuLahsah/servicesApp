@@ -8,7 +8,7 @@
 import UIKit
 import Firebase
 class AddServicesViewController: UIViewController {
-    
+    // MARK: - Outlat
     @IBOutlet weak var enNameLabel: UILabel!{
         didSet{
             enNameLabel.text = "enName".localizes
@@ -41,10 +41,12 @@ class AddServicesViewController: UIViewController {
             actionButton.layer.cornerRadius = 10
         }
     }
+    // MARK: - Definitions
     let activityIndicator = UIActivityIndicatorView()
     let imagePickerController = UIImagePickerController()
     var selectServices : Service?
     var selectedServiceImage:UIImage?
+    // MARK: - View did load
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePickerController.delegate = self
@@ -52,17 +54,17 @@ class AddServicesViewController: UIViewController {
             let db = Firestore.firestore()
             db.collection("services").document(selectServices.id).getDocument { documentSnapshot, error in
                 if let _ = error{
-            }
+                }
                 if let documentSnapshot = documentSnapshot, let data = documentSnapshot.data(){
                     if let enName = data["enName"] as? String, let arName = data["arName"] as? String{
-                self.enNameTextField.text = enName
-                self.arNameTextField.text = arName
-                self.serviceImage.lodingImage(selectServices.imageUrl)
-            
-                self.actionButton.setTitle("edit".localizes, for: .normal)
-                let deleteBarButton = UIBarButtonItem(image: UIImage(systemName: "trash.fill"), style: .plain, target: self, action: #selector(self.handleDelete))
-            self.navigationItem.rightBarButtonItem = deleteBarButton
-            }
+                        self.enNameTextField.text = enName
+                        self.arNameTextField.text = arName
+                        self.serviceImage.lodingImage(selectServices.imageUrl)
+                        
+                        self.actionButton.setTitle("edit".localizes, for: .normal)
+                        let deleteBarButton = UIBarButtonItem(image: UIImage(systemName: "trash.fill"), style: .plain, target: self, action: #selector(self.handleDelete))
+                        self.navigationItem.rightBarButtonItem = deleteBarButton
+                    }
                 }
             }
         }else {
@@ -73,7 +75,7 @@ class AddServicesViewController: UIViewController {
         
     }
     
-    
+    // MARK: - action button
     @IBAction func handleActionTouch(_ sender: Any) {
         if let image = serviceImage.image,
            let imageData = image.pngData(),
@@ -124,32 +126,33 @@ class AddServicesViewController: UIViewController {
             
         }
     }
-
-
-@objc func handleDelete(){
-    let ref = Firestore.firestore().collection("services")
-    if let selectServices = selectServices {
-        Activity.showIndicator(parentView: self.view, childView: activityIndicator)
-        ref.document(selectServices.id).delete { error in
-            if let error = error {
-                print("Error in db delete",error)
-            }else {
-                
-                let storageRef = Storage.storage().reference(withPath: "services/\(selectServices.id)")
-                storageRef.delete { error in
-                    if let error = error {
-                        print("Error in storage delete",error)
-                    } else {
-                        self.activityIndicator.stopAnimating()
-                        self.navigationController?.popViewController(animated: true)
+    
+    // MARK: - Delete action
+    @objc func handleDelete(){
+        let ref = Firestore.firestore().collection("services")
+        if let selectServices = selectServices {
+            Activity.showIndicator(parentView: self.view, childView: activityIndicator)
+            ref.document(selectServices.id).delete { error in
+                if let error = error {
+                    print("Error in db delete",error)
+                }else {
+                    
+                    let storageRef = Storage.storage().reference(withPath: "services/\(selectServices.id)")
+                    storageRef.delete { error in
+                        if let error = error {
+                            print("Error in storage delete",error)
+                        } else {
+                            self.activityIndicator.stopAnimating()
+                            self.navigationController?.popViewController(animated: true)
+                        }
                     }
                 }
             }
         }
     }
-}
     
 }
+// MARK: - Extension
 extension AddServicesViewController:UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     @objc func selectImage(){
         showAlert()
@@ -188,6 +191,7 @@ extension AddServicesViewController:UIImagePickerControllerDelegate, UINavigatio
         
     }
 }
+// MARK: - Extension
 extension AddServicesViewController:UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

@@ -8,7 +8,7 @@
 import UIKit
 import Firebase
 class ServicesViewController: UIViewController {
-    
+    // MARK: - Outlat
     @IBOutlet weak var logoutBarButton: UIBarButtonItem!
     @IBOutlet weak var servicesCollectionView: UICollectionView!{
         didSet{
@@ -16,9 +16,13 @@ class ServicesViewController: UIViewController {
             servicesCollectionView.dataSource = self
         }
     }
-    
     @IBOutlet weak var addServiceBarButton: UIBarButtonItem!
+    
+    // MARK: - Definitions
     var services = [Service]()
+    var selectServices : Service?
+    var selectedServiceImage:UIImage?
+    // MARK: - View did load
     override func viewDidLoad() {
         super.viewDidLoad()
         getData()
@@ -32,13 +36,10 @@ class ServicesViewController: UIViewController {
                 navigationItem.rightBarButtonItem = nil
                 navigationItem.leftBarButtonItem = nil
             }
-            
         }
-        
-        
     }
-    var selectServices : Service?
-    var selectedServiceImage:UIImage?
+    
+    // MARK: - function get data
     func getData(){
         let db = Firestore.firestore()
         db.collection("services").addSnapshotListener { snapshot, error in
@@ -61,7 +62,7 @@ class ServicesViewController: UIViewController {
                             let newService = Service(dict: serviceData)
                             self.services[updateIndex] = newService
                             self.servicesCollectionView.reloadData()
-
+                            
                         }
                         
                     case .removed:
@@ -72,12 +73,12 @@ class ServicesViewController: UIViewController {
                             
                         }
                     }
-                    
                 }
-                
             }
         }
     }
+    
+    // MARK: - prepare function
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "toRequestDetailsVC"{
@@ -85,13 +86,14 @@ class ServicesViewController: UIViewController {
             sender.selectServices = selectServices
         }else if segue.identifier == "toAddServicesVC"{
             let sender = segue.destination as! AddServicesViewController
-                        sender.selectServices = selectServices
-                        sender.selectedServiceImage = selectedServiceImage
+            sender.selectServices = selectServices
+            sender.selectedServiceImage = selectedServiceImage
         }else{
             
         }
     }
     
+    // MARK: - logout function
     @IBAction func logout(_ sender: Any) {
         do {
             try Auth.auth().signOut()
@@ -105,7 +107,7 @@ class ServicesViewController: UIViewController {
     }
 }
 
-
+// MARK: - extension
 extension ServicesViewController:UICollectionViewDelegate,UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return services.count

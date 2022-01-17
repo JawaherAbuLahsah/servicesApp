@@ -9,7 +9,7 @@ import UIKit
 import Firebase
 class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegate {
     
-    
+    // MARK: - Outlat
     @IBOutlet var ratingStarButton: [UIButton]!{
         didSet{
             for button in ratingStarButton {
@@ -40,7 +40,6 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
             serviceView.layer.cornerRadius = 10
             serviceView.layer.shadowRadius = 5
             serviceView.layer.shadowOpacity = 0.5
-            //serviceView.isHidden = true
         }
     }
     @IBOutlet weak var providerServicesTableView: UITableView!{
@@ -70,13 +69,14 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
             
         }
     }
+    // MARK: - Definitions
     let imagePickerController = UIImagePickerController()
     var hamburgerMenuViewController:HamburgerMenuViewController?
     var isHamburgerMenuShown:Bool = false
     var providerServices = [String]()
     var userProviderData = [User]()
-    //    var requests = [String]()
     var requestsData = [Request]()
+    // MARK: - View did load
     override func viewDidLoad() {
         super.viewDidLoad()
         getData()
@@ -85,7 +85,7 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
         
         // Do any additional setup after loading the view.
     }
-    
+    // MARK: - get requests function
     func getRequests(){
         let db = Firestore.firestore()
         if let currentUser = Auth.auth().currentUser{
@@ -106,7 +106,7 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
                                 if let error = error{
                                     print("6",error)
                                 }
-                               
+                                
                                 db.collection("services").document(serviceId).getDocument { serviceSnapshot, error in
                                     if let error = error{
                                         print("3",error)
@@ -185,7 +185,7 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
     
     
     
-    
+    // MARK: - get user data
     func getData(){
         let db = Firestore.firestore()
         if let currentUser = Auth.auth().currentUser{
@@ -273,7 +273,7 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
     }
     
     
-    
+    // MARK: - prepare function
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "toEditServiceVC"{
@@ -288,7 +288,7 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
     
     
     
-    
+    // MARK: - Hamburger Menu
     func hideHamburgerMenu() {
         UIView.animate(withDuration: 0.2) {
             self.hamburgerMenuConstraintLeading.constant = 10
@@ -326,11 +326,9 @@ class UserProfileViewController: UIViewController,HamburgerMenuControllerDelegat
         }
         hamburgerMenuView.isHidden = false
     }
-    
-    
-    
 }
 
+// MARK: - Extension
 extension UserProfileViewController:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -396,6 +394,7 @@ extension UserProfileViewController:UITableViewDelegate,UITableViewDataSource{
         }
     }
 }
+// MARK: - Extension
 extension UserProfileViewController:UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     @objc func selectImage(){
         showAlert()

@@ -10,12 +10,12 @@ import Firebase
 import CoreLocation
 
 class RegistrationViewController: UIViewController ,CLLocationManagerDelegate {
-
-    let locationManager = CLLocationManager()
+    
+    // MARK: - Outlet
     @IBOutlet weak var showPasswordButton: UIButton!
     @IBOutlet weak var registrationView: UIView!{
         didSet{
-    registrationView.layer.cornerRadius = 40
+            registrationView.layer.cornerRadius = 40
             registrationView.layer.shadowRadius = 30
             registrationView.layer.shadowOpacity = 0.5
         }
@@ -28,7 +28,6 @@ class RegistrationViewController: UIViewController ,CLLocationManagerDelegate {
             userTypeButton.backgroundColor = .white
         }
     }
-    
     @IBOutlet weak var userTypeLabel: UILabel!{
         didSet{
             userTypeLabel.text = "provider".localizes
@@ -82,8 +81,16 @@ class RegistrationViewController: UIViewController ,CLLocationManagerDelegate {
         }
     }
     
+    // MARK: - Definitions
+    let locationManager = CLLocationManager()
     var activityIndicator = UIActivityIndicatorView()
     var isProvider = false
+    var latitude = 0.0
+    var longitude = 0.0
+    var isShowPassword = true
+    let image = UIImage(systemName: "person.fill")
+    
+    // MARK: - Specify the type action
     @IBAction func specifyType(_ sender: Any) {
         if isProvider{
             userTypeButton.backgroundColor = .white
@@ -95,30 +102,34 @@ class RegistrationViewController: UIViewController ,CLLocationManagerDelegate {
     }
     
     
-    
+    // MARK: - View did load
     override func viewDidLoad() {
         super.viewDidLoad()
+        // for get location
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
         
+        //dismiss the keyboard when pressing outside
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
-                tap.cancelsTouchesInView = false
-                view.addGestureRecognizer(tap)
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+        
+        // to make the button inside the textfield
         passWordTextField.rightView = showPasswordButton
         passWordTextField.rightViewMode = .always
     }
     
-    var latitude = 0.0
-    var longitude = 0.0
     
+    // MARK: - Function to get the current location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-            let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
         latitude = locValue.latitude
         longitude = locValue.longitude
     }
-    var isShowPassword = true
+    
+    // MARK: - Show password action
     @IBAction func showPassword(_ sender: Any) {
         if isShowPassword {
             passWordTextField.isSecureTextEntry = false
@@ -133,10 +144,7 @@ class RegistrationViewController: UIViewController ,CLLocationManagerDelegate {
     }
     
     
-    
-    
-    
-    let image = UIImage(systemName: "person.fill")
+    // MARK: - Register action
     @IBAction func handleRegister(_ sender: Any) {
         
         if let name = userNameTaxtField.text ,
@@ -149,8 +157,8 @@ class RegistrationViewController: UIViewController ,CLLocationManagerDelegate {
             Auth.auth().createUser(withEmail: email, password: password) { authDataResult, error in
                 if let _ = error{
                     
-                        Alert.showAlertError("check".localizes)
-                        self.present(Alert.alert, animated: true, completion: nil)
+                    Alert.showAlertError("check".localizes)
+                    self.present(Alert.alert, animated: true, completion: nil)
                     Activity.removeIndicator(parentView: self.view, childView: self.activityIndicator)
                 }
                 if let authDataResult = authDataResult {
@@ -199,12 +207,12 @@ class RegistrationViewController: UIViewController ,CLLocationManagerDelegate {
                                         if self.isProvider{
                                             let mainTabBarController = storyboard.instantiateViewController(identifier: "ServicesSelectionNavigationController")
                                             mainTabBarController.modalPresentationStyle = .fullScreen
-
+                                            
                                             self.present(mainTabBarController, animated: true, completion: nil)
                                         }else{
                                             let mainTabBarController = storyboard.instantiateViewController(identifier: "ServiceRequesterNavigationController")
                                             mainTabBarController.modalPresentationStyle = .fullScreen
-
+                                            
                                             self.present(mainTabBarController, animated: true, completion: nil)
                                         }
                                         
@@ -223,7 +231,7 @@ class RegistrationViewController: UIViewController ,CLLocationManagerDelegate {
     }
 }
 
-
+// MARK: - Extension
 extension RegistrationViewController:UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

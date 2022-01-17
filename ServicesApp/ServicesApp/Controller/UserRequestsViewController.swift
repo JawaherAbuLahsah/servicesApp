@@ -13,25 +13,27 @@ import Firebase
 import CoreLocation
 class UserRequestsViewController: UIViewController ,CLLocationManagerDelegate{
     
-    
+    // MARK: - Outlat
     @IBOutlet weak var requestsTableView: UITableView!{
         didSet{
             requestsTableView.delegate = self
             requestsTableView.dataSource = self
         }
     }
+    
+    // MARK: - Definitions
     var userRequests = [Request]()
     var latitude = 0.0
     var longitude = 0.0
     let locationManager = CLLocationManager()
     
+    // MARK: - View Did Load
     override func viewDidLoad() {
         super.viewDidLoad()
-       // upDateData()
         getData()
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
-                tap.cancelsTouchesInView = false
-                view.addGestureRecognizer(tap)
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
@@ -39,24 +41,24 @@ class UserRequestsViewController: UIViewController ,CLLocationManagerDelegate{
     }
     
     
-    
+    // MARK: - Function to get the current location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-            let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
         latitude = locValue.latitude
         longitude = locValue.longitude
         upDateData()
     }
     
+    // MARK: - Function to update location for user
     func upDateData(){
         let db = Firestore.firestore()
         if let currentUser = Auth.auth().currentUser{
             db.collection("users").document(currentUser.uid).updateData(["latitude":latitude])
             db.collection("users").document(currentUser.uid).updateData(["longitude":longitude])
-            print(">>>>",longitude)
         }
     }
     
-    
+    // MARK: - Function to get data
     func getData(){
         let db = Firestore.firestore()
         db.collection("requests").addSnapshotListener { snapshot, error in
@@ -93,13 +95,12 @@ class UserRequestsViewController: UIViewController ,CLLocationManagerDelegate{
                                             let user = User(dict: userData)
                                             let userProvider = User(dict: userProviderData)
                                             let service = Service(dict: serviceData)
-                                            print(user)
-                                            print(userProvider)
+                                            
                                             
                                             let request = Request(dict: requestData,id: documentChange.document.documentID,userRequest: user ,userProvider: userProvider, requestType: service)
                                             switch documentChange.type{
                                             case .added:
-                                              
+                                                
                                                 if !request.haveProvider {
                                                     
                                                     for id in userProvider.service{
@@ -107,7 +108,7 @@ class UserRequestsViewController: UIViewController ,CLLocationManagerDelegate{
                                                             let loc = userProvider.location.distance(from: request.location) / 1000
                                                             if loc < 30{
                                                                 
-                                                            self.userRequests.append(request)
+                                                                self.userRequests.append(request)
                                                                 
                                                             }
                                                         }
@@ -121,13 +122,20 @@ class UserRequestsViewController: UIViewController ,CLLocationManagerDelegate{
                                                 let requestId = documentChange.document.documentID
                                                 
                                                 let newRequest = Request(dict: requestData, id: requestId, userRequest: user, userProvider: userProvider, requestType: service)
-                                                print(newRequest)
+                                                
                                                 
                                                 if newRequest.title != "" && !newRequest.haveProvider {
+                                                    for id in userProvider.service{
+                                                        if id == service.id{
+                                                            let loc = userProvider.location.distance(from: request.location) / 1000
+                                                            if loc < 30{
                                                     self.requestsTableView.beginUpdates()
                                                     self.userRequests.append(newRequest)
                                                     self.requestsTableView.insertRows(at: [IndexPath(row:self.userRequests.count - 1,section: 0)],with: .automatic)
                                                     self.requestsTableView.endUpdates()
+                                                            }
+                                                        }
+                                                    }
                                                 }
                                                 
                                                 if newRequest.haveProvider{
@@ -161,7 +169,7 @@ class UserRequestsViewController: UIViewController ,CLLocationManagerDelegate{
         }
     }
 }
-
+// MARK: - Extension
 extension UserRequestsViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         

@@ -8,18 +8,16 @@
 import UIKit
 import Firebase
 import IQKeyboardManagerSwift
-//import InputBarAccessoryView
+
 import AMKeyboardFrameTracker
 class ChatViewController: UIViewController {
-    
-  //  let inputBar = InputBarAccessoryView()
+    // MARK: - Outlat
     @IBOutlet weak var inputViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var endServiceButton: UIButton!{
         didSet{
             endServiceButton.isHidden = true
         }
     }
-    
     @IBOutlet weak var chatTextField: UITextField!{
         didSet{
             chatTextField.delegate = self
@@ -32,38 +30,35 @@ class ChatViewController: UIViewController {
             chatTableView.dataSource = self
         }
     }
+    // MARK: - Definitions
     let keyboardFrameTrackerView = AMKeyboardFrameTrackerView.init(height: 60)
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        IQKeyboardManager.shared.enable = false
-        getData()
-//        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
-//        tap.cancelsTouchesInView = false
-//        view.addGestureRecognizer(tap)
-        
-         self.chatTableView.keyboardDismissMode = .interactive
-        
-        self.keyboardFrameTrackerView.delegate = self
-        self.chatTextField.inputAccessoryView = self.keyboardFrameTrackerView
-        //inputBar.chatTextField.keyboardType =
-    }
-    
-    override func viewDidLayoutSubviews() {
-            super.viewDidLayoutSubviews()
-            /* you need to set the inputAccessoryView height if you need
-             the keyboard to start dismissing exactly when the touch hits the inputContainerView while panning
-             if your view interacts with the safeAreas you should be using a height constraint better
-             */
-            self.keyboardFrameTrackerView.setHeight(self.inputContainerView.frame.height)
-        }
-    
-    
     var messages = [Message]()
     var requestData :[String:Any] = [:]
     var providerId = ""
     var requsterId = ""
     var requsetId = ""
+    
+    // MARK: - view did load
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        IQKeyboardManager.shared.enable = false
+        getData()
+        
+        self.chatTableView.keyboardDismissMode = .interactive
+        
+        self.keyboardFrameTrackerView.delegate = self
+        self.chatTextField.inputAccessoryView = self.keyboardFrameTrackerView
+        
+    }
+    
+    // MARK: - View Did Layout Subviews
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.keyboardFrameTrackerView.setHeight(self.inputContainerView.frame.height)
+    }
+    
+    
+    // MARK: - save data action
     func saveData(){
         if let chat = chatTextField.text{
             let messageId = "\(Firebase.UUID())"
@@ -84,6 +79,8 @@ class ChatViewController: UIViewController {
         }
         chatTextField.text = ""
     }
+    
+    // MARK: - get data action
     func getData(){
         let db = Firestore.firestore()
         
@@ -98,7 +95,7 @@ class ChatViewController: UIViewController {
                     self.requestData = doc.data()
                     print("llll",self.requestData)
                 }
-            
+                
                 if let requesterUser = self.requestData["requestsId"] as? String,let providerUser = self.requestData["providerId"] as? String{
                     self.providerId = providerUser
                     self.requsterId = requesterUser
@@ -148,7 +145,7 @@ class ChatViewController: UIViewController {
                                                             self.chatTableView.endUpdates()
                                                             
                                                         case .modified:
-                    
+                                                            
                                                             if  currentUser.uid == requesterUser || currentUser.uid == providerUser {
                                                                 self.chatTableView.beginUpdates()
                                                                 let newMess = Message(dict: messageData, userId: user)
@@ -179,15 +176,15 @@ class ChatViewController: UIViewController {
         }
     }
     
-    
+    // MARK: - send ation
     @IBAction func sendMessage(_ sender: Any) {
         saveData()
     }
-    
+    // MARK: - end action
     @IBAction func endService(_ sender: Any) {
         print("button eeeee")
         if let currentUser = Auth.auth().currentUser{
-                    let db = Firestore.firestore()
+            let db = Firestore.firestore()
             db.collection("requests").whereField("providerId", isEqualTo: currentUser.uid).getDocuments { querySnapshot, error in
                 if let error = error{
                     print("eeee",error)
@@ -196,29 +193,25 @@ class ChatViewController: UIViewController {
                     let document = querySnapshot.documents.first
                     document?.reference.updateData(["done":true])
                 }
-                
-            
-            
-        
-        let chatRef = Firestore.firestore().collection("chat")
+                let chatRef = Firestore.firestore().collection("chat")
                 chatRef.document(self.providerId).delete { error in
-            if let error = error {
-                print("Error in db delete",error)
-            }
-            
-                        chatRef.document(self.requsterId).delete { error in
-                            if let error = error {
-                                print("Error in db delete",error)
-                            }
-            
+                    if let error = error {
+                        print("Error in db delete",error)
+                    }
+                    
+                    chatRef.document(self.requsterId).delete { error in
+                        if let error = error {
+                            print("Error in db delete",error)
                         }
+                        
+                    }
+                }
+                
+            }
         }
-        
-       }
     }
-    }
-    
 }
+// MARK: - Extension
 extension ChatViewController:UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -246,9 +239,6 @@ extension ChatViewController:UITableViewDelegate,UITableViewDataSource,UITextFie
         return cell
     }
     
-    //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    //        return 100
-    //    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -256,16 +246,7 @@ extension ChatViewController:UITableViewDelegate,UITableViewDataSource,UITextFie
         return true
     }
 }
-
-
-//extension ChatViewController: InputBarAccessoryViewDelegate {
-//  func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-//
-//    inputBar.inputTextView.text = ""
-//  }
-//}
-
-
+// MARK: - Extenaion
 extension ChatViewController: AMKeyboardFrameTrackerDelegate {
     func keyboardFrameDidChange(with frame: CGRect) {
         let tabBarHeight = self.tabBarController?.tabBar.frame.height ?? 0.0

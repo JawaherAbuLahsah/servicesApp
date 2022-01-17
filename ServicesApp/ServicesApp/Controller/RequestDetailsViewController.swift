@@ -10,10 +10,8 @@ import Firebase
 import CoreLocation
 import MapKit
 class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate {
-    let locationManager = CLLocationManager()
+    // MARK: - Outlet
     @IBOutlet weak var serviceNameLabel: UILabel!
-    var selectServices : Service?
-    
     @IBOutlet weak var titleLabel: UILabel!{
         didSet{
             titleLabel.text = "title".localizes
@@ -29,7 +27,6 @@ class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate 
             sendButton.setTitle("send".localizes, for: .normal)
         }
     }
-    
     @IBOutlet weak var requestTitleTextField: UITextField!{
         didSet{
             requestTitleTextField.delegate = self
@@ -43,27 +40,20 @@ class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate 
             let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: target, action: #selector(tapDone))
             toolBar.setItems([flexibleSpace, doneButton], animated: false)
             requestDetailsTextView.inputAccessoryView = toolBar
-            //            requestDetailsTextView.toolbarPlaceholder = "details".localizes
-            
         }
     }
-    
-    
-    
     @IBOutlet weak var showMapButton: UIButton!{
         didSet{
             showMapButton.setTitle("show".localizes, for: .normal)
         }
     }
-    
     @IBOutlet weak var removeAnnotationButton: UIButton!{
         didSet{
             removeAnnotationButton.isHidden = true
         }
     }
-    
     @IBOutlet weak var mapView: MKMapView!{
-    didSet{
+        didSet{
             mapView.isHidden = true
             let gestureRecognizer = UITapGestureRecognizer(
                 target: self, action:#selector(handleTap))
@@ -72,14 +62,21 @@ class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate 
         }
     }
     
+    // MARK: - Definitions
+    var selectServices : Service?
+    let locationManager = CLLocationManager()
     var isShow = true
     var latitude = 0.0
     var longitude = 0.0
+    
+    // MARK: - View Did Load
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         if let selectServices = selectServices{
             serviceNameLabel.text = selectServices.name
         }
+        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
@@ -89,31 +86,34 @@ class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate 
         mapView.isZoomEnabled = true
         mapView.isScrollEnabled = true
         if let coor = mapView.userLocation.location?.coordinate{
-               mapView.setCenter(coor, animated: true)
-           }
+            mapView.setCenter(coor, animated: true)
+        }
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
-                tap.cancelsTouchesInView = false
-                view.addGestureRecognizer(tap)
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
     }
+    
+    // MARK: - Function to get the current location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
-
+        
         mapView.mapType = MKMapType.standard
-
+        
         let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         let region = MKCoordinateRegion(center: locValue, span: span)
         mapView.setRegion(region, animated: true)
-
+        
         let annotation = MKPointAnnotation()
         annotation.coordinate = locValue
         mapView.addAnnotation(annotation)
-
+        
         locationManager.stopUpdatingLocation()
         latitude = manager.location!.coordinate.latitude
         longitude = manager.location!.coordinate.longitude
     }
     
     
+    // MARK: - Function to create request
     @IBAction func sendRequest(_ sender: Any) {
         if let title = requestTitleTextField.text,
            let details = requestDetailsTextView.text ,
@@ -176,22 +176,22 @@ class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate 
         self.present(mainTabBarController, animated: true, completion: nil)
     }
     
-    
+    // MARK: - Done action
     @objc func tapDone() {
         self.view.endEditing(true)
     }
     
-    
+    // MARK: - Function to remove annotation
     @IBAction func removeAnnotation(_ sender: Any) {
         
         let annotations = mapView.annotations.filter({ !($0 is MKUserLocation) })
         mapView.removeAnnotations(annotations)
-         latitude = 0.0
-         longitude = 0.0
+        latitude = 0.0
+        longitude = 0.0
         
     }
     
-    
+    // MARK: - Function to show map
     @IBAction func showMap(_ sender: Any) {
         if isShow{
             removeAnnotationButton.isHidden = false
@@ -203,10 +203,9 @@ class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate 
             isShow = true
         }
     }
-    
-    
 }
 
+// MARK: - Extenstion
 extension RequestDetailsViewController:UITextFieldDelegate,UITextViewDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -215,8 +214,9 @@ extension RequestDetailsViewController:UITextFieldDelegate,UITextViewDelegate{
     }
     
 }
-
+// MARK: - Extenstion
 extension RequestDetailsViewController:MKMapViewDelegate, UIGestureRecognizerDelegate{
+    // for put annotation to get location
     @objc func handleTap(gestureRecognizer: UITapGestureRecognizer) {
         locationManager.stopUpdatingLocation()
         let annotations = mapView.annotations.filter({ !($0 is MKUserLocation) })
