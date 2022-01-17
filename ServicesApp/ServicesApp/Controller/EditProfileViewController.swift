@@ -165,7 +165,7 @@ extension EditProfileViewController:UIImagePickerControllerDelegate, UINavigatio
             self.getImage(.photoLibrary)
         }
         let dismissAction = UIAlertAction(title: "Cancle", style: .cancel) { Action in
-            self.dismiss(animated: true, completion: nil)
+            
         }
         alert.addAction(cameraAction)
         alert.addAction(galaryAction)
@@ -187,7 +187,7 @@ extension EditProfileViewController:UIImagePickerControllerDelegate, UINavigatio
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        
+        dismiss(animated: true, completion: nil)
     }
 }
 extension EditProfileViewController:UITextFieldDelegate{

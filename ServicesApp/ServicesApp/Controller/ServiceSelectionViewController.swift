@@ -20,6 +20,7 @@ class ServiceSelectionViewController: UIViewController {
             serviceSelectionTableView.delegate = self
         }
     }
+    var activityIndicator = UIActivityIndicatorView()
     var services = [Service]()
     var selectedServices = [String]()
     override func viewDidLoad() {
@@ -50,7 +51,7 @@ class ServiceSelectionViewController: UIViewController {
     
     @IBAction func handleSave(_ sender: Any) {
         //add
-        
+        Activity.showIndicator(parentView: self.view, childView: activityIndicator)
         if let currentUser = Auth.auth().currentUser{
             let db = Firestore.firestore()
             db.collection("users").document(currentUser.uid).getDocument { snapshot, error in
@@ -84,6 +85,7 @@ class ServiceSelectionViewController: UIViewController {
                             
                             
                         }else{
+                            Activity.removeIndicator(parentView: self.view, childView: self.activityIndicator)
                             print("omeokpre")
                             let storyboard = UIStoryboard(name: "Main", bundle: nil)
                             
@@ -123,8 +125,11 @@ extension ServiceSelectionViewController:UITableViewDelegate,UITableViewDataSour
     @objc func didChangeswitch(_ sender:UISwitch){
         if sender.isOn{
             selectedServices.append(services[sender.tag].id)
+            print(services[sender.tag].id)
         }else{
+            if sender.tag >= 0 {
             selectedServices.remove(at: sender.tag)
+            }
         }
     }
 }

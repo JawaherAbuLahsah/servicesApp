@@ -83,15 +83,6 @@
         }
       },
       {
-        "package": "InputBarAccessoryView",
-        "repositoryURL": "https://github.com/nathantannar4/InputBarAccessoryView",
-        "state": {
-          "branch": null,
-          "revision": "6d3d205f29b80f8fa9a9616ad801c488293242bf",
-          "version": "5.4.0"
-        }
-      },
-      {
         "package": "IQKeyboardManagerSwift",
         "repositoryURL": "https://github.com/hackiftekhar/IQKeyboardManager.git",
         "state": {
@@ -107,15 +98,6 @@
           "branch": null,
           "revision": "0706abcc6b0bd9cedfbb015ba840e4a780b5159b",
           "version": "1.22.2"
-        }
-      },
-      {
-        "package": "MessageKit",
-        "repositoryURL": "https://github.com/MessageKit/MessageKit.git",
-        "state": {
-          "branch": "master",
-          "revision": "2a35fbb9c34ba032fd0f04d5451292c76ec06e62",
-          "version": null
         }
       },
       {
