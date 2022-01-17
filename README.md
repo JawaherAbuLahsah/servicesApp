@@ -43,7 +43,7 @@
 
 ## ERD
 
-![](erd.png)
+![](ERD.png)
 
 ## Wireframe
 
