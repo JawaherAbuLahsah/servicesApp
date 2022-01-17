@@ -832,7 +832,7 @@
                                 <color key="backgroundColor" name="Color-1"/>
                                 <items>
                                     <navigationItem id="Exr-oO-tGO">
-                                        <barButtonItem key="rightBarButtonItem"  id="ksl-yQ-vp6">
+                                        <barButtonItem key="rightBarButtonItem" id="ksl-yQ-vp6">
                                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="UyP-xH-jbx">
                                                 <rect key="frame" x="254" y="5" width="50" height="34"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1045,10 +1045,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="PRA-a4-WBX">
-                                <rect key="frame" x="0.0" y="50" width="320" height="439"/>
+                                <rect key="frame" x="0.0" y="50" width="320" height="469"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="pRd-MT-Qma">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="439"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="469"/>
                                         <color key="backgroundColor" name="color"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="serviceProvidersCell" id="Yse-fY-cDe">
@@ -1071,7 +1071,7 @@
                             <constraint firstItem="PRA-a4-WBX" firstAttribute="top" secondItem="1QV-2d-laP" secondAttribute="top" constant="50" id="6ZE-8u-bSd"/>
                             <constraint firstItem="1QV-2d-laP" firstAttribute="trailing" secondItem="PRA-a4-WBX" secondAttribute="trailing" id="toT-xd-lgf"/>
                             <constraint firstItem="PRA-a4-WBX" firstAttribute="leading" secondItem="1QV-2d-laP" secondAttribute="leading" id="wRF-Y2-BtR"/>
-                            <constraint firstItem="1QV-2d-laP" firstAttribute="bottom" secondItem="PRA-a4-WBX" secondAttribute="bottom" constant="30" id="zPT-ie-1Iu"/>
+                            <constraint firstItem="1QV-2d-laP" firstAttribute="bottom" secondItem="PRA-a4-WBX" secondAttribute="bottom" id="zPT-ie-1Iu"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="PROVIDER" image="person.text.rectangle" catalog="system" id="yNP-X3-Iwi"/>
@@ -1365,7 +1365,7 @@
                                                                     <constraint firstAttribute="height" constant="40" id="5dG-2D-ZVT"/>
                                                                 </constraints>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="VT1-Th-RoR">
