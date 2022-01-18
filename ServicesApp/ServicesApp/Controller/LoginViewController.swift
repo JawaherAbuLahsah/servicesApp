@@ -65,10 +65,11 @@ class LoginViewController: UIViewController {
     // MARK: - view did load
     override func viewDidLoad() {
         super.viewDidLoad()
+        //dismiss the keyboard when pressing outside
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
-        // Do any additional setup after loading the view.
+        // to make the button inside the textfield
         passwordTextField.rightView = showPasswordButton
         passwordTextField.rightViewMode = .always
         
@@ -77,11 +78,13 @@ class LoginViewController: UIViewController {
     // MARK: - Show password action
     @IBAction func showPassword(_ sender: UIButton) {
         if isShowPassword {
+            // show password
             passwordTextField.isSecureTextEntry = false
             
             showPasswordButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
             isShowPassword = false
         }else{
+            // hide password
             passwordTextField.isSecureTextEntry = true
             showPasswordButton.setImage(UIImage(systemName: "eye"), for: .normal)
             isShowPassword = true

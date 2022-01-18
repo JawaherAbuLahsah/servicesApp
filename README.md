@@ -13,7 +13,7 @@
 ![](ar.gif)
 
 ## user Stories 
-###Requester
+### Requester
 - As requester , I can log in to the app.
 - As requester , I can choose the service.
 - As requester , I can write the service details.
@@ -23,13 +23,18 @@
 - As requester , I can edit my profile.
 - As requester , I can rate the service provider
 
-###Service Provider
+### Service Provider
 - As  service provider, I can login to the app.
 - As  service provider, I can choose the services that I will provide.
 - As  service provider, I can view the service details, accept it and set a price.
 - As  service provider, I can talk with the requester.
 - As  service provider, I can edit my profile.
 
+### Admin 
+- As  admin, I can login to the app.
+- As  admin, I can add new services.
+- As  admin, I can modify the services.
+- As  admin, I can delete the services.
 
 
 ## Framework

@@ -65,7 +65,7 @@ class LandingViewController: UIViewController {
     // MARK: - View Did Load
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
         arabicButtonCenter = arabicButton.center
         englishButtonCenter = englishButton.center
         arabicButton.center = languageButton.center
