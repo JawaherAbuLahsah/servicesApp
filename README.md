@@ -40,7 +40,6 @@
 ## Framework
 - UIKit
 - Firebase
-- AVFoundation
 - CoreLocation
 - IQKeyboardManagerSwift
 - AMKeyboardFrameTracker
