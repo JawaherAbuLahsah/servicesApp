@@ -54,5 +54,5 @@
 "sendService" = "You can request services";
 "conversation" = "You can have conversations";
 "request" = "REQUEST";
-"provider" = "SERVICE PROVIDER";
+"provideHere" = "SERVICE PROVIDER";
 

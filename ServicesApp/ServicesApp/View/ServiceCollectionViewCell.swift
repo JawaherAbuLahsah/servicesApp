@@ -30,6 +30,7 @@ class ServiceCollectionViewCell: UICollectionViewCell {
     func setup(_ sleid:Information){
         let animation = AnimationView(name: sleid.animationView)
         animation.frame = animationView.bounds
+        animation.center = animationView.center
         animation.loopMode = .loop
         if animationView.subviews.isEmpty{
         animationView.addSubview(animation)

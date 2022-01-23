@@ -40,7 +40,7 @@ class ReviewProviderViewController: UIViewController {
     // MARK: - View did load
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.8)
         // Do any additional setup after loading the view.
     }
     

@@ -102,7 +102,7 @@ class ServiceProvidersViewController: UIViewController {
                                                     self.serviceProviders.append(newRequest)
                                                     self.serviceProvidersTableView.insertRows(at: [IndexPath(row:self.serviceProviders.count - 1,section: 0)],with: .automatic)
                                                     self.serviceProvidersTableView.endUpdates()
-                                                    InAppNotify.Show(Announcement(title: "provider".localizes), to: self)
+                                                    InAppNotify.Show(Announcement(title: "provideHere".localizes), to: self)
                                                 }
                                                 if !newRequest.haveProvider && !newRequest.accept{
                                                     if let deleteIndex = self.serviceProviders.firstIndex(where: {$0.id == requestId}){

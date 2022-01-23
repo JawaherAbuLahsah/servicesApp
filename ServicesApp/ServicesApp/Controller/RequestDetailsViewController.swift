@@ -15,6 +15,7 @@ class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate 
 //    @IBOutlet weak var animatiomMapVirw: AnimationView!
         
     
+    @IBOutlet weak var serviceImage: UIImageView!
     
     @IBOutlet weak var serviceNameLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!{
@@ -85,9 +86,11 @@ class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate 
 //        animatiomMapVirw.addSubview(animatiomMapView)
 //        animatiomMapView.play()
 //
-//        if let selectServices = selectServices{
-//            serviceNameLabel.text = selectServices.name
-//        }
+        if let selectServices = selectServices{
+            serviceNameLabel.text = selectServices.name
+            serviceImage.lodingImage(selectServices.imageUrl)
+        }
+        
 //
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -207,12 +210,12 @@ class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate 
     @IBAction func showMap(_ sender: Any) {
         if isShow{
             removeAnnotationButton.isHidden = false
-//            animatiomMapVirw.isHidden = true
+            serviceImage.isHidden = true
             mapView.isHidden = false
             isShow = false
         }else{
             removeAnnotationButton.isHidden = true
-//            animatiomMapVirw.isHidden = false
+            serviceImage.isHidden = false
             mapView.isHidden = true
             isShow = true
         }

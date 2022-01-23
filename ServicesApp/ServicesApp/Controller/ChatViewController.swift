@@ -30,6 +30,23 @@ class ChatViewController: UIViewController {
             chatTableView.dataSource = self
         }
     }
+    
+    @IBOutlet weak var userImage: UIImageView!{
+        didSet{
+            userImage.layer.borderWidth = 2.0
+            userImage.layer.cornerRadius = userImage.bounds.height / 2
+            userImage.layer.masksToBounds = true
+        }
+    }
+    @IBOutlet weak var usreNameLabel: UILabel!
+    @IBOutlet weak var phonNumberLabel: UILabel!
+    
+    @IBOutlet weak var userInfoView: UIView!{
+        didSet{
+            userInfoView.isHidden = true
+        }
+    }
+    
     // MARK: - Definitions
     let keyboardFrameTrackerView = AMKeyboardFrameTrackerView.init(height: 60)
     var messages = [Message]()
@@ -106,6 +123,48 @@ class ChatViewController: UIViewController {
                         }
                         
                         
+                        
+                        db.collection("users").document(providerUser).getDocument { providerUserDocument, error in
+                            if let error = error{
+                                print("chat error",error)
+                            }
+                            if let providerUserDocument = providerUserDocument , let userProvider = providerUserDocument.data() {
+                                if let currentUser = Auth.auth().currentUser{
+                                    if currentUser.uid == requesterUser{
+                                        if let image = userProvider["profilePictuer"] as? String, let name = userProvider["name"] as? String,let phone = userProvider["phoneNumber"] as? String{
+                                            self.userImage.lodingImage(image)
+                                            self.usreNameLabel.text = name
+                                            self.phonNumberLabel.text = phone
+                                            self.userInfoView.isHidden = false
+                                        }
+                                    }
+                                }
+                                db.collection("users").document(requesterUser).getDocument { requesterUserDocument, error in
+                                    if let error = error{
+                                        print("chat error",error)
+                                    }
+                                    if let requesterUserDocument = requesterUserDocument , let userRequester = requesterUserDocument.data() {
+                                        if let currentUser = Auth.auth().currentUser{
+                                            if currentUser.uid == providerUser{
+                                                if let image = userRequester["profilePictuer"]  as? String, let name = userRequester["name"] as? String,let phone = userRequester["phoneNumber"] as? String{
+                                                    self.userImage.lodingImage(image)
+                                                    self.usreNameLabel.text = name
+                                                    self.phonNumberLabel.text = phone
+                                                    self.userInfoView.isHidden = false
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                         if let querySnapshot = querySnapshot {
                             querySnapshot.documentChanges.forEach { documentChange in
                                 if documentChange.type == .removed{
@@ -165,13 +224,11 @@ class ChatViewController: UIViewController {
                                             }
                                         }
                                     }
-                                    
                                 }
                             }
                         }
                     }
                 }
-                
             }
         }
     }
@@ -209,6 +266,7 @@ class ChatViewController: UIViewController {
                 
             }
         }
+        userInfoView.isHidden = true
     }
 }
 // MARK: - Extension

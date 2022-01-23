@@ -149,8 +149,16 @@ class UserRequestsViewController: UIViewController ,CLLocationManagerDelegate{
                                                         self.requestsTableView.endUpdates()
                                                     }
                                                 }
-                                                if newRequest.accept{
-                                                    InAppNotify.Show(Announcement(title: "accept".localizes), to: self)
+                                                if newRequest.accept {
+                                                    
+                                                        for id in userProvider.service{
+                                                            if id == service.id{
+                                                                let loc = userProvider.location.distance(from: request.location) / 1000
+                                                                if loc < 30{
+                                                                    InAppNotify.Show(Announcement(title: "accept".localizes), to: self)
+                                                                }
+                                                            }
+                                                        }
                                                 }
                                                 
                                             case .removed:
@@ -160,7 +168,7 @@ class UserRequestsViewController: UIViewController ,CLLocationManagerDelegate{
                                                     self.requestsTableView.beginUpdates()
                                                     self.requestsTableView.deleteRows(at: [IndexPath(row: deleteIndex, section: 0)], with: .automatic)
                                                     self.requestsTableView.endUpdates()
-                                                    
+                                    
                                                 }
                                                 
                                             }
