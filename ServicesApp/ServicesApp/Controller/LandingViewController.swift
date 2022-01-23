@@ -6,9 +6,16 @@
 //
 
 import UIKit
-
+import LottieCore
 class LandingViewController: UIViewController {
+    @IBOutlet weak var pageControl: UIPageControl!
     
+    @IBOutlet weak var informationCollectionView: UICollectionView!{
+        didSet{
+            informationCollectionView.delegate = self
+            informationCollectionView.dataSource = self
+        }
+    }
     // MARK: - Outlet
     @IBOutlet weak var languageView: UIView!{
         didSet{
@@ -18,15 +25,15 @@ class LandingViewController: UIViewController {
             languageView.layer.shadowOpacity = 0.5
         }
     }
-    @IBOutlet weak var infoImage: UIImageView!{
-        didSet{
-            if UserDefaults.standard.object(forKey: "currentLanguage") as? String == "ar"{
-                infoImage.image = UIImage(named: "a")
-            }else{
-                infoImage.image = UIImage(named: "e")
-            }
-        }
-    }
+//    @IBOutlet weak var infoImage: UIImageView!{
+//        didSet{
+//            if UserDefaults.standard.object(forKey: "currentLanguage") as? String == "ar"{
+//                infoImage.image = UIImage(named: "a")
+//            }else{
+//                infoImage.image = UIImage(named: "e")
+//            }
+//        }
+//    }
     @IBOutlet weak var languageButton: UIButton!{
         didSet{
             languageButton.setTitle("language".localizes, for: .normal)
@@ -61,7 +68,8 @@ class LandingViewController: UIViewController {
     var englishButtonCenter:CGPoint!
     var lang:String?
     var isClick = true
-    
+    var informations = [Information(animationView: "choose", info: "choose".localizes),Information(animationView: "send", info: "sendService".localizes),Information(animationView: "conversation", info: "conversation".localizes)]
+    var currentPage = 0
     // MARK: - View Did Load
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +78,10 @@ class LandingViewController: UIViewController {
         englishButtonCenter = englishButton.center
         arabicButton.center = languageButton.center
         englishButton.center = languageButton.center
+        
+        
+        
+        
     }
     
     // MARK: - Change language action
@@ -77,11 +89,11 @@ class LandingViewController: UIViewController {
         if sender.tag == 0 {
             lang = "ar"
             UIView.appearance().semanticContentAttribute = .forceRightToLeft
-            infoImage.image = UIImage(named: "a")
+//            infoImage.image = UIImage(named: "a")
         }else{
             lang = "en"
             UIView.appearance().semanticContentAttribute = .forceLeftToRight
-            infoImage.image = UIImage(named: "e")
+//            infoImage.image = UIImage(named: "e")
         }
         if let lang = lang{
             UserDefaults.standard.set(lang, forKey: "currentLanguage")
@@ -115,4 +127,27 @@ class LandingViewController: UIViewController {
         }
     }
     
+}
+extension LandingViewController:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return informations.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellInfo", for: indexPath) as! ServiceCollectionViewCell
+        
+        cell.setup(informations[indexPath.row])
+        
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
+    }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let width = scrollView.frame.width
+        currentPage = Int(scrollView.contentOffset.x / width)
+        pageControl.currentPage = currentPage
+    }
 }

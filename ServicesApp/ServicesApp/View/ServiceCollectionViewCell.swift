@@ -6,8 +6,13 @@
 //
 
 import UIKit
-
+import LottieCore
 class ServiceCollectionViewCell: UICollectionViewCell {
+    
+    @IBOutlet weak var animationView: AnimationView!
+    @IBOutlet weak var infoLabel: UILabel!
+    
+    
     @IBOutlet weak var serviceNameLabel: UILabel!
     
     @IBOutlet weak var serviceImage: UIImageView!
@@ -19,5 +24,17 @@ class ServiceCollectionViewCell: UICollectionViewCell {
             servicesView.layer.shadowOffset = CGSize.zero
             servicesView.layer.shadowRadius = 5
         }
+    }
+    
+    
+    func setup(_ sleid:Information){
+        let animation = AnimationView(name: sleid.animationView)
+        animation.frame = animationView.bounds
+        animation.loopMode = .loop
+        if animationView.subviews.isEmpty{
+        animationView.addSubview(animation)
+        }
+        animation.play()
+        infoLabel.text = sleid.info
     }
 }

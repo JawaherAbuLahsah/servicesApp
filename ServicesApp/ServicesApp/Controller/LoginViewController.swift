@@ -7,6 +7,8 @@
 
 import UIKit
 import Firebase
+import MaterialComponents
+
 class LoginViewController: UIViewController {
     
     // MARK: - Outlet
@@ -18,25 +20,32 @@ class LoginViewController: UIViewController {
             loginView.layer.shadowOpacity = 0.5
         }
     }
-    @IBOutlet weak var emailLabel: UILabel!{
+//    @IBOutlet weak var emailLabel: UILabel!{
+//        didSet{
+//            emailLabel.text = "email".localizes
+//        }
+//    }
+    @IBOutlet weak var emailTextField: MDCOutlinedTextField!{
         didSet{
-            emailLabel.text = "email".localizes
-        }
-    }
-    @IBOutlet weak var emailTextField: UITextField!{
-        didSet{
+            emailTextField.label.text = "email".localizes
             emailTextField.delegate = self
         }
     }
-    @IBOutlet weak var passwordLabel: UILabel!{
-        didSet{
-            passwordLabel.text = "password".localizes
-        }
-    }
-    @IBOutlet weak var passwordTextField: UITextField!{
+//    @IBOutlet weak var emailTextField: UITextField!{
+//        didSet{
+//            emailTextField.delegate = self
+//        }
+//    }
+//    @IBOutlet weak var passwordLabel: UILabel!{
+//        didSet{
+//            passwordLabel.text = "password".localizes
+//        }
+//    }
+    @IBOutlet weak var passwordTextField: MDCOutlinedTextField!{
         didSet{
             passwordTextField.delegate = self
             passwordTextField.isSecureTextEntry = true
+            passwordTextField.label.text = "password".localizes
         }
     }
     @IBOutlet weak var loginButton: UIButton!{
@@ -70,8 +79,10 @@ class LoginViewController: UIViewController {
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
         // to make the button inside the textfield
-        passwordTextField.rightView = showPasswordButton
-        passwordTextField.rightViewMode = .always
+        passwordTextField.trailingView = showPasswordButton
+        passwordTextField.trailingViewMode = .whileEditing
+        //passwordTextField.rightView = showPasswordButton
+       // passwordTextField.rightViewMode = .whileEditing
         
         
     }

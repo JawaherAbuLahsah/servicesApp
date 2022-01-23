@@ -11,6 +11,7 @@
 import UIKit
 import Firebase
 import CoreLocation
+import InAppNotify
 class UserRequestsViewController: UIViewController ,CLLocationManagerDelegate{
     
     // MARK: - Outlat
@@ -26,6 +27,7 @@ class UserRequestsViewController: UIViewController ,CLLocationManagerDelegate{
     var latitude = 0.0
     var longitude = 0.0
     let locationManager = CLLocationManager()
+    var selectedRequest:Request?
     
     // MARK: - View Did Load
     override func viewDidLoad() {
@@ -109,7 +111,7 @@ class UserRequestsViewController: UIViewController ,CLLocationManagerDelegate{
                                                             if loc < 30{
                                                                 
                                                                 self.userRequests.append(request)
-                                                                
+                                                                InAppNotify.Show(Announcement(title: "request".localizes), to: self)
                                                             }
                                                         }
                                                     }
@@ -129,10 +131,11 @@ class UserRequestsViewController: UIViewController ,CLLocationManagerDelegate{
                                                         if id == service.id{
                                                             let loc = userProvider.location.distance(from: request.location) / 1000
                                                             if loc < 30{
-                                                    self.requestsTableView.beginUpdates()
-                                                    self.userRequests.append(newRequest)
-                                                    self.requestsTableView.insertRows(at: [IndexPath(row:self.userRequests.count - 1,section: 0)],with: .automatic)
-                                                    self.requestsTableView.endUpdates()
+                                                                self.requestsTableView.beginUpdates()
+                                                                self.userRequests.append(newRequest)
+                                                                self.requestsTableView.insertRows(at: [IndexPath(row:self.userRequests.count - 1,section: 0)],with: .automatic)
+                                                                InAppNotify.Show(Announcement(title: "request".localizes), to: self)
+                                                                self.requestsTableView.endUpdates()
                                                             }
                                                         }
                                                     }
@@ -145,6 +148,9 @@ class UserRequestsViewController: UIViewController ,CLLocationManagerDelegate{
                                                         self.requestsTableView.deleteRows(at: [IndexPath(row: deleteIndex, section: 0)], with: .automatic)
                                                         self.requestsTableView.endUpdates()
                                                     }
+                                                }
+                                                if newRequest.accept{
+                                                    InAppNotify.Show(Announcement(title: "accept".localizes), to: self)
                                                 }
                                                 
                                             case .removed:
@@ -203,58 +209,92 @@ extension UserRequestsViewController:UITableViewDelegate,UITableViewDataSource{
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let alert = UIAlertController(title: userRequests[indexPath.row].title, message: "\(userRequests[indexPath.row].details) \n \(userRequests[indexPath.row].userRequest.name)", preferredStyle: .alert)
-        alert.addTextField { (textField:UITextField) in
-            textField.placeholder = "price".localizes
-            textField.keyboardType = .decimalPad
-            let toolBar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.size.width, height: 44.0))
-            let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-            let DoneButton = UIBarButtonItem(title: "done".localizes, style: .plain, target: self, action: #selector(self.tapDone))
-            toolBar.setItems([flexibleSpace, DoneButton], animated: false)
-            textField.inputAccessoryView = toolBar
-        }
         
-        let cancelAction = UIAlertAction(title: "cancel".localizes, style: .cancel) { Action in
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let viewController = storyboard.instantiateViewController(identifier: "requestVC") as? RequestsViewController{
             
-        }
-        let sendAction = UIAlertAction(title: "send".localizes, style: .default) { Action in
             
-            if let fields = alert.textFields{
-                let price = fields[0]
-                if let price = price.text, !price.isEmpty{
-                    
-                    let db = Firestore.firestore()
-                    let ref = db.collection("requests")
-                    
-                    let priceData:[String:Any] = ["price": price,
-                                                  "requestsId" : self.userRequests[indexPath.row].userRequest.id,
-                                                  "providerId":self.userRequests[indexPath.row].userProvider.id,
-                                                  "title" : self.userRequests[indexPath.row].title ,
-                                                  "details" : self.userRequests[indexPath.row].details ,
-                                                  "createAt" : FieldValue.serverTimestamp(),
-                                                  "haveProvider":true,
-                                                  "serviceId":self.userRequests[indexPath.row].requestType.id,
-                                                  "latitude" : self.userRequests[indexPath.row].latitude,
-                                                  "longitude" : self.userRequests[indexPath.row].longitude,
-                                                  "accept" : false,
-                                                  "done" : false
-                    ]
-                    
-                    ref.document(self.userRequests[indexPath.row].id).setData(priceData) { error in
-                        if let error = error {
-                            print("FireStore Error",error.localizedDescription)
-                        }
-                    }
-                }else{
-                    print("oh no")
-                }
-            }
+            viewController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            viewController.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+            selectedRequest = userRequests[indexPath.row]
+            viewController.selectedRequest = self.selectedRequest
+            self.present(viewController, animated: true, completion: nil)
         }
-        alert.addAction(cancelAction)
-        alert.addAction(sendAction)
-        self.present(alert, animated: true, completion: nil)
-    }
-    @objc func tapDone() {
-        self.view.endEditing(true)
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//        CLGeocoder().reverseGeocodeLocation(userRequests[indexPath.row].location) { placemarks, error in
+//
+//            guard let placemark = placemarks?.first else {
+//                let errorString = error?.localizedDescription ?? "Unexpected Error"
+//                print("Unable to reverse geocode the given location. Error: \(errorString)")
+//                return
+//            }
+//
+//            let reversedGeoLocation = ReversedGeoLocation(with: placemark)
+//            print("user loction>>>",reversedGeoLocation.formattedAddress)
+//
+//            let alert = UIAlertController(title: self.userRequests[indexPath.row].title, message: "details".localizes+": \(self.userRequests[indexPath.row].details) \n\n "+"location".localizes+": \(reversedGeoLocation.formattedAddress)\n\n "+"from".localizes+" : \(self.userRequests[indexPath.row].userRequest.name)", preferredStyle: .alert)
+//        alert.addTextField { (textField:UITextField) in
+//            textField.placeholder = "price".localizes
+//            textField.keyboardType = .decimalPad
+//            let toolBar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.size.width, height: 44.0))
+//            let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+//            let DoneButton = UIBarButtonItem(title: "done".localizes, style: .plain, target: self, action: #selector(self.tapDone))
+//            toolBar.setItems([flexibleSpace, DoneButton], animated: false)
+//            textField.inputAccessoryView = toolBar
+//        }
+//
+//        let cancelAction = UIAlertAction(title: "cancel".localizes, style: .cancel) { Action in
+//
+//        }
+//        let sendAction = UIAlertAction(title: "send".localizes, style: .default) { Action in
+//
+//            if let fields = alert.textFields{
+//                let price = fields[0]
+//                if let price = price.text, !price.isEmpty{
+//
+//                    let db = Firestore.firestore()
+//                    let ref = db.collection("requests")
+//
+//                    let priceData:[String:Any] = ["price": price,
+//                                                  "requestsId" : self.userRequests[indexPath.row].userRequest.id,
+//                                                  "providerId":self.userRequests[indexPath.row].userProvider.id,
+//                                                  "title" : self.userRequests[indexPath.row].title ,
+//                                                  "details" : self.userRequests[indexPath.row].details ,
+//                                                  "createAt" : FieldValue.serverTimestamp(),
+//                                                  "haveProvider":true,
+//                                                  "serviceId":self.userRequests[indexPath.row].requestType.id,
+//                                                  "latitude" : self.userRequests[indexPath.row].latitude,
+//                                                  "longitude" : self.userRequests[indexPath.row].longitude,
+//                                                  "accept" : false,
+//                                                  "done" : false
+//                    ]
+//
+//                    ref.document(self.userRequests[indexPath.row].id).setData(priceData) { error in
+//                        if let error = error {
+//                            print("FireStore Error",error.localizedDescription)
+//                        }
+//                    }
+//                }else{
+//                    print("oh no")
+//                }
+//            }
+//        }
+//
+//        alert.addAction(cancelAction)
+//        alert.addAction(sendAction)
+//        self.present(alert, animated: true, completion: nil)
+//        }
+//    }
+//    @objc func tapDone() {
+//        self.view.endEditing(true)
     }
 }

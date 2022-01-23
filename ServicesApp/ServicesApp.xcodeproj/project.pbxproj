@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		379BA0E0C214B0DC73DC6632 /* Pods_ServicesApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D190BE38A46B5CCEFA007495 /* Pods_ServicesApp.framework */; };
 		95034C6527765C40006E37CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95034C6427765C40006E37CD /* AppDelegate.swift */; };
 		95034C6727765C40006E37CD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95034C6627765C40006E37CD /* SceneDelegate.swift */; };
 		95034C6927765C40006E37CD /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95034C6827765C40006E37CD /* LandingViewController.swift */; };
@@ -40,9 +41,18 @@
 		9515C524277D8A8500205358 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9515C523277D8A8500205358 /* EditProfileViewController.swift */; };
 		9515C526277E29D400205358 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9515C525277E29D300205358 /* ResetPasswordViewController.swift */; };
 		95293030278DD06D00B000A9 /* ReviewProviderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9529302F278DD06D00B000A9 /* ReviewProviderViewController.swift */; };
+		95471D41279C6EAA0033BA6E /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 95471D40279C6EAA0033BA6E /* Lottie */; };
+		95471D43279C6EAA0033BA6E /* _LottieCore in Frameworks */ = {isa = PBXBuildFile; productRef = 95471D42279C6EAA0033BA6E /* _LottieCore */; };
+		95471D47279C73CC0033BA6E /* map.json in Resources */ = {isa = PBXBuildFile; fileRef = 95471D46279C73CC0033BA6E /* map.json */; };
+		95471D49279C81320033BA6E /* deliveryservice.json in Resources */ = {isa = PBXBuildFile; fileRef = 95471D48279C81320033BA6E /* deliveryservice.json */; };
+		95471D4B279C8A210033BA6E /* Information.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95471D4A279C8A210033BA6E /* Information.swift */; };
+		95471D4F279C8B5B0033BA6E /* send.json in Resources */ = {isa = PBXBuildFile; fileRef = 95471D4C279C8B5B0033BA6E /* send.json */; };
+		95471D50279C8B5B0033BA6E /* conversation.json in Resources */ = {isa = PBXBuildFile; fileRef = 95471D4D279C8B5B0033BA6E /* conversation.json */; };
+		95471D51279C8B5B0033BA6E /* choose.json in Resources */ = {isa = PBXBuildFile; fileRef = 95471D4E279C8B5B0033BA6E /* choose.json */; };
 		955042D92786ECB4002A0071 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955042D82786ECB4002A0071 /* Activity.swift */; };
 		955042DB2786ECE4002A0071 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955042DA2786ECE4002A0071 /* Alert.swift */; };
 		955042DD27870F84002A0071 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955042DC27870F84002A0071 /* ChatTableViewCell.swift */; };
+		957391A1279C4FD6006E5119 /* RequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957391A0279C4FD6006E5119 /* RequestsViewController.swift */; };
 		9576FF8E277F5D7F00E1F583 /* CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576FF8D277F5D7F00E1F583 /* CLLocation.swift */; };
 		95A7AE8A279338C600E07281 /* AMKeyboardFrameTracker in Frameworks */ = {isa = PBXBuildFile; productRef = 95A7AE89279338C600E07281 /* AMKeyboardFrameTracker */; };
 		95B01C3B278C803A00FCD909 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 95B01C3A278C803A00FCD909 /* IQKeyboardManagerSwift */; };
@@ -55,6 +65,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		544BD651AB6403A281A29773 /* Pods-ServicesApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ServicesApp.debug.xcconfig"; path = "Target Support Files/Pods-ServicesApp/Pods-ServicesApp.debug.xcconfig"; sourceTree = "<group>"; };
+		792A4AA6456567611713758F /* Pods-ServicesApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ServicesApp.release.xcconfig"; path = "Target Support Files/Pods-ServicesApp/Pods-ServicesApp.release.xcconfig"; sourceTree = "<group>"; };
 		95034C6127765C40006E37CD /* ServicesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ServicesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95034C6427765C40006E37CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		95034C6627765C40006E37CD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -93,14 +105,22 @@
 		9515C523277D8A8500205358 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		9515C525277E29D300205358 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		9529302F278DD06D00B000A9 /* ReviewProviderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewProviderViewController.swift; sourceTree = "<group>"; };
+		95471D46279C73CC0033BA6E /* map.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = map.json; path = ../../../../../../Downloads/map.json; sourceTree = "<group>"; };
+		95471D48279C81320033BA6E /* deliveryservice.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = deliveryservice.json; sourceTree = "<group>"; };
+		95471D4A279C8A210033BA6E /* Information.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Information.swift; sourceTree = "<group>"; };
+		95471D4C279C8B5B0033BA6E /* send.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = send.json; sourceTree = "<group>"; };
+		95471D4D279C8B5B0033BA6E /* conversation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = conversation.json; sourceTree = "<group>"; };
+		95471D4E279C8B5B0033BA6E /* choose.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = choose.json; sourceTree = "<group>"; };
 		955042D82786ECB4002A0071 /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		955042DA2786ECE4002A0071 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		955042DC27870F84002A0071 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
+		957391A0279C4FD6006E5119 /* RequestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsViewController.swift; sourceTree = "<group>"; };
 		9576FF8D277F5D7F00E1F583 /* CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocation.swift; sourceTree = "<group>"; };
 		95B8322B2780C51600D674C4 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		95B8322D2780C88D00D674C4 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		95CD0AD9278C8D9F00C0BEF5 /* TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 		95F2E2A8277C55720066D83C /* ServicesApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ServicesApp.entitlements; sourceTree = "<group>"; };
+		D190BE38A46B5CCEFA007495 /* Pods_ServicesApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ServicesApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,16 +129,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				95A7AE8A279338C600E07281 /* AMKeyboardFrameTracker in Frameworks */,
+				95471D41279C6EAA0033BA6E /* Lottie in Frameworks */,
 				95B01C3B278C803A00FCD909 /* IQKeyboardManagerSwift in Frameworks */,
 				95B01C43278C820800FCD909 /* FirebaseFirestore in Frameworks */,
+				95471D43279C6EAA0033BA6E /* _LottieCore in Frameworks */,
 				95B01C41278C820800FCD909 /* FirebaseAuth in Frameworks */,
 				95B01C45278C820800FCD909 /* FirebaseStorage in Frameworks */,
+				379BA0E0C214B0DC73DC6632 /* Pods_ServicesApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5E524B41EF8A51E0BB2802DA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				544BD651AB6403A281A29773 /* Pods-ServicesApp.debug.xcconfig */,
+				792A4AA6456567611713758F /* Pods-ServicesApp.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		95034C5827765C40006E37CD = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +158,8 @@
 				95034CCD2779B250006E37CD /* README.md */,
 				95034C6327765C40006E37CD /* ServicesApp */,
 				95034C6227765C40006E37CD /* Products */,
+				5E524B41EF8A51E0BB2802DA /* Pods */,
+				C592C9E018646E9C2DBD4C45 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -161,6 +195,7 @@
 				95034CB92778618A006E37CD /* Service.swift */,
 				95034CBB277861AA006E37CD /* Request.swift */,
 				95B8322D2780C88D00D674C4 /* Message.swift */,
+				95471D4A279C8A210033BA6E /* Information.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -169,6 +204,11 @@
 			isa = PBXGroup;
 			children = (
 				95034C6D27765C43006E37CD /* Assets.xcassets */,
+				95471D4E279C8B5B0033BA6E /* choose.json */,
+				95471D4D279C8B5B0033BA6E /* conversation.json */,
+				95471D4C279C8B5B0033BA6E /* send.json */,
+				95471D48279C81320033BA6E /* deliveryservice.json */,
+				95471D46279C73CC0033BA6E /* map.json */,
 				95034C6F27765C43006E37CD /* LaunchScreen.storyboard */,
 				95034C6A27765C40006E37CD /* Main.storyboard */,
 				95034CC32778C4AE006E37CD /* ServiceCollectionViewCell.swift */,
@@ -198,6 +238,7 @@
 				950F1B892784D7BB005C92D1 /* RequesterTabBarViewController.swift */,
 				950F1B8B2785F6F6005C92D1 /* AddServicesViewController.swift */,
 				9529302F278DD06D00B000A9 /* ReviewProviderViewController.swift */,
+				957391A0279C4FD6006E5119 /* RequestsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -216,6 +257,14 @@
 			path = Utill;
 			sourceTree = "<group>";
 		};
+		C592C9E018646E9C2DBD4C45 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D190BE38A46B5CCEFA007495 /* Pods_ServicesApp.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -223,9 +272,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 95034C7527765C43006E37CD /* Build configuration list for PBXNativeTarget "ServicesApp" */;
 			buildPhases = (
+				48BD9767EAEF926CB40D96BC /* [CP] Check Pods Manifest.lock */,
 				95034C5D27765C40006E37CD /* Sources */,
 				95034C5E27765C40006E37CD /* Frameworks */,
 				95034C5F27765C40006E37CD /* Resources */,
+				63662B64B4BAF91733F3D0D7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -238,6 +289,8 @@
 				95B01C42278C820800FCD909 /* FirebaseFirestore */,
 				95B01C44278C820800FCD909 /* FirebaseStorage */,
 				95A7AE89279338C600E07281 /* AMKeyboardFrameTracker */,
+				95471D40279C6EAA0033BA6E /* Lottie */,
+				95471D42279C6EAA0033BA6E /* _LottieCore */,
 			);
 			productName = ServicesApp;
 			productReference = 95034C6127765C40006E37CD /* ServicesApp.app */;
@@ -272,6 +325,7 @@
 				95B01C39278C803A00FCD909 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				95B01C3F278C820800FCD909 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				95A7AE88279338C600E07281 /* XCRemoteSwiftPackageReference "AMKeyboardFrameTracker" */,
+				95471D3F279C6EAA0033BA6E /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 95034C6227765C40006E37CD /* Products */;
 			projectDirPath = "";
@@ -291,13 +345,60 @@
 				95034CD02779B2B9006E37CD /* .gitignore in Resources */,
 				95034C7127765C43006E37CD /* LaunchScreen.storyboard in Resources */,
 				95034C6E27765C43006E37CD /* Assets.xcassets in Resources */,
+				95471D51279C8B5B0033BA6E /* choose.json in Resources */,
 				95034C85277789DA006E37CD /* Localization.strings in Resources */,
+				95471D4F279C8B5B0033BA6E /* send.json in Resources */,
 				95034C7C277745A3006E37CD /* GoogleService-Info.plist in Resources */,
+				95471D47279C73CC0033BA6E /* map.json in Resources */,
+				95471D50279C8B5B0033BA6E /* conversation.json in Resources */,
 				95034C6C27765C40006E37CD /* Main.storyboard in Resources */,
+				95471D49279C81320033BA6E /* deliveryservice.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		48BD9767EAEF926CB40D96BC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ServicesApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		63662B64B4BAF91733F3D0D7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ServicesApp/Pods-ServicesApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ServicesApp/Pods-ServicesApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ServicesApp/Pods-ServicesApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		95034C5D27765C40006E37CD /* Sources */ = {
@@ -312,6 +413,7 @@
 				95293030278DD06D00B000A9 /* ReviewProviderViewController.swift in Sources */,
 				95034C6527765C40006E37CD /* AppDelegate.swift in Sources */,
 				95034CBC277861AA006E37CD /* Request.swift in Sources */,
+				95471D4B279C8A210033BA6E /* Information.swift in Sources */,
 				95034CC62778D7CB006E37CD /* ServiceSelectionViewController.swift in Sources */,
 				9515C526277E29D400205358 /* ResetPasswordViewController.swift in Sources */,
 				95034C8F27778F53006E37CD /* LodingImage.swift in Sources */,
@@ -324,6 +426,7 @@
 				950F1B8C2785F6F6005C92D1 /* AddServicesViewController.swift in Sources */,
 				9576FF8E277F5D7F00E1F583 /* CLLocation.swift in Sources */,
 				95034CBE27789578006E37CD /* RequestDetailsViewController.swift in Sources */,
+				957391A1279C4FD6006E5119 /* RequestsViewController.swift in Sources */,
 				95034CC42778C4AE006E37CD /* ServiceCollectionViewCell.swift in Sources */,
 				95B8322C2780C51600D674C4 /* ChatViewController.swift in Sources */,
 				95034C6727765C40006E37CD /* SceneDelegate.swift in Sources */,
@@ -493,6 +596,7 @@
 		};
 		95034C7627765C43006E37CD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 544BD651AB6403A281A29773 /* Pods-ServicesApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -526,6 +630,7 @@
 		};
 		95034C7727765C43006E37CD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 792A4AA6456567611713758F /* Pods-ServicesApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -581,6 +686,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		95471D3F279C6EAA0033BA6E /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		95A7AE88279338C600E07281 /* XCRemoteSwiftPackageReference "AMKeyboardFrameTracker" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/iAmrMohamed/AMKeyboardFrameTracker";
@@ -608,6 +721,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		95471D40279C6EAA0033BA6E /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 95471D3F279C6EAA0033BA6E /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+		95471D42279C6EAA0033BA6E /* _LottieCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 95471D3F279C6EAA0033BA6E /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = _LottieCore;
+		};
 		95A7AE89279338C600E07281 /* AMKeyboardFrameTracker */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 95A7AE88279338C600E07281 /* XCRemoteSwiftPackageReference "AMKeyboardFrameTracker" */;

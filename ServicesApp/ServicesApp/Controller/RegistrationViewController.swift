@@ -8,7 +8,7 @@
 import UIKit
 import Firebase
 import CoreLocation
-
+import MaterialComponents
 class RegistrationViewController: UIViewController ,CLLocationManagerDelegate {
     
     // MARK: - Outlet
@@ -33,45 +33,49 @@ class RegistrationViewController: UIViewController ,CLLocationManagerDelegate {
             userTypeLabel.text = "provider".localizes
         }
     }
-    @IBOutlet weak var userNameLabel: UILabel!{
-        didSet{
-            userNameLabel.text = "name".localizes
-        }
-    }
-    @IBOutlet weak var userNameTaxtField: UITextField!{
+//    @IBOutlet weak var userNameLabel: UILabel!{
+//        didSet{
+//            userNameLabel.text = "name".localizes
+//        }
+//    }
+    @IBOutlet weak var userNameTaxtField: MDCOutlinedTextField!{
         didSet{
             userNameTaxtField.delegate = self
+            userNameTaxtField.label.text = "name".localizes
         }
     }
-    @IBOutlet weak var userEmailLabel: UILabel!{
-        didSet{
-            userEmailLabel.text = "email".localizes
-        }
-    }
-    @IBOutlet weak var userEmailTextField: UITextField!{
+//    @IBOutlet weak var userEmailLabel: UILabel!{
+//        didSet{
+//            userEmailLabel.text = "email".localizes
+//        }
+//    }
+    @IBOutlet weak var userEmailTextField: MDCOutlinedTextField!{
         didSet{
             userEmailTextField.delegate = self
+            userEmailTextField.label.text = "email".localizes
         }
     }
-    @IBOutlet weak var userPhoneNumberLabel: UILabel!{
-        didSet{
-            userPhoneNumberLabel.text = "phone".localizes
-        }
-    }
-    @IBOutlet weak var userPhoneNumberTextField: UITextField!{
+//    @IBOutlet weak var userPhoneNumberLabel: UILabel!{
+//        didSet{
+//            userPhoneNumberLabel.text = "phone".localizes
+//        }
+//    }
+    @IBOutlet weak var userPhoneNumberTextField: MDCOutlinedTextField!{
         didSet{
             userPhoneNumberTextField.delegate = self
+            userPhoneNumberTextField.label.text = "phone".localizes
         }
     }
-    @IBOutlet weak var passWordLabel: UILabel!{
-        didSet{
-            passWordLabel.text = "password".localizes
-        }
-    }
-    @IBOutlet weak var passWordTextField: UITextField!{
+//    @IBOutlet weak var passWordLabel: UILabel!{
+//        didSet{
+//            passWordLabel.text = "password".localizes
+//        }
+//    }
+    @IBOutlet weak var passWordTextField: MDCOutlinedTextField!{
         didSet{
             passWordTextField.delegate = self
             passWordTextField.isSecureTextEntry = true
+            passWordTextField.label.text = "password".localizes
         }
     }
     @IBOutlet weak var signInButton: UIButton!{
@@ -117,8 +121,8 @@ class RegistrationViewController: UIViewController ,CLLocationManagerDelegate {
         view.addGestureRecognizer(tap)
         
         // to make the button inside the textfield
-        passWordTextField.rightView = showPasswordButton
-        passWordTextField.rightViewMode = .always
+        passWordTextField.trailingView = showPasswordButton
+        passWordTextField.trailingViewMode = .whileEditing
     }
     
     

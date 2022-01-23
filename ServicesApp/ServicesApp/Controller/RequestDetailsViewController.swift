@@ -9,8 +9,13 @@ import UIKit
 import Firebase
 import CoreLocation
 import MapKit
+import LottieCore
 class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate {
     // MARK: - Outlet
+//    @IBOutlet weak var animatiomMapVirw: AnimationView!
+        
+    
+    
     @IBOutlet weak var serviceNameLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!{
         didSet{
@@ -72,11 +77,18 @@ class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate 
     // MARK: - View Did Load
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if let selectServices = selectServices{
-            serviceNameLabel.text = selectServices.name
-        }
-        
+//        let animatiomMapView = AnimationView(name: "map")
+//
+//        animatiomMapView.frame = CGRect(x: 0, y: 0, width: 400, height: 400)
+//
+//        animatiomMapView.loopMode = .loop
+//        animatiomMapVirw.addSubview(animatiomMapView)
+//        animatiomMapView.play()
+//
+//        if let selectServices = selectServices{
+//            serviceNameLabel.text = selectServices.name
+//        }
+//
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
@@ -195,10 +207,12 @@ class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate 
     @IBAction func showMap(_ sender: Any) {
         if isShow{
             removeAnnotationButton.isHidden = false
+//            animatiomMapVirw.isHidden = true
             mapView.isHidden = false
             isShow = false
         }else{
             removeAnnotationButton.isHidden = true
+//            animatiomMapVirw.isHidden = false
             mapView.isHidden = true
             isShow = true
         }

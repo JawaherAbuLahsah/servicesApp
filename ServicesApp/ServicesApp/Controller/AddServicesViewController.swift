@@ -49,6 +49,7 @@ class AddServicesViewController: UIViewController {
     // MARK: - View did load
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.8)
         imagePickerController.delegate = self
         if let selectServices = selectServices{
             let db = Firestore.firestore()

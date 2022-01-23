@@ -48,3 +48,11 @@
 "requests" = "REQUESTS";
 "nothing" = "No Data";
 "swipe" = "Swipe to delete";
+"location" = "Location";
+"from" = "From";
+"choose" = "You can choose services";
+"sendService" = "You can request services";
+"conversation" = "You can have conversations";
+"request" = "REQUEST";
+"provider" = "SERVICE PROVIDER";
+
