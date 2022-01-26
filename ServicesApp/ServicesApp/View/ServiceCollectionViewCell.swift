@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import LottieCore
+import Lottie
 class ServiceCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var animationView: AnimationView!

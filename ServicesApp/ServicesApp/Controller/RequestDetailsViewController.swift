@@ -9,7 +9,7 @@ import UIKit
 import Firebase
 import CoreLocation
 import MapKit
-import LottieCore
+import Lottie
 class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate {
     // MARK: - Outlet
 //    @IBOutlet weak var animatiomMapVirw: AnimationView!
@@ -97,9 +97,7 @@ class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate 
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
         mapView.showsUserLocation = true
-        mapView.mapType = .standard
-        mapView.isZoomEnabled = true
-        mapView.isScrollEnabled = true
+        
         if let coor = mapView.userLocation.location?.coordinate{
             mapView.setCenter(coor, animated: true)
         }
@@ -112,7 +110,7 @@ class RequestDetailsViewController: UIViewController ,CLLocationManagerDelegate 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
         
-        mapView.mapType = MKMapType.standard
+        mapView.mapType = MKMapType.hybrid
         
         let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         let region = MKCoordinateRegion(center: locValue, span: span)

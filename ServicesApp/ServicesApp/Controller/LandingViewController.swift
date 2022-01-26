@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import LottieCore
+import Lottie
 class LandingViewController: UIViewController {
     @IBOutlet weak var pageControl: UIPageControl!
     
@@ -80,7 +80,7 @@ class LandingViewController: UIViewController {
         englishButton.center = languageButton.center
         
         
-        
+        startTimer()
         
     }
     
@@ -127,6 +127,30 @@ class LandingViewController: UIViewController {
         }
     }
     
+    
+    @objc func scrollToNextCell(_ timer1: Timer){
+        let cellSize = CGSize(width: self.view.frame.width, height: self.view.frame.height)
+
+           //get current content Offset of the Collection view
+           let contentOffset = informationCollectionView.contentOffset;
+
+           if informationCollectionView.contentSize.width <= informationCollectionView.contentOffset.x + cellSize.width
+           {
+               informationCollectionView.scrollRectToVisible(CGRect(x: 0, y: contentOffset.y, width: cellSize.width, height: cellSize.height), animated: true)
+               currentPage = 0
+           } else {
+               informationCollectionView.scrollRectToVisible(CGRect(x: contentOffset.x + cellSize.width, y: contentOffset.y, width: cellSize.width, height: cellSize.height), animated: true)
+               currentPage = currentPage + 1
+           }
+        pageControl.currentPage = currentPage
+        }
+        func startTimer() {
+
+            _ = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(scrollToNextCell), userInfo: nil, repeats: true);
+
+
+        }
+    
 }
 extension LandingViewController:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -146,8 +170,8 @@ extension LandingViewController:UICollectionViewDelegate,UICollectionViewDataSou
         return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
     }
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let width = scrollView.frame.width
-        currentPage = Int(scrollView.contentOffset.x / width)
-        pageControl.currentPage = currentPage
+//        let width = scrollView.frame.width
+//        currentPage = Int(scrollView.contentOffset.x / width)
+//        pageControl.currentPage = currentPage
     }
 }

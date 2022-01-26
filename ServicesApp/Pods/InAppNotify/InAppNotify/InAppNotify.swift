@@ -193,7 +193,7 @@ public struct NotificationSize {
     public static let indicatorWidth    : CGFloat = 40
     public static let imageSize         : CGFloat = 48
     public static let imageOffset       : CGFloat = 9
-    public static var height            : CGFloat = UIApplication.shared.isStatusBarHidden ? 100 : 110
+    public static var height            : CGFloat = UIApplication.shared.isStatusBarHidden ? 70 : 80
     public static var textOffset        : CGFloat = 65
 }
 

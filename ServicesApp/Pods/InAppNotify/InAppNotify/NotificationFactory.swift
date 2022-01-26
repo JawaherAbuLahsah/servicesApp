@@ -47,7 +47,6 @@ open class NotificationFactory: UIView,UITextViewDelegate {
     open fileprivate(set) lazy var indicatorView: UIView = {
         
         let view = UIView()
-        
         view.backgroundColor            = InAppNotify.theme.dragIndicatorColor
         view.layer.cornerRadius         = NotificationSize.indicatorHeight / 2
         view.isUserInteractionEnabled   = true
